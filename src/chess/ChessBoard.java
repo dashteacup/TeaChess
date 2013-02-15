@@ -8,17 +8,6 @@ import java.util.ArrayList;
  */
 public class ChessBoard {
     /**
-     * Set to nine so I can index from 1-8 normally. The [0] element
-     * will always be empty.
-     */
-    protected static final int boardSize = 9;
-    
-    /**
-     * The board held in a 2 dimensional array;
-     */
-    protected ArrayList<ArrayList<ChessPiece>> board;
-    
-    /**
      * Build new standard sized chess board.
      * Currently, empty elements are set to null, I think I need to do
      * something better than that.
@@ -90,11 +79,94 @@ public class ChessBoard {
             }
         }       
     }
+    
+    /**
+     * Determine if the indicated move is a valid chess move.
+     */
+    public boolean checkValidMove(int oldRow, int oldColumn, int newRow, int newColumn)
+    {
+        ChessPiece piece = board.get(oldRow).get(oldColumn);
+        // moving to an empty space
+        if (board.get(newRow).get(newColumn) == null) {
+            if (!piece.isValidMove(newRow, newColumn))
+                return false;
+        }
+        // the space is occupied
+        else {
+            if (!piece.canCapture(newRow, newColumn))
+                return false;
+        }
+        if (piece.isHoppable()) {
+            return true;
+        }
+        else if (!hasClearPath(oldRow, oldColumn, newRow, newColumn)) {
+            return false;
+        }
+        return true;
+    }
 
+    /**
+     * Actually make a move. Doesn't do error checking.
+     */
+    void makeMove(int oldRow, int oldColumn, int newRow, int newColumn)
+    {
+        ChessPiece movingPiece = board.get(oldRow).get(oldColumn);
+        board.get(newRow).set(newColumn, movingPiece);
+        board.get(oldRow).set(oldColumn, null);
+    }
+    
     /**
      * Get the chess board.
      */
     public ArrayList<ArrayList<ChessPiece>> getBoard() {
         return board;
     }
+
+    /**
+     * Determine if there is a clear (unobstructed) path between the two positions on the
+     * chess board. Do not use this function on hoppable chess pieces.
+     */
+    private boolean hasClearPath(int oldRow, int oldColumn, int newRow, int newColumn)
+    {
+        int deltaRow = Math.abs(oldRow - newRow);
+        int deltaColumn = Math.abs(oldColumn - newColumn);
+        // horizontal movement
+        if (deltaRow == 0 && deltaColumn != 0) {
+            int lower = (oldColumn < newColumn) ? oldColumn : newColumn;
+            int upper = (oldColumn > newColumn) ? oldColumn : newColumn;
+            for (int column = lower + 1; column < upper; ++column) {
+                if (board.get(oldRow).get(column) != null) 
+                    return false;
+            }
+            return true;    
+        }
+        // vertical movement
+        else if (deltaRow != 0 && deltaColumn == 0) {
+            int lower = (oldRow < newRow) ? oldRow : newRow;
+            int upper = (oldRow > newRow) ? oldRow : newRow;
+            for (int row = lower + 1; row < upper; ++row) {
+                if (board.get(row).get(oldColumn) != null)
+                    return false;
+            }
+            return true;
+        }
+        // diagonal movement
+        else if (deltaRow == deltaColumn) {
+            // TODO: fix this
+            return true; 
+        }
+        // All non-hoppable pieces move either vertically, horizontally, or diagonally 
+        return false;
+    }
+
+    /**
+     * Set to nine so I can index from 1-8 normally. The [0] element
+     * will always be empty.
+     */
+    private static final int boardSize = 9;
+
+    /**
+     * The board held in a 2 dimensional array;
+     */
+    private ArrayList<ArrayList<ChessPiece>> board;
 }

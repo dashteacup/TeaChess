@@ -57,8 +57,12 @@ public class ChessController implements ActionListener {
         if (pieceSelected) {
             // No moving to your own place, just deselect current piece.
             if (!(newRow == selectedRow && newColumn == selectedColumn)) {
-                view.moveChessPiece(selectedRow, selectedColumn, newRow, newColumn);
-                changePlayers();
+                // have to translate board positions.. I should rewrite chessboard to be consistant
+                if (modelBoard.checkValidMove(8 - selectedRow, 1 + selectedColumn, 8 - newRow, 1 + newColumn)) {
+                    view.moveChessPiece(selectedRow, selectedColumn, newRow, newColumn);
+                    modelBoard.makeMove(8 - selectedRow, 1 + selectedColumn, 8 - newRow, 1 + newColumn);
+                    changePlayers();
+                }
             }
             pieceSelected = false;
         }
@@ -77,8 +81,14 @@ public class ChessController implements ActionListener {
      */
     private void changePlayers()
     {
-        currentPlayerColor = (currentPlayerColor == ChessPieceColor.WHITE) ? 
-                ChessPieceColor.BLACK : ChessPieceColor.WHITE;
+        if (currentPlayerColor == ChessPieceColor.WHITE) {
+            currentPlayerColor = ChessPieceColor.BLACK;
+            view.setStatusLabel("Black's turn.");
+        }
+        else {
+            currentPlayerColor = ChessPieceColor.WHITE;
+            view.setStatusLabel("White's turn.");
+        }
     }
 
     /**

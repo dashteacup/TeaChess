@@ -1,10 +1,12 @@
 package chess;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -39,12 +41,19 @@ public class ChessGameView {
      */
     public void startNewGame()
     {
+        JPanel totalLayoutPanel = new JPanel(new BorderLayout());
+        statusLabel = new JLabel("White's turn.");
+        totalLayoutPanel.add(statusLabel, BorderLayout.PAGE_START);
+        
+        // make the chess board's panel
         JPanel boardPanel = new JPanel();
         boardPanel.setPreferredSize(new Dimension(windowWidth, windowHeight));
         boardPanel.setLayout(new GridLayout(chessBoardRows, chessBoardColumns));
         buttonCollection = new ChessSpaceButton[chessBoardRows][chessBoardColumns]; 
-        addButtons(boardPanel);
-        gameWindow.setContentPane(boardPanel);
+        addButtons(boardPanel);        
+        totalLayoutPanel.add(boardPanel, BorderLayout.CENTER);
+        
+        gameWindow.setContentPane(totalLayoutPanel);
         gameWindow.setVisible(true);
     }
   
@@ -56,6 +65,13 @@ public class ChessGameView {
         buttonCollection[oldRow][oldColumn].movePiece(buttonCollection[newRow][newColumn]);
     }
     
+    /**
+     * @param message to display in the status area
+     */
+    public void setStatusLabel(String message) {
+        statusLabel.setText(message);
+    }
+
     /**
      * Create the game's menu.
      * @param window to put the menu in.
@@ -193,5 +209,10 @@ public class ChessGameView {
      * The window for this game.
      */
     private JFrame gameWindow;
+
+    /**
+     * Gives status information about the currently running game.
+     */
+    private JLabel statusLabel;
 
 }
