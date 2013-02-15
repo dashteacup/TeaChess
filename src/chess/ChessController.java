@@ -3,9 +3,6 @@ package chess;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-
 /**
  * Controller Class for the chess game project. 
  */
@@ -28,7 +25,7 @@ public class ChessController implements ActionListener {
      */
     public static void main(String[] args) 
     {
-        ChessController controller = new ChessController();
+        new ChessController();
     }
     
     /**
@@ -36,6 +33,7 @@ public class ChessController implements ActionListener {
      */
     public void actionPerformed(ActionEvent event)
     {
+        // Clicked the new game menu item.
         if (event.getActionCommand() == "New Game") {
             view.startNewGame();
             modelBoard = new ChessBoard();
@@ -43,36 +41,60 @@ public class ChessController implements ActionListener {
             pieceSelected = false;
         }
         else {
-            buttonLastPicked = (JButton) event.getSource();
-            String[] toolTip = buttonLastPicked.getToolTipText().split(" ");
-            if (pieceSelected) {
-                int newRow = Integer.valueOf(toolTip[0]);
-                int newColumn = Integer.valueOf(toolTip[1]);
-                view.movePieceIcon(selectedRow, selectedColumn, newRow, newColumn);
-                pieceSelected = false;
-            }
-            else {
-                selectedRow = Integer.valueOf(toolTip[0]);
-                selectedColumn = Integer.valueOf(toolTip[1]);
-                pieceSelected = true;
-            } 
+            buttonLastPicked = (ChessSpaceButton) event.getSource();
+            buttonClickedAction();
         }
+                    
+    }
+    
+    /**
+     * Actions to be performed when receiving a button clicked event.
+     */
+    public void buttonClickedAction()
+    {
+        int newRow = buttonLastPicked.getRow();
+        int newColumn = buttonLastPicked.getColumn();
+        if (pieceSelected) {
+            // No moving to your own place, just deselect current piece.
+            if (!(newRow == selectedRow && newColumn == selectedColumn)) {
+                view.moveChessPiece(selectedRow, selectedColumn, newRow, newColumn);
+                changePlayers();
+            }
+            pieceSelected = false;
+        }
+        else {
+            // Can't move around empty spaces
+            if (!buttonLastPicked.isEmptySpace() && buttonLastPicked.getPieceColor() == currentPlayerColor) {
+                selectedRow = newRow;
+                selectedColumn = newColumn;
+                pieceSelected = true;
+            }
+        } 
+    }
+
+    /**
+     * Change the color of the current player from black to white or white to black. 
+     */
+    private void changePlayers()
+    {
+        currentPlayerColor = (currentPlayerColor == ChessPieceColor.WHITE) ? 
+                ChessPieceColor.BLACK : ChessPieceColor.WHITE;
     }
 
     /**
      * The game's Model of the chess board.
      */
-    protected ChessBoard modelBoard;
+    private ChessBoard modelBoard;
     
     /**
      * The game's View.
      */
-    protected ChessGameView view;
+    private ChessGameView view;
     
     /**
      * The button last selected by the user.
      */
-    protected JButton buttonLastPicked;
+    private ChessSpaceButton buttonLastPicked;
     
     /**
      * Color of the player whose turn we are doing.

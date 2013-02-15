@@ -4,9 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -45,20 +42,18 @@ public class ChessGameView {
         JPanel boardPanel = new JPanel();
         boardPanel.setPreferredSize(new Dimension(windowWidth, windowHeight));
         boardPanel.setLayout(new GridLayout(chessBoardRows, chessBoardColumns));
-        buttonCollection = new JButton[chessBoardRows][chessBoardColumns]; 
+        buttonCollection = new ChessSpaceButton[chessBoardRows][chessBoardColumns]; 
         addButtons(boardPanel);
         gameWindow.setContentPane(boardPanel);
         gameWindow.setVisible(true);
     }
   
     /**
-     * Move a chess piece icon from one place on the board to another.
+     * Move the graphical representation of a chess piece to another space.
      */
-    public void movePieceIcon(int oldRow, int oldColumn, int newRow, int newColumn)
+    public void moveChessPiece(int oldRow, int oldColumn, int newRow, int newColumn)
     {
-        Icon savedIcon = buttonCollection[oldRow][oldColumn].getIcon();
-        buttonCollection[oldRow][oldColumn].setIcon(null);
-        buttonCollection[newRow][newColumn].setIcon(savedIcon);
+        buttonCollection[oldRow][oldColumn].movePiece(buttonCollection[newRow][newColumn]);
     }
     
     /**
@@ -86,12 +81,10 @@ public class ChessGameView {
         for (int row = 0; row < chessBoardRows; ++row) {
             if (row % 2 == 0)
                 backgroundColor = lightSpace;
-            else backgroundColor = darkSpace;
+            else 
+                backgroundColor = darkSpace;
             for (int column = 0; column < chessBoardColumns; ++column) {
-                JButton b = new JButton();
-                b.setBackground(backgroundColor);
-                b.addActionListener(myController);
-                b.setToolTipText(row + " " + column);
+                ChessSpaceButton b = new ChessSpaceButton(row, column, backgroundColor, myController);
                 boardPanel.add(b);
                 buttonCollection[row][column] = b;
                 backgroundColor = nextColor(backgroundColor);
@@ -107,44 +100,44 @@ public class ChessGameView {
     {
         // set up pawns
         for (int i = 0; i < chessBoardColumns; ++i) {
-            buttonCollection[1][i].setIcon(new ImageIcon(imageDirectory + "blackPawn.png"));
-            buttonCollection[6][i].setIcon(new ImageIcon(imageDirectory + "whitePawn.png"));
+            buttonCollection[1][i].setPiece("blackPawn.png");
+            buttonCollection[6][i].setPiece("whitePawn.png");
         }
         // set up rooks
-        buttonCollection[0][0].setIcon(new ImageIcon(imageDirectory + "blackRook.png"));
-        buttonCollection[0][7].setIcon(new ImageIcon(imageDirectory + "blackRook.png"));
-        buttonCollection[7][0].setIcon(new ImageIcon(imageDirectory + "whiteRook.png"));
-        buttonCollection[7][7].setIcon(new ImageIcon(imageDirectory + "whiteRook.png"));
+        buttonCollection[0][0].setPiece("blackRook.png");
+        buttonCollection[0][7].setPiece("blackRook.png");
+        buttonCollection[7][0].setPiece("whiteRook.png");
+        buttonCollection[7][7].setPiece("whiteRook.png");
         // set up knights
-        buttonCollection[0][1].setIcon(new ImageIcon(imageDirectory + "blackKnight.png"));
-        buttonCollection[0][6].setIcon(new ImageIcon(imageDirectory + "blackKnight.png"));
-        buttonCollection[7][1].setIcon(new ImageIcon(imageDirectory + "whiteKnight.png"));
-        buttonCollection[7][6].setIcon(new ImageIcon(imageDirectory + "whiteKnight.png"));
+        buttonCollection[0][1].setPiece("blackKnight.png");
+        buttonCollection[0][6].setPiece("blackKnight.png");
+        buttonCollection[7][1].setPiece("whiteKnight.png");
+        buttonCollection[7][6].setPiece("whiteKnight.png");
         // set up bishops
-        buttonCollection[0][2].setIcon(new ImageIcon(imageDirectory + "blackBishop.png"));
-        buttonCollection[0][5].setIcon(new ImageIcon(imageDirectory + "blackBishop.png"));
-        buttonCollection[7][2].setIcon(new ImageIcon(imageDirectory + "whiteBishop.png"));
-        buttonCollection[7][5].setIcon(new ImageIcon(imageDirectory + "whiteBishop.png"));
+        buttonCollection[0][2].setPiece("blackBishop.png");
+        buttonCollection[0][5].setPiece("blackBishop.png");
+        buttonCollection[7][2].setPiece("whiteBishop.png");
+        buttonCollection[7][5].setPiece("whiteBishop.png");
         // set up queens
-        buttonCollection[0][3].setIcon(new ImageIcon(imageDirectory + "blackQueen.png"));
-        buttonCollection[7][3].setIcon(new ImageIcon(imageDirectory + "whiteQueen.png"));
+        buttonCollection[0][3].setPiece("blackQueen.png");
+        buttonCollection[7][3].setPiece("whiteQueen.png");
         // set up kings
-        buttonCollection[0][4].setIcon(new ImageIcon(imageDirectory + "blackKing.png"));
-        buttonCollection[7][4].setIcon(new ImageIcon(imageDirectory + "whiteKing.png"));
+        buttonCollection[0][4].setPiece("blackKing.png");
+        buttonCollection[7][4].setPiece("whiteKing.png");
         // set up frogs
-        buttonCollection[2][0].setIcon(new ImageIcon(imageDirectory + "blackFrog.png"));
-        buttonCollection[2][7].setIcon(new ImageIcon(imageDirectory + "blackFrog.png"));
-        buttonCollection[5][0].setIcon(new ImageIcon(imageDirectory + "whiteFrog.png"));
-        buttonCollection[5][7].setIcon(new ImageIcon(imageDirectory + "whiteFrog.png"));
+        buttonCollection[2][0].setPiece("blackFrog.png");
+        buttonCollection[2][7].setPiece("blackFrog.png");
+        buttonCollection[5][0].setPiece("whiteFrog.png");
+        buttonCollection[5][7].setPiece("whiteFrog.png");
         // set up princes
-        buttonCollection[2][4].setIcon(new ImageIcon(imageDirectory + "blackPrince.png"));
-        buttonCollection[5][4].setIcon(new ImageIcon(imageDirectory + "whitePrince.png"));
+        buttonCollection[2][4].setPiece("blackPrince.png");
+        buttonCollection[5][4].setPiece("whitePrince.png");
     }
     
     /**
      * Helper function to allow swapping back and forth between black and white.
      * @param c the current color
-     * @return WHITE if input is BLACK, BLACK if input is WHITE 
+     * @return lightSpace if input is darkSpace, darkSpace if input is lightSpace 
      */
     private Color nextColor(Color c)
     {
@@ -189,17 +182,12 @@ public class ChessGameView {
      * Color of the darker spaces on the chess board.
      */
     private final static Color darkSpace = new Color(0.82f, 0.545f, 0.278f);
-    
-    /**
-     * Path to the directory where the image files are stored. 
-     */
-    private final static String imageDirectory = "src/chess/images/";
-    
+        
     /**
      * Collection holding references to all the button objects representing spaces
      * on a chess board.
      */
-    private JButton buttonCollection[][];
+    private ChessSpaceButton buttonCollection[][];
     
     /**
      * The window for this game.
