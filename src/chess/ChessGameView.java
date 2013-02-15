@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -51,10 +52,35 @@ public class ChessGameView {
     }
   
     /**
+     * Move a chess piece icon from one place on the board to another.
+     */
+    public void movePieceIcon(int oldRow, int oldColumn, int newRow, int newColumn)
+    {
+        Icon savedIcon = buttonCollection[oldRow][oldColumn].getIcon();
+        buttonCollection[oldRow][oldColumn].setIcon(null);
+        buttonCollection[newRow][newColumn].setIcon(savedIcon);
+    }
+    
+    /**
+     * Create the game's menu.
+     * @param window to put the menu in.
+     */
+    private void setUpMenu(JFrame window)
+    {
+        JMenuBar menubar = new JMenuBar();
+        JMenu file = new JMenu("File");
+        JMenuItem newGame = new JMenuItem("New Game");
+        newGame.addActionListener(myController);
+        file.add(newGame); 
+        menubar.add(file);
+        window.setJMenuBar(menubar);
+    }
+
+    /**
      * Add all the buttons representing the squares and pieces on the chess board.
      * @param boardPanel
      */
-    public void addButtons(JPanel boardPanel)
+    private void addButtons(JPanel boardPanel)
     {
         Color backgroundColor;
         for (int row = 0; row < chessBoardRows; ++row) {
@@ -65,7 +91,7 @@ public class ChessGameView {
                 JButton b = new JButton();
                 b.setBackground(backgroundColor);
                 b.addActionListener(myController);
-                b.setToolTipText("row: " + row + " col: " + column);
+                b.setToolTipText(row + " " + column);
                 boardPanel.add(b);
                 buttonCollection[row][column] = b;
                 backgroundColor = nextColor(backgroundColor);
@@ -113,21 +139,6 @@ public class ChessGameView {
         // set up princes
         buttonCollection[2][4].setIcon(new ImageIcon(imageDirectory + "blackPrince.png"));
         buttonCollection[5][4].setIcon(new ImageIcon(imageDirectory + "whitePrince.png"));
-    }
-    
-    /**
-     * Create the game's menu.
-     * @param window to put the menu in.
-     */
-    private void setUpMenu(JFrame window)
-    {
-        JMenuBar menubar = new JMenuBar();
-        JMenu file = new JMenu("File");
-        JMenuItem newGame = new JMenuItem("New Game");
-        newGame.addActionListener(myController);
-        file.add(newGame); 
-        menubar.add(file);
-        window.setJMenuBar(menubar);
     }
     
     /**

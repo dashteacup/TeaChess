@@ -20,6 +20,7 @@ public class ChessController implements ActionListener {
         view = new ChessGameView(this);
         // White player always goes first in chess.
         currentPlayerColor = ChessPieceColor.WHITE;
+        pieceSelected = false;
     }
     
     /**
@@ -27,7 +28,7 @@ public class ChessController implements ActionListener {
      */
     public static void main(String[] args) 
     {
-        new ChessController();
+        ChessController controller = new ChessController();
     }
     
     /**
@@ -39,15 +40,23 @@ public class ChessController implements ActionListener {
             view.startNewGame();
             modelBoard = new ChessBoard();
             currentPlayerColor = ChessPieceColor.WHITE;
+            pieceSelected = false;
         }
         else {
             buttonLastPicked = (JButton) event.getSource();
-            JOptionPane.showMessageDialog(null,
-                                          "I was clicked by "+ buttonLastPicked.getToolTipText(),
-                                          "Square Clicked", 
-                                          JOptionPane.INFORMATION_MESSAGE);
+            String[] toolTip = buttonLastPicked.getToolTipText().split(" ");
+            if (pieceSelected) {
+                int newRow = Integer.valueOf(toolTip[0]);
+                int newColumn = Integer.valueOf(toolTip[1]);
+                view.movePieceIcon(selectedRow, selectedColumn, newRow, newColumn);
+                pieceSelected = false;
+            }
+            else {
+                selectedRow = Integer.valueOf(toolTip[0]);
+                selectedColumn = Integer.valueOf(toolTip[1]);
+                pieceSelected = true;
+            } 
         }
-
     }
 
     /**
@@ -70,5 +79,18 @@ public class ChessController implements ActionListener {
      */
     private ChessPieceColor currentPlayerColor;
     
-
+    /**
+     * Determine if the player has picked a piece to move.
+     */
+    private boolean pieceSelected;
+    
+    /**
+     * selected row
+     */
+    private int selectedRow;
+    
+    /**
+     * selected column
+     */
+    private int selectedColumn;
 }
