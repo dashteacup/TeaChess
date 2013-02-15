@@ -9,6 +9,7 @@ import javax.swing.JButton;
 /**
  * Custom button type made so I can store additional information on a JButton.
  */
+@SuppressWarnings("serial")
 public class ChessSpaceButton extends JButton {
     /**
      * Create a new empty chess space button
@@ -136,11 +137,4 @@ public class ChessSpaceButton extends JButton {
      * Path to the directory where the image files are stored. 
      */
     private final static String imageDirectory = "src/chess/images/";
-
-    /**
-     * I honestly don't know why I need this, but it makes eclipse's warning go away.
-     * I think it has something to do with me subclassing a standard library class.
-     */
-    private static final long serialVersionUID = 2054454644311363296L;
-
 }
