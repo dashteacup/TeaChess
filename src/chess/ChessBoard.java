@@ -38,29 +38,11 @@ public class ChessBoard {
                     board.get(row).add(new Pawn(row, col, ChessPieceColor.WHITE));
                 break;
             case 3:
-                board.get(row).add(new Frog(row, 1, ChessPieceColor.WHITE));
-                for (int col = 2; col < 8; ++col) {
-                    if (col == 5)
-                        board.get(row).add(new Prince(row, 5, ChessPieceColor.WHITE));
-                    else
-                        board.get(row).add(null);
-                }
-                board.get(row).add(new Frog(row, 8, ChessPieceColor.WHITE));
-                break;
             case 4:
             case 5:
+            case 6:
                 for (int col = 1; col < boardSize; ++col)
                     board.get(row).add(null);
-                break;
-            case 6:
-                board.get(row).add(new Frog(row, 1, ChessPieceColor.BLACK));
-                for (int col = 2; col < 8; ++col) {
-                    if (col == 5)
-                        board.get(row).add(new Prince(row, 5, ChessPieceColor.BLACK));
-                    else
-                        board.get(row).add(null);
-                }
-                board.get(row).add(new Frog(row, 8, ChessPieceColor.BLACK));
                 break;
             case 7:
                 for (int col = 1; col < boardSize; ++col)
@@ -77,9 +59,9 @@ public class ChessBoard {
                 board.get(row).add(new Rook(row, 8, ChessPieceColor.BLACK));
                 break;
             }
-        }       
+        }
     }
-    
+
     /**
      * Determine if the indicated move is a valid chess move.
      */
@@ -114,7 +96,7 @@ public class ChessBoard {
         board.get(newRow).set(newColumn, movingPiece);
         board.get(oldRow).set(oldColumn, null);
     }
-    
+
     /**
      * Get the chess board.
      */
@@ -135,10 +117,10 @@ public class ChessBoard {
             int lower = (oldColumn < newColumn) ? oldColumn : newColumn;
             int upper = (oldColumn > newColumn) ? oldColumn : newColumn;
             for (int column = lower + 1; column < upper; ++column) {
-                if (board.get(oldRow).get(column) != null) 
+                if (board.get(oldRow).get(column) != null)
                     return false;
             }
-            return true;    
+            return true;
         }
         // vertical movement
         else if (deltaRow != 0 && deltaColumn == 0) {
@@ -153,9 +135,9 @@ public class ChessBoard {
         // diagonal movement
         else if (deltaRow == deltaColumn) {
             // TODO: fix this
-            return true; 
+            return true;
         }
-        // All non-hoppable pieces move either vertically, horizontally, or diagonally 
+        // All non-hoppable pieces move either vertically, horizontally, or diagonally
         return false;
     }
 
