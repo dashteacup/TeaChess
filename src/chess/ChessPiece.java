@@ -8,28 +8,28 @@ public abstract class ChessPiece {
      * Equivalent to chess term 'rank'. Valid values are 1-8.
      */
     protected int row;
-    
+
     /**
      * Equivalent to chess term 'file'. Valid values are 1-8.
      * Note: I didn't use the letters typically used in chess notation.
      */
     protected int column;
-    
+
     /**
      * Color of this particular chess piece.
      */
     protected ChessPieceColor color;
 
     /**
-     * Flag determining if the piece can hop over other pieces like a knight. 
+     * Flag determining if the piece can hop over other pieces like a knight.
      */
     protected boolean hoppable;
-    
+
     /**
      * Create a new chess piece
      * @param row aka 'rank' valid 1-8
      * @param column aka 'file' valid 1-8 NOT a-h
-     * @param color black or white
+     * @param color BLACK or WHITE
      */
     public ChessPiece(int row, int column, ChessPieceColor color)
     {
@@ -38,9 +38,22 @@ public abstract class ChessPiece {
         this.color = color;
         this.hoppable = false;
     }
-    
+
+
     /**
-     * Move the chess piece to a new place on the board. If the new place is not 
+     * Create a new chess piece in algebraic chess notation.
+     * @param file letter for the column in algebraic chess notation (a-h)
+     * @param rank number indicating the row in algebraic chess notation (1-8)
+     * @param color BLACK or WHITE
+     */
+    public ChessPiece(File file, int rank, ChessPieceColor color)
+    {
+        this(rank, file.getColumn(), color);
+    }
+
+
+    /**
+     * Move the chess piece to a new place on the board. If the new place is not
      * a valid way to move, then do not move the piece.
      * @return true if the piece moves to the new place, false otherwise.
      */
@@ -53,13 +66,13 @@ public abstract class ChessPiece {
         }
         return false;
     }
-    
+
     /**
      * Determine if the chess piece can move to a new position on the
      * board. Does not take into account the placement of other pieces.
      */
     public abstract boolean isValidMove(int newRow, int newColumn);
-    
+
     /**
      * Determine if the piece is in a valid starting position.
      */
@@ -67,7 +80,7 @@ public abstract class ChessPiece {
 
     /**
      * Determine if the chess piece can capture a piece at another place on the
-     * board. Doesn't actually check to see if there is a chess piece at the 
+     * board. Doesn't actually check to see if there is a chess piece at the
      * indicated location.
      * @param enemyRow row of the piece to capture
      * @param enemyColumn column of the piece to capture
@@ -79,12 +92,12 @@ public abstract class ChessPiece {
         // Most pieces capture in the same way that they move.
         return isValidMove(enemyRow, enemyColumn);
     }
-    
+
     /**
-     * "Capture" an enemy piece at the enemy row and column. Doesn't actually 
-     * handle the destruction of a piece and it's removal from the board--only 
+     * "Capture" an enemy piece at the enemy row and column. Doesn't actually
+     * handle the destruction of a piece and it's removal from the board--only
      * moves this piece to the other's place. Also doesn't check to see if there
-     * is actually a chess piece at the indicated position. If this is not a 
+     * is actually a chess piece at the indicated position. If this is not a
      * valid way to capture, the piece will not be moved.
      * @param enemyRow row of the piece to capture
      * @param enemyColumn column of the piece to capture
@@ -99,11 +112,12 @@ public abstract class ChessPiece {
         }
         return false;
     }
-    
+
     /**
      * Get the chess piece's row aka 'rank' on the board.
      */
-    public int getRow() {
+    public int getRow()
+    {
         return row;
     }
 
@@ -117,13 +131,29 @@ public abstract class ChessPiece {
     }
 
     /**
+     * @return the chess piece's rank, a number from 1-8
+     */
+    public int getRank()
+    {
+        return getRow();
+    }
+
+    /**
+     * @return the chess piece's file, a letter from a-h
+     */
+    public File getFile()
+    {
+        return File.getFile(getColumn());
+    }
+
+    /**
      * Get the chess piece's color.
      */
     public ChessPieceColor getColor()
     {
         return color;
     }
-    
+
     /**
      * Determine if the chess piece can hop over other chess pieces like a Knight.
      */
@@ -142,17 +172,17 @@ public abstract class ChessPiece {
         boolean validColumn = (column >= 1 && column <= 8);
         return validRow && validColumn;
     }
-    
+
     /**
-     * Determine if the piece's current position and it's desired 
-     * destination both reside within the chess board. 
+     * Determine if the piece's current position and it's desired
+     * destination both reside within the chess board.
      */
     protected boolean bothPlacesOnTheBoard(int newRow, int newColumn)
     {
-        return isOnTheBoard(newRow, newColumn) && 
+        return isOnTheBoard(newRow, newColumn) &&
                isOnTheBoard(this.row, this.column);
     }
-    
+
     /**
      * Determine if the piece's destination and source are the same.
      * Chess pieces can't make no-op moves.
