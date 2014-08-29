@@ -6,12 +6,14 @@ package chess;
 public abstract class ChessPiece {
     /**
      * Equivalent to chess term 'rank'. Valid values are 1-8.
+     * Rows begin numbering from bottom to top.
      */
     protected int row;
 
     /**
      * Equivalent to chess term 'file'. Valid values are 1-8.
      * Note: I didn't use the letters typically used in chess notation.
+     * Columns begin numbering from left to right.
      */
     protected int column;
 
@@ -43,7 +45,7 @@ public abstract class ChessPiece {
     /**
      * Create a new chess piece in algebraic chess notation.
      * @param file letter for the column in algebraic chess notation (a-h)
-     * @param rank number indicating the row in algebraic chess notation (1-8)
+     * @param rank number for the row in algebraic chess notation (1-8)
      * @param color BLACK or WHITE
      */
     public ChessPiece(File file, int rank, ChessPieceColor color)
@@ -70,8 +72,24 @@ public abstract class ChessPiece {
     /**
      * Determine if the chess piece can move to a new position on the
      * board. Does not take into account the placement of other pieces.
+     * @param newRow row you want to move to (1-8)
+     * @param newColumn column you want move to (1-8)
+     * @return true if this is a valid move for this chess piece
      */
     public abstract boolean isValidMove(int newRow, int newColumn);
+
+    /**
+     * Determine if the chess piece can move to a new position on the
+     * board. The positions are specified in algebraic chess notation. Does not
+     * take into account the placement of other pieces.
+     * @param file letter for the column you want to move to (a-h)
+     * @param rank number for the row you want to move to (1-8)
+     * @return true if this is a valid move for this chess piece
+     */
+    public boolean isValidMove(File file, int rank)
+    {
+        return isValidMove(rank, file.getColumn());
+    }
 
     /**
      * Determine if the piece is in a valid starting position.
@@ -115,6 +133,7 @@ public abstract class ChessPiece {
 
     /**
      * Get the chess piece's row aka 'rank' on the board.
+     * Rows begin numbering from bottom to top.
      */
     public int getRow()
     {
@@ -124,6 +143,7 @@ public abstract class ChessPiece {
     /**
      * Get the chess piece's column aka 'file' on the board.
      * Using 1-8 instead of traditional chess notation a-h.
+     * Columns begin numbering from left to right.
      */
     public int getColumn()
     {
