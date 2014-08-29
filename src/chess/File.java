@@ -2,7 +2,7 @@ package chess;
 
 /**
  * Constant representing a file (column) on the chessboard with letters as in
- * algebraic chess notation.
+ * algebraic chess notation. This enum was made for UI convenience.
  */
 public enum File {
     // These are lowercase to match algebraic chess notation.
