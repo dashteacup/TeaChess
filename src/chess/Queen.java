@@ -18,7 +18,7 @@ public class Queen extends ChessPiece {
     /**
      * Determine if the Queen is in a valid starting position.
      */
-    public boolean hasValidStartingPosition()
+    public boolean inValidStartingPosition()
     {
         if (column != 4)
             return false;

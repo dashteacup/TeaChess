@@ -16,13 +16,13 @@ public class KnightTest {
     public void initializeWithValidInputs()
     {
         Knight whiteLeft = new Knight(1, 2, ChessPieceColor.WHITE);
-        assertTrue(whiteLeft.hasValidStartingPosition());
+        assertTrue(whiteLeft.inValidStartingPosition());
         Knight whiteRight = new Knight(1, 7, ChessPieceColor.WHITE);
-        assertTrue(whiteRight.hasValidStartingPosition());
+        assertTrue(whiteRight.inValidStartingPosition());
         Knight blackLeft = new Knight(8, 2, ChessPieceColor.BLACK);
-        assertTrue(blackLeft.hasValidStartingPosition());
+        assertTrue(blackLeft.inValidStartingPosition());
         Knight blackRight = new Knight(8, 7, ChessPieceColor.BLACK);
-        assertTrue(blackRight.hasValidStartingPosition());
+        assertTrue(blackRight.inValidStartingPosition());
         assertTrue(blackRight.isHoppable());
     }
     
@@ -30,20 +30,20 @@ public class KnightTest {
     public void initializeWithBlackAndWhiteSwapped()
     {
         Knight whiteInBlackRightSpot = new Knight(8, 7, ChessPieceColor.WHITE);
-        assertFalse(whiteInBlackRightSpot.hasValidStartingPosition());
+        assertFalse(whiteInBlackRightSpot.inValidStartingPosition());
         Knight blackInWhiteLeftSpot = new Knight(1, 2, ChessPieceColor.BLACK);
-        assertFalse(blackInWhiteLeftSpot.hasValidStartingPosition());
+        assertFalse(blackInWhiteLeftSpot.inValidStartingPosition());
     }
     
     @Test
     public void initializeWithCompletelyWrongLocation()
     {
         Knight whiteInWrongColumn = new Knight(1, 5, ChessPieceColor.WHITE);
-        assertFalse(whiteInWrongColumn.hasValidStartingPosition());
+        assertFalse(whiteInWrongColumn.inValidStartingPosition());
         Knight offTheBoard = new Knight(1, 9, ChessPieceColor.WHITE);
-        assertFalse(offTheBoard.hasValidStartingPosition());
+        assertFalse(offTheBoard.inValidStartingPosition());
         Knight inTheMiddle = new Knight(4, 4, ChessPieceColor.BLACK);
-        assertFalse(inTheMiddle.hasValidStartingPosition());
+        assertFalse(inTheMiddle.inValidStartingPosition());
     }
 
     @Test

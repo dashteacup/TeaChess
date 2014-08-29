@@ -18,7 +18,7 @@ public class King extends ChessPiece {
     /**
      * Determine if the King is in a valid starting position.
      */
-    public boolean hasValidStartingPosition()
+    public boolean inValidStartingPosition()
     {
         if (column == 5) {
             boolean isWhiteKing = (color == ChessPieceColor.WHITE) && (row == 1);

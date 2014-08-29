@@ -16,13 +16,13 @@ public class RookTest {
     public void testConstructorWithValidInitialPositions()
     {
         Rook lwhite = new Rook(1, 1, ChessPieceColor.WHITE);
-        assertTrue(lwhite.hasValidStartingPosition());
+        assertTrue(lwhite.inValidStartingPosition());
         Rook lblack = new Rook(8, 1, ChessPieceColor.BLACK);
-        assertTrue(lblack.hasValidStartingPosition());
+        assertTrue(lblack.inValidStartingPosition());
         Rook rwhite = new Rook(1, 8, ChessPieceColor.WHITE);
-        assertTrue(rwhite.hasValidStartingPosition());
+        assertTrue(rwhite.inValidStartingPosition());
         Rook rblack = new Rook(8, 8, ChessPieceColor.BLACK);
-        assertTrue(rblack.hasValidStartingPosition());
+        assertTrue(rblack.inValidStartingPosition());
         
         // Make sure these inherited functions still work correctly
         assertEquals(8, rblack.getRow());
@@ -34,24 +34,24 @@ public class RookTest {
     public void testConstructorWithIncorrectInitialPositions()
     {
         Rook bad = new Rook(3, 3, ChessPieceColor.WHITE);
-        assertFalse(bad.hasValidStartingPosition());
+        assertFalse(bad.inValidStartingPosition());
         Rook invalid = new Rook(0, 1, ChessPieceColor.WHITE);
-        assertFalse(invalid.hasValidStartingPosition());
+        assertFalse(invalid.inValidStartingPosition());
         Rook wrong = new Rook(7, 8, ChessPieceColor.WHITE);
-        assertFalse(wrong.hasValidStartingPosition());
+        assertFalse(wrong.inValidStartingPosition());
     }
     
     @Test
     public void testConstructorWithWrongColors()
     {
         Rook black11 = new Rook(1, 1, ChessPieceColor.BLACK);
-        assertFalse(black11.hasValidStartingPosition());
+        assertFalse(black11.inValidStartingPosition());
         Rook black18 = new Rook(1, 8, ChessPieceColor.BLACK);
-        assertFalse(black18.hasValidStartingPosition());
+        assertFalse(black18.inValidStartingPosition());
         Rook white81 = new Rook(8, 1, ChessPieceColor.WHITE);
-        assertFalse(white81.hasValidStartingPosition());
+        assertFalse(white81.inValidStartingPosition());
         Rook white88 = new Rook(8, 8, ChessPieceColor.WHITE);
-        assertFalse(white88.hasValidStartingPosition());
+        assertFalse(white88.inValidStartingPosition());
     }
 
     @Test

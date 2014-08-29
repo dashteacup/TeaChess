@@ -16,40 +16,40 @@ public class BishopTest {
     public void initializeWithValidInputs()
     {
         Bishop whiteLeft = new Bishop(1, 3, ChessPieceColor.WHITE);
-        assertTrue(whiteLeft.hasValidStartingPosition());
+        assertTrue(whiteLeft.inValidStartingPosition());
         Bishop whiteRight = new Bishop(1, 6, ChessPieceColor.WHITE);
-        assertTrue(whiteRight.hasValidStartingPosition());
+        assertTrue(whiteRight.inValidStartingPosition());
         Bishop blackLeft = new Bishop(8, 3, ChessPieceColor.BLACK);
-        assertTrue(blackLeft.hasValidStartingPosition());
+        assertTrue(blackLeft.inValidStartingPosition());
         Bishop blackRight = new Bishop(8, 6, ChessPieceColor.BLACK);
-        assertTrue(blackRight.hasValidStartingPosition());
+        assertTrue(blackRight.inValidStartingPosition());
     }
     
     @Test
     public void initializeWithWhiteAndBlackBishopSwapped()
     {
         Bishop whiteInBlackSpot = new Bishop(8, 3, ChessPieceColor.WHITE);
-        assertFalse(whiteInBlackSpot.hasValidStartingPosition());
+        assertFalse(whiteInBlackSpot.inValidStartingPosition());
         Bishop blackInWhiteSpot = new Bishop(1, 6, ChessPieceColor.BLACK);
-        assertFalse(blackInWhiteSpot.hasValidStartingPosition());
+        assertFalse(blackInWhiteSpot.inValidStartingPosition());
     }
     
     @Test
     public void initializeWithRightRowWrongColumn()
     {
         Bishop wrongColumnWhite = new Bishop(1, 1, ChessPieceColor.WHITE);
-        assertFalse(wrongColumnWhite.hasValidStartingPosition());
+        assertFalse(wrongColumnWhite.inValidStartingPosition());
         Bishop wrongColumnBlack = new Bishop(8, 8, ChessPieceColor.BLACK);
-        assertFalse(wrongColumnBlack.hasValidStartingPosition());
+        assertFalse(wrongColumnBlack.inValidStartingPosition());
     }
     
     @Test
     public void initializeWithCompletelyWrongLocation()
     {
         Bishop offTheBoard = new Bishop(4, 9, ChessPieceColor.WHITE);
-        assertFalse(offTheBoard.hasValidStartingPosition());
+        assertFalse(offTheBoard.inValidStartingPosition());
         Bishop middleOfTheBoard = new Bishop(6, 7, ChessPieceColor.BLACK);
-        assertFalse(middleOfTheBoard.hasValidStartingPosition());
+        assertFalse(middleOfTheBoard.inValidStartingPosition());
     }
 
     @Test

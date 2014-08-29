@@ -16,31 +16,31 @@ public class QueenTest {
     public void initializeWithValidInputs()
     {
         Queen white = new Queen(1, 4, ChessPieceColor.WHITE);
-        assertTrue(white.hasValidStartingPosition());
+        assertTrue(white.inValidStartingPosition());
         Queen black = new Queen(8, 4, ChessPieceColor.BLACK);
-        assertTrue(black.hasValidStartingPosition());        
+        assertTrue(black.inValidStartingPosition());        
     }
     
     @Test
     public void initializeWithBlackAndWhiteSwapped()
     {
         Queen whiteInBlackSpot = new Queen(8, 4, ChessPieceColor.WHITE);
-        assertFalse(whiteInBlackSpot.hasValidStartingPosition());
+        assertFalse(whiteInBlackSpot.inValidStartingPosition());
         Queen blackInWhiteSpot = new Queen(1, 4, ChessPieceColor.BLACK);
-        assertFalse(blackInWhiteSpot.hasValidStartingPosition());
+        assertFalse(blackInWhiteSpot.inValidStartingPosition());
     }
     
     @Test
     public void initializeWithCompletelyWrongLocation()
     {
         Queen whiteInWrongColumn = new Queen(1, 7, ChessPieceColor.WHITE);
-        assertFalse(whiteInWrongColumn.hasValidStartingPosition());
+        assertFalse(whiteInWrongColumn.inValidStartingPosition());
         Queen blackInWrongRow = new Queen(7, 4, ChessPieceColor.BLACK);
-        assertFalse(blackInWrongRow.hasValidStartingPosition());
+        assertFalse(blackInWrongRow.inValidStartingPosition());
         Queen middleOfBoard = new Queen(4, 4, ChessPieceColor.BLACK);
-        assertFalse(middleOfBoard.hasValidStartingPosition());
+        assertFalse(middleOfBoard.inValidStartingPosition());
         Queen offTheBoard = new Queen(3, 9, ChessPieceColor.WHITE);
-        assertFalse(offTheBoard.hasValidStartingPosition());
+        assertFalse(offTheBoard.inValidStartingPosition());
     }
     
     @Test

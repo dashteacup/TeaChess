@@ -18,7 +18,7 @@ public class Bishop extends ChessPiece {
     /**
      * Determine if the Bishop is in a valid starting position.
      */
-    public boolean hasValidStartingPosition()
+    public boolean inValidStartingPosition()
     {
         if ((color == ChessPieceColor.WHITE) && (row == 1)) {
             return (column == 3) || (column == 6);

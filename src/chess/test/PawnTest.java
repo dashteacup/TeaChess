@@ -17,27 +17,27 @@ public class PawnTest {
     {
         // Pawns go on rank 2 for white
         Pawn white = new Pawn(2, 1, ChessPieceColor.WHITE);
-        assertTrue(white.hasValidStartingPosition());
+        assertTrue(white.inValidStartingPosition());
         Pawn white2 = new Pawn(2, 8, ChessPieceColor.WHITE);
-        assertTrue(white2.hasValidStartingPosition());
+        assertTrue(white2.inValidStartingPosition());
         // Pawns go on rank 7 for black
         Pawn black = new Pawn(7, 3, ChessPieceColor.BLACK);
-        assertTrue(black.hasValidStartingPosition());
+        assertTrue(black.inValidStartingPosition());
         Pawn black2 = new Pawn(7, 8, ChessPieceColor.BLACK);
-        assertTrue(black2.hasValidStartingPosition());
+        assertTrue(black2.inValidStartingPosition());
     }
     
     @Test
     public void testConstructorWithIncorrectInitialPositions()
     {
         Pawn outOfBounds = new Pawn(2, 9, ChessPieceColor.WHITE);
-        assertFalse(outOfBounds.hasValidStartingPosition());
+        assertFalse(outOfBounds.inValidStartingPosition());
         Pawn middleOfBoard = new Pawn(4, 5, ChessPieceColor.WHITE);
-        assertFalse(middleOfBoard.hasValidStartingPosition());
+        assertFalse(middleOfBoard.inValidStartingPosition());
         Pawn wrongColorOnWhiteSide = new Pawn(2, 6, ChessPieceColor.BLACK);
-        assertFalse(wrongColorOnWhiteSide.hasValidStartingPosition());
+        assertFalse(wrongColorOnWhiteSide.inValidStartingPosition());
         Pawn wrongColorOnBlackSide = new Pawn(7, 8, ChessPieceColor.WHITE);
-        assertFalse(wrongColorOnBlackSide.hasValidStartingPosition());
+        assertFalse(wrongColorOnBlackSide.inValidStartingPosition());
     }
 
     @Test

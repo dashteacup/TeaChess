@@ -76,7 +76,7 @@ public abstract class ChessPiece {
     /**
      * Determine if the piece is in a valid starting position.
      */
-    public abstract boolean hasValidStartingPosition();
+    public abstract boolean inValidStartingPosition();
 
     /**
      * Determine if the chess piece can capture a piece at another place on the

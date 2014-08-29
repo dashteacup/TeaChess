@@ -16,9 +16,9 @@ public class KingTest {
     public void initializeWithValidInputs()
     {
         King whiteKing = new King(1, 5, ChessPieceColor.WHITE);
-        assertTrue(whiteKing.hasValidStartingPosition());
+        assertTrue(whiteKing.inValidStartingPosition());
         King blackKing = new King(8, 5, ChessPieceColor.BLACK);
-        assertTrue(blackKing.hasValidStartingPosition());
+        assertTrue(blackKing.inValidStartingPosition());
         assertFalse(blackKing.isHoppable());
     }
     
@@ -26,20 +26,20 @@ public class KingTest {
     public void initializeWithWhiteAndBlackKingSwapped()
     {
         King whiteKing = new King(8, 5, ChessPieceColor.WHITE);
-        assertFalse(whiteKing.hasValidStartingPosition());
+        assertFalse(whiteKing.inValidStartingPosition());
         King blackKing = new King(1, 5, ChessPieceColor.BLACK);
-        assertFalse(blackKing.hasValidStartingPosition());
+        assertFalse(blackKing.inValidStartingPosition());
     }
     
     @Test
     public void initializeWithKingsInWrongColumn()
     {
         King whiteInQueenSpot = new King(1, 4, ChessPieceColor.WHITE);
-        assertFalse(whiteInQueenSpot.hasValidStartingPosition());
+        assertFalse(whiteInQueenSpot.inValidStartingPosition());
         King blackInQueenSpot = new King(8, 4, ChessPieceColor.BLACK);
-        assertFalse(blackInQueenSpot.hasValidStartingPosition());
+        assertFalse(blackInQueenSpot.inValidStartingPosition());
         King inTheMiddleOfTheBoard = new King (5, 6, ChessPieceColor.BLACK);
-        assertFalse(inTheMiddleOfTheBoard.hasValidStartingPosition());
+        assertFalse(inTheMiddleOfTheBoard.inValidStartingPosition());
     }
     
     @Test
@@ -110,7 +110,7 @@ public class KingTest {
     public void moveFromLowerLeftCorner()
     {
         King whiteTraveler = new King(1, 1, ChessPieceColor.WHITE);
-        assertFalse(whiteTraveler.hasValidStartingPosition());
+        assertFalse(whiteTraveler.inValidStartingPosition());
         // Try to go down-left, but fail
         assertFalse(whiteTraveler.move(0, 0));
         // Try to go left, but fail
