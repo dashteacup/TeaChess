@@ -70,6 +70,16 @@ public abstract class ChessPiece {
     }
 
     /**
+     * Move the chess piece to a new place on the board. If the new place is not
+     * a valid way to move, then do not move the piece.
+     * @return true if the piece moves to the new place, false otherwise.
+     */
+    public boolean move(File file, int rank)
+    {
+        return move(rank, file.getColumn());
+    }
+
+    /**
      * Determine if the chess piece can move to a new position on the
      * board. Does not take into account the placement of other pieces.
      * @param newRow row you want to move to (1-8)
