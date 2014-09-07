@@ -8,11 +8,22 @@ public class Bishop extends ChessPiece {
      * Create a new Bishop chess piece.
      * @param row aka 'rank' valid 1 or 8
      * @param column aka 'file' valid 3 or 6
-     * @param color black or white
+     * @param color BLACK or WHITE
      */
     public Bishop(int row, int column, ChessPieceColor color)
     {
         super(row, column, color);
+    }
+
+    /**
+     * Create a new Bishop chess piece in algebraic chess notation.
+     * @param file letter for the column in algebraic chess notation (a-h)
+     * @param rank number indicating the row in algebraic chess notation (1-8)
+     * @param color BLACK or WHITE
+     */
+    public Bishop(File file, int rank, ChessPieceColor color)
+    {
+        super(file, rank, color);
     }
 
     /**

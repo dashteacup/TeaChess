@@ -1,6 +1,10 @@
 package chess.test;
 
-import static org.junit.Assert.*;
+import static chess.File.c;
+import static chess.File.f;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -11,20 +15,38 @@ import chess.ChessPieceColor;
  * Tests for the Bishop class.
  */
 public class BishopTest {
-    
+
+    /**
+     * Check that Bishops created in the correct starting positions have the
+     * right properties.
+     */
     @Test
     public void initializeWithValidInputs()
     {
         Bishop whiteLeft = new Bishop(1, 3, ChessPieceColor.WHITE);
         assertTrue(whiteLeft.inValidStartingPosition());
+        assertEquals(1, whiteLeft.getRow());
+        assertEquals(3, whiteLeft.getColumn());
+        assertEquals(ChessPieceColor.WHITE, whiteLeft.getColor());
+
         Bishop whiteRight = new Bishop(1, 6, ChessPieceColor.WHITE);
         assertTrue(whiteRight.inValidStartingPosition());
+        assertEquals(f, whiteRight.getFile());
+        assertEquals(1, whiteRight.getRank());
+
         Bishop blackLeft = new Bishop(8, 3, ChessPieceColor.BLACK);
         assertTrue(blackLeft.inValidStartingPosition());
-        Bishop blackRight = new Bishop(8, 6, ChessPieceColor.BLACK);
+        assertEquals(c, blackLeft.getFile());
+        assertEquals(8, blackLeft.getRank());
+        assertEquals(ChessPieceColor.BLACK, blackLeft.getColor());
+
+        Bishop blackRight = new Bishop(f, 8, ChessPieceColor.BLACK);
         assertTrue(blackRight.inValidStartingPosition());
+        assertEquals(8, blackRight.getRow());
+        assertEquals(6, blackRight.getColumn());
+        assertEquals(ChessPieceColor.BLACK, blackRight.getColor());
     }
-    
+
     @Test
     public void initializeWithWhiteAndBlackBishopSwapped()
     {
@@ -33,7 +55,7 @@ public class BishopTest {
         Bishop blackInWhiteSpot = new Bishop(1, 6, ChessPieceColor.BLACK);
         assertFalse(blackInWhiteSpot.inValidStartingPosition());
     }
-    
+
     @Test
     public void initializeWithRightRowWrongColumn()
     {
@@ -42,7 +64,7 @@ public class BishopTest {
         Bishop wrongColumnBlack = new Bishop(8, 8, ChessPieceColor.BLACK);
         assertFalse(wrongColumnBlack.inValidStartingPosition());
     }
-    
+
     @Test
     public void initializeWithCompletelyWrongLocation()
     {
@@ -67,7 +89,7 @@ public class BishopTest {
         // Move to self
         assertFalse(leftWhite.isValidMove(1, 3));
     }
-    
+
     @Test
     public void checkForValidMovesInMiddleOfBoard()
     {
@@ -83,7 +105,7 @@ public class BishopTest {
         // go up-right too far
         assertFalse(middle.isValidMove(9, 8));
     }
-    
+
     @Test
     public void checkCompletelyWrongMovement()
     {
