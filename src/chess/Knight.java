@@ -15,10 +15,11 @@ public class Knight extends ChessPiece {
         super(row, column, color);
         hoppable = true;
     }
-    
+
     /**
      * Determine if the Knight is in a valid starting position.
      */
+    @Override
     public boolean inValidStartingPosition()
     {
         boolean isCorrectColumn = (column == 2) || (column == 7);
@@ -27,7 +28,7 @@ public class Knight extends ChessPiece {
         if ((color == ChessPieceColor.BLACK) && (row == 8))
             return isCorrectColumn;
         return false;
-            
+
     }
 
     /**
@@ -35,11 +36,10 @@ public class Knight extends ChessPiece {
      * Knights. Doesn't account for other pieces. Remember, knights can
      * hop over other pieces.
      */
+    @Override
     public boolean isValidMove(int row, int column)
     {
-        if (!bothPlacesOnTheBoard(row, column))
-            return false;
-        if (sourceAndDestinationSame(row, column))
+        if (!super.isValidMove(row, column))
             return false;
         int deltaRow = Math.abs(this.row - row);
         int deltaColumn = Math.abs(this.column - column);

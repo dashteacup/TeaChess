@@ -14,10 +14,11 @@ public class Bishop extends ChessPiece {
     {
         super(row, column, color);
     }
-    
+
     /**
      * Determine if the Bishop is in a valid starting position.
      */
+    @Override
     public boolean inValidStartingPosition()
     {
         if ((color == ChessPieceColor.WHITE) && (row == 1)) {
@@ -33,11 +34,10 @@ public class Bishop extends ChessPiece {
      * Determine if the move follows the standard movement pattern for
      * Bishops. Doesn't account for other pieces.
      */
+    @Override
     public boolean isValidMove(int row, int column)
     {
-        if (!bothPlacesOnTheBoard(row, column))
-            return false;
-        if (sourceAndDestinationSame(row, column))
+        if (!super.isValidMove(row, column))
             return false;
         int deltaRow = Math.abs(this.row - row);
         int deltaColumn = Math.abs(this.column - column);

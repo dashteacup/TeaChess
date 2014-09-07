@@ -1,6 +1,8 @@
 package chess.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -23,13 +25,13 @@ public class RookTest {
         assertTrue(rwhite.inValidStartingPosition());
         Rook rblack = new Rook(8, 8, ChessPieceColor.BLACK);
         assertTrue(rblack.inValidStartingPosition());
-        
+
         // Make sure these inherited functions still work correctly
         assertEquals(8, rblack.getRow());
         assertEquals(8, rblack.getColumn());
         assertEquals(ChessPieceColor.BLACK, rblack.getColor());
     }
-    
+
     @Test
     public void testConstructorWithIncorrectInitialPositions()
     {
@@ -40,7 +42,7 @@ public class RookTest {
         Rook wrong = new Rook(7, 8, ChessPieceColor.WHITE);
         assertFalse(wrong.inValidStartingPosition());
     }
-    
+
     @Test
     public void testConstructorWithWrongColors()
     {
@@ -67,7 +69,7 @@ public class RookTest {
         assertTrue(white.move(7, 5));
         // no going out of bounds
         assertFalse(white.move(9, 6));
-        
+
         Rook black = new Rook(3, 3, ChessPieceColor.BLACK);
         assertTrue(black.move(8, 3));
         assertFalse(black.move(3, 4));

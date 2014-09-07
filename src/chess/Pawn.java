@@ -14,10 +14,11 @@ public class Pawn extends ChessPiece {
     {
         super(row, column, color);
     }
-    
+
     /**
      * Determine if the Pawn is in a valid starting position.
      */
+    @Override
     public boolean inValidStartingPosition()
     {
         if (!isOnTheBoard(this.row, this.column))
@@ -25,19 +26,18 @@ public class Pawn extends ChessPiece {
         if ((this.row == 2) && (color == ChessPieceColor.WHITE))
             return true;
         return ((this.row == 7) && (color == ChessPieceColor.BLACK));
-            
+
     }
-    
+
     /**
      * Determine if the move follows the standard movement pattern for Pawns.
      * Doesn't account for the presence of other pieces. You cannot capture with
      * the move command for pawns.
      */
+    @Override
     public boolean isValidMove(int row, int column)
     {
-        if (!bothPlacesOnTheBoard(row, column))
-            return false;
-        if (sourceAndDestinationSame(row, column))
+        if (!super.isValidMove(row, column))
             return false;
         // no capturing
         if (this.column != column)
@@ -55,7 +55,8 @@ public class Pawn extends ChessPiece {
         }
         return isMovingForward;
     }
-    
+
+    @Override
     public boolean canCapture(int enemyRow, int enemyColumn)
     {
         if (!bothPlacesOnTheBoard(enemyRow, enemyColumn))
@@ -72,5 +73,5 @@ public class Pawn extends ChessPiece {
         int deltaRow = Math.abs(this.row - enemyRow);
         int deltaColumn = Math.abs(this.column - enemyColumn);
         return (deltaRow == 1) && (deltaColumn == 1);
-    }    
+    }
 }

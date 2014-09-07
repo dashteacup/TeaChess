@@ -49,9 +49,7 @@ public class King extends ChessPiece {
     @Override
     public boolean isValidMove(int row, int column)
     {
-        if (!bothPlacesOnTheBoard(row, column))
-            return false;
-        if (sourceAndDestinationSame(row, column))
+        if (!super.isValidMove(row, column))
             return false;
         int deltaRow = Math.abs(row - this.row);
         int deltaColumn = Math.abs(column - this.column);

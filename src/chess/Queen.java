@@ -14,10 +14,11 @@ public class Queen extends ChessPiece {
     {
         super(row, column, color);
     }
-    
+
     /**
      * Determine if the Queen is in a valid starting position.
      */
+    @Override
     public boolean inValidStartingPosition()
     {
         if (column != 4)
@@ -30,11 +31,10 @@ public class Queen extends ChessPiece {
      * Determine if the move follows the standard movement pattern for
      * Queens. Doesn't account for other pieces.
      */
+    @Override
     public boolean isValidMove(int row, int column)
     {
-        if (!bothPlacesOnTheBoard(row, column))
-            return false;
-        if (sourceAndDestinationSame(row, column))
+        if (!super.isValidMove(row, column))
             return false;
         // up-down like rook
         if (this.row == row)

@@ -80,13 +80,18 @@ public abstract class ChessPiece {
     }
 
     /**
-     * Determine if the chess piece can move to a new position on the
-     * board. Does not take into account the placement of other pieces.
+     * Determine if a position is on the board and not the same as the chess
+     * piece's current position. Does not take into account the placement
+     * of other pieces.
      * @param newRow row you want to move to (1-8)
      * @param newColumn column you want move to (1-8)
      * @return true if this is a valid move for this chess piece
      */
-    public abstract boolean isValidMove(int newRow, int newColumn);
+    public boolean isValidMove(int newRow, int newColumn)
+    {
+        return bothPlacesOnTheBoard(newRow, newColumn) &&
+               (!sourceAndDestinationSame(newRow, newColumn));
+    }
 
     /**
      * Determine if the chess piece can move to a new position on the
@@ -194,7 +199,7 @@ public abstract class ChessPiece {
 
     /**
      * Determine if the position at row and column lies within the board.
-     * Assumes and 8x8 chess board.
+     * Assumes an 8x8 chess board.
      */
     protected boolean isOnTheBoard(int row, int column)
     {
