@@ -1,7 +1,6 @@
 package chess.test;
 
-import static chess.File.c;
-import static chess.File.f;
+import static chess.File.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -47,49 +46,94 @@ public class BishopTest {
         assertEquals(ChessPieceColor.BLACK, blackRight.getColor());
     }
 
+    /**
+     * Swap the positions of the white and black Bishops and confirm that they
+     * aren't in valid starting positions.
+     */
     @Test
     public void initializeWithWhiteAndBlackBishopSwapped()
     {
-        Bishop whiteInBlackSpot = new Bishop(8, 3, ChessPieceColor.WHITE);
-        assertFalse(whiteInBlackSpot.inValidStartingPosition());
-        Bishop blackInWhiteSpot = new Bishop(1, 6, ChessPieceColor.BLACK);
-        assertFalse(blackInWhiteSpot.inValidStartingPosition());
+        Bishop whiteInLeftBlackSpot = new Bishop(8, 3, ChessPieceColor.WHITE);
+        assertFalse(whiteInLeftBlackSpot.inValidStartingPosition());
+
+        Bishop whiteInRightBlackSpot = new Bishop(f, 8, ChessPieceColor.WHITE);
+        assertFalse(whiteInRightBlackSpot.inValidStartingPosition());
+
+        Bishop blackInLeftWhiteSpot = new Bishop(c, 1, ChessPieceColor.BLACK);
+        assertFalse(blackInLeftWhiteSpot.inValidStartingPosition());
+
+        Bishop blackInRightWhiteSpot = new Bishop(1, 6, ChessPieceColor.BLACK);
+        assertFalse(blackInRightWhiteSpot.inValidStartingPosition());
     }
 
+    /**
+     * Confirm that Bishops placed in the correct row but wrong column do not
+     * have valid starting positions.
+     */
     @Test
     public void initializeWithRightRowWrongColumn()
     {
         Bishop wrongColumnWhite = new Bishop(1, 1, ChessPieceColor.WHITE);
         assertFalse(wrongColumnWhite.inValidStartingPosition());
+
         Bishop wrongColumnBlack = new Bishop(8, 8, ChessPieceColor.BLACK);
         assertFalse(wrongColumnBlack.inValidStartingPosition());
+
+        Bishop wrongColumnAlgWhite = new Bishop(b, 1, ChessPieceColor.WHITE);
+        assertFalse(wrongColumnAlgWhite.inValidStartingPosition());
+
+        Bishop wrongColumnAlgBlack = new Bishop(g, 8, ChessPieceColor.BLACK);
+        assertFalse(wrongColumnAlgBlack.inValidStartingPosition());
     }
 
+    /**
+     * Confirm that Bishops placed far from their normal place do not have valid
+     * starting positions.
+     */
     @Test
     public void initializeWithCompletelyWrongLocation()
     {
         Bishop offTheBoard = new Bishop(4, 9, ChessPieceColor.WHITE);
         assertFalse(offTheBoard.inValidStartingPosition());
+
         Bishop middleOfTheBoard = new Bishop(6, 7, ChessPieceColor.BLACK);
         assertFalse(middleOfTheBoard.inValidStartingPosition());
+
+        Bishop upperRightOfBoard = new Bishop(h, 7, ChessPieceColor.BLACK);
+        assertFalse(upperRightOfBoard.inValidStartingPosition());
+
+        Bishop leftMiddleOfBoard = new Bishop(a, 5, ChessPieceColor.WHITE);
+        assertFalse(leftMiddleOfBoard.inValidStartingPosition());
     }
 
+    /**
+     * Confirm that diagonal moves made from the left white Bishop's starting
+     * position are properly recognized as valid/invalid.
+     */
     @Test
     public void checkForValidMovesAtLeftWhiteBishopStart()
     {
         Bishop leftWhite = new Bishop(1, 3, ChessPieceColor.WHITE);
-        // Go up-right one
-        assertTrue(leftWhite.isValidMove(2, 4));
-        // Go up-right all the way
-        assertTrue(leftWhite.isValidMove(6, 8));
-        // Go up-left all the way
-        assertTrue(leftWhite.isValidMove(3, 1));
-        // Go off the edge
-        assertFalse(leftWhite.isValidMove(-1, 5));
         // Move to self
         assertFalse(leftWhite.isValidMove(1, 3));
+        // Go up-right one
+        assertTrue(leftWhite.isValidMove(2, 4));
+        // Go up-right three
+        assertTrue(leftWhite.isValidMove(f, 4));
+        // Go up-right all the way
+        assertTrue(leftWhite.isValidMove(6, 8));
+        // Go up-left one
+        assertTrue(leftWhite.isValidMove(b, 2));
+        // Go up-left all the way
+        assertTrue(leftWhite.isValidMove(3, 1));
+        // Go down-right off the edge
+        assertFalse(leftWhite.isValidMove(-1, 5));
     }
 
+    /**
+     * Confirm that diagonal moves made from the middle of the board are
+     * properly recognized as valid/invalid.
+     */
     @Test
     public void checkForValidMovesInMiddleOfBoard()
     {
