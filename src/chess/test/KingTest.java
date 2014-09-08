@@ -164,6 +164,8 @@ public class KingTest {
     {
         King whiteKing = new King(1, 5, ChessPieceColor.WHITE);
         assertTrue(whiteKing.inValidStartingPosition());
+        // Move to self
+        assertFalse(whiteKing.isValidMove(e, 1));
         // Go left
         assertTrue(whiteKing.isValidMove(1, 4));
         assertTrue(whiteKing.isValidMove(d, 1));
@@ -199,6 +201,8 @@ public class KingTest {
     {
         King blackKing = new King(e, 8, ChessPieceColor.BLACK);
         assertTrue(blackKing.inValidStartingPosition());
+        // Move to self
+        assertFalse(blackKing.isValidMove(8, 5));
         // Go left
         assertTrue(blackKing.isValidMove(d, 8));
         assertTrue(blackKing.isValidMove(8, 4));
