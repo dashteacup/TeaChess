@@ -1,6 +1,7 @@
 package chess.test;
 
 import static org.junit.Assert.*;
+import static chess.File.*;
 
 import org.junit.Test;
 
@@ -12,20 +13,35 @@ import chess.Knight;
  */
 public class KnightTest {
 
+    /**
+     * Confirm that Knights placed in their starting positions have the right
+     * properties.
+     */
     @Test
     public void initializeWithValidInputs()
     {
         Knight whiteLeft = new Knight(1, 2, ChessPieceColor.WHITE);
         assertTrue(whiteLeft.inValidStartingPosition());
+        assertEquals(b, whiteLeft.getFile());
+        assertEquals(1, whiteLeft.getRank());
+
         Knight whiteRight = new Knight(1, 7, ChessPieceColor.WHITE);
         assertTrue(whiteRight.inValidStartingPosition());
+        assertEquals(g, whiteRight.getFile());
+        assertEquals(1, whiteRight.getRank());
+
         Knight blackLeft = new Knight(8, 2, ChessPieceColor.BLACK);
         assertTrue(blackLeft.inValidStartingPosition());
+        assertEquals(b, blackLeft.getFile());
+        assertEquals(8, blackLeft.getRank());
+
         Knight blackRight = new Knight(8, 7, ChessPieceColor.BLACK);
         assertTrue(blackRight.inValidStartingPosition());
         assertTrue(blackRight.isHoppable());
+        assertEquals(g, blackRight.getFile());
+        assertEquals(8, blackRight.getRank());
     }
-    
+
     @Test
     public void initializeWithBlackAndWhiteSwapped()
     {
@@ -34,7 +50,7 @@ public class KnightTest {
         Knight blackInWhiteLeftSpot = new Knight(1, 2, ChessPieceColor.BLACK);
         assertFalse(blackInWhiteLeftSpot.inValidStartingPosition());
     }
-    
+
     @Test
     public void initializeWithCompletelyWrongLocation()
     {
@@ -71,7 +87,7 @@ public class KnightTest {
         // move to self, fail
         assertFalse(white.isValidMove(1, 7));
     }
-    
+
     @Test
     public void checkValidMovesInMiddle()
     {
@@ -92,9 +108,9 @@ public class KnightTest {
         assertTrue(black.isValidMove(2, 5));
         // down 1, right 2
         assertTrue(black.isValidMove(3, 6));
-        
+
     }
-    
+
     @Test
     public void checkCapture()
     {
