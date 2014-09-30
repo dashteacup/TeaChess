@@ -41,7 +41,6 @@ public abstract class ChessPiece {
         this.hoppable = false;
     }
 
-
     /**
      * Create a new chess piece in algebraic chess notation.
      * @param file letter for the column in algebraic chess notation (a-h)
@@ -52,7 +51,6 @@ public abstract class ChessPiece {
     {
         this(rank, file.getColumn(), color);
     }
-
 
     /**
      * Move the chess piece to a new place on the board. If the new place is not

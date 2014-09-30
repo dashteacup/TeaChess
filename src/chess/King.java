@@ -26,7 +26,6 @@ public class King extends ChessPiece {
         super(file, rank, color);
     }
 
-
     /**
      * Determine if the King is in a valid starting position.
      */
