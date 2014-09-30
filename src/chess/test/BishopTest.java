@@ -71,8 +71,7 @@ public class BishopTest {
      * have valid starting positions.
      */
     @Test
-    public void initializeWithRightRowWrongColumn()
-    {
+    public void initializeWithRightRowWrongColumn() {
         Bishop wrongColumnWhite = new Bishop(1, 1, ChessPieceColor.WHITE);
         assertFalse(wrongColumnWhite.inValidStartingPosition());
 
@@ -150,6 +149,9 @@ public class BishopTest {
         assertFalse(middle.isValidMove(9, 8));
     }
 
+    /**
+     * Confirm that non-diagonal moves are recognized as invalid.
+     */
     @Test
     public void checkCompletelyWrongMovement()
     {
@@ -162,5 +164,26 @@ public class BishopTest {
         assertFalse(wrong.isValidMove(2, 3));
         // totally random
         assertFalse(wrong.isValidMove(4, 8));
+        // move to upper left corner
+        assertFalse(wrong.isValidMove(a, 8));
+        // move like a knight
+        assertFalse(wrong.isValidMove(e, 4));
+        // move like a knight
+        assertFalse(wrong.isValidMove(a, 2));
+        // move to lower right corner
+        assertFalse(wrong.isValidMove(h, 1));
+        // move to right bishop's spot
+        assertFalse(wrong.isValidMove(f, 1));
+    }
+
+    /**
+     * Walk the right white bishop around the board from its starting position.
+     * Confirm that valid moves succeed, invalid moves fail, and the state is
+     * updated correctly.
+     */
+    @Test
+    public void walkFromRightWhiteBishop()
+    {
+
     }
 }
