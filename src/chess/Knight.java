@@ -8,11 +8,23 @@ public class Knight extends ChessPiece {
      * Create a new Knight chess piece.
      * @param row aka 'rank' valid 1 or 8
      * @param column aka 'file' valid 2 or 7
-     * @param color black or white
+     * @param color BLACK or WHITE
      */
     public Knight(int row, int column, ChessPieceColor color)
     {
         super(row, column, color);
+        hoppable = true;
+    }
+
+    /**
+     * Create a new Knight chess piece in algebraic chess notation.
+     * @param file letter for the column in algebraic chess notation (a-h)
+     * @param rank number indicating the row in algebraic chess notation (1-8)
+     * @param color BLACK or WHITE
+     */
+    public Knight(File file, int rank, ChessPieceColor color)
+    {
+        super(file, rank, color);
         hoppable = true;
     }
 
