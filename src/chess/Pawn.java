@@ -16,6 +16,17 @@ public class Pawn extends ChessPiece {
     }
 
     /**
+     * Create a new Pawn chess piece
+     * @param file letter in algebraic chess notation
+     * @param rank number indicating the row in algebraic chess notation
+     * @param color BLACK or WHITE
+     */
+    public Pawn(File file, int rank, ChessPieceColor color)
+    {
+        super(file, rank, color);
+    }
+
+    /**
      * Determine if the Pawn is in a valid starting position.
      */
     @Override
@@ -56,6 +67,14 @@ public class Pawn extends ChessPiece {
         return isMovingForward;
     }
 
+    /**
+     * Determine if the Pawn can capture a piece at another location. Doesn't
+     * check to see if there is a chess piece at the indicated location.
+     * @param enemyRow row of the piece to capture
+     * @param enemyColumn column of the piece to capture
+     * @return true if the Pawn can capture the piece at the indicated location,
+     * false otherwise
+     */
     @Override
     public boolean canCapture(int enemyRow, int enemyColumn)
     {
