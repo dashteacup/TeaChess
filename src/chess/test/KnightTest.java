@@ -167,26 +167,65 @@ public class KnightTest {
         assertFalse(white.isValidMove(4, 4));
     }
 
+    /**
+     * Confirm that all L-shaped moves made from the middle of the board are
+     * recognized as valid.
+     */
     @Test
     public void checkValidMovesInMiddle()
     {
         Knight black = new Knight(4, 4, ChessPieceColor.BLACK);
         // up 2, left 1
         assertTrue(black.isValidMove(6, 3));
-        // up 1, left 2
-        assertTrue(black.isValidMove(5, 2));
         // up 2, right 1
         assertTrue(black.isValidMove(6, 5));
         // up 1, right 2
         assertTrue(black.isValidMove(5, 6));
+        // down 1, right 2
+        assertTrue(black.isValidMove(3, 6));
+        // down 2, right 1
+        assertTrue(black.isValidMove(2, 5));
         // down 2, left 1
         assertTrue(black.isValidMove(2, 3));
         // down 1, left 2
         assertTrue(black.isValidMove(3, 2));
+        // up 1, left 2
+        assertTrue(black.isValidMove(5, 2));
+    }
+
+    /**
+     * Walk the right black knight around the board from its starting position.
+     * Confirm that valid moves succeed, invalid moves fail, and the state is
+     * updated properly.
+     */
+    @Test
+    public void walkFromRightBlackKnight()
+    {
+        Knight traveler = new Knight(g, 8, ChessPieceColor.BLACK);
+        assertTrue(traveler.inValidStartingPosition());
+        // down 2, left 1
+        assertTrue(traveler.move(f, 6));
+        // down 1, left 2
+        assertTrue(traveler.move(d, 5));
         // down 2, right 1
-        assertTrue(black.isValidMove(2, 5));
-        // down 1, right 2
-        assertTrue(black.isValidMove(3, 6));
+        assertTrue(traveler.move(e, 3));
+        assertEquals(e, traveler.getFile());
+        assertEquals(3, traveler.getRank());
+        // bad move, up 1, left 1
+        assertFalse(traveler.move(d, 4));
+        // bad move, up 4
+        assertFalse(traveler.move(d, 8));
+        // down 1, left 2
+        assertTrue(traveler.move(c, 2));
+        // down 1, right 2 (this is where the king is)
+        assertTrue(traveler.move(e, 1));
+        assertEquals(e, traveler.getFile());
+        assertEquals(5, traveler.getColumn());
+        assertEquals(1, traveler.getRow());
+        // bad move, all the way to the right
+        assertFalse(traveler.move(h, 1));
+        // up one, right 2
+        assertTrue(traveler.move(g, 2));
     }
 
     @Test
