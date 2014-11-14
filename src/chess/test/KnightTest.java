@@ -82,7 +82,6 @@ public class KnightTest {
         assertFalse(rightSideOfBoard.inValidStartingPosition());
     }
 
-
     /**
      * Confirm that all L-shaped moves from the right white knight's starting
      * position are recognized as valid/invalid.
@@ -228,11 +227,29 @@ public class KnightTest {
         assertTrue(traveler.move(g, 2));
     }
 
+    /**
+     * Confirm that the capture functions work properly. Knights capture the
+     * same way they move.
+     */
     @Test
-    public void checkCapture()
+    public void checkCapture() 
     {
         Knight white = new Knight(4, 4, ChessPieceColor.WHITE);
         // up 2, left 1
-        assertTrue(white.capture(6, 3));
+        assertTrue(white.canCapture(6, 3));
+        // bad move, up 1, right 1
+        assertFalse(white.canCapture(e, 5));
+        // up 1, right 2
+        assertTrue(white.capture(f, 5));
+        // bad move, right 2
+        assertFalse(white.capture(h, 5));
+        // down 2, right 1
+        assertTrue(white.capture(g, 3));
+        // bad move, lower left corner
+        assertFalse(white.capture(a, 1));
+        // bad move, up 3, left 1
+        assertFalse(white.capture(f, 6));
+        assertEquals(g, white.getFile());
+        assertEquals(3, white.getRank());
     }
 }
