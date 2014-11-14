@@ -125,6 +125,20 @@ public abstract class ChessPiece {
     }
 
     /**
+     * Determine if the chess piece can capture a piece at another place on the
+     * board. Doesn't actually check to see if there is a chess piece at the
+     * indicated location. The positions are specified in algebraic chess notation.
+     * @param enemyFile letter for the column you want to move to (a-h)
+     * @param enemyRank number for the row you want to move to (1-8)
+     * @return true if the piece can capture an enemy at the indicated location,
+     * false otherwise.
+     */
+    public boolean canCapture(File enemyFile, int enemyRank)
+    {
+        return canCapture(enemyRank, enemyFile.getColumn());
+    }
+
+    /**
      * "Capture" an enemy piece at the enemy row and column. Doesn't actually
      * handle the destruction of a piece and it's removal from the board--only
      * moves this piece to the other's place. Also doesn't check to see if there
@@ -142,6 +156,21 @@ public abstract class ChessPiece {
             return true;
         }
         return false;
+    }
+
+    /**
+     * "Capture" an enemy piece at the enemy file and rank. Doesn't actually
+     * handle the destruction of a piece and it's removal from the board--only
+     * moves this piece to the other's place. Also doesn't check to see if there
+     * is actually a chess piece at the indicated position. If this is not a
+     * valid way to capture, the piece will not be moved.
+     * @param enemyFile file of the piece to capture
+     * @param enemyRank rank of the piece to capture
+     * @return true if the capture succeeds, false if it cannot be made.
+     */
+    public boolean capture(File enemyFile, int enemyRank)
+    {
+        return capture(enemyRank, enemyFile.getColumn());
     }
 
     /**
