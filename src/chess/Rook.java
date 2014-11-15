@@ -21,12 +21,12 @@ public class Rook extends ChessPiece {
     @Override
     public boolean inValidStartingPosition()
     {
-        if (!isOnTheBoard(this.row, this.column))
+        if (!isOnTheBoard(getRow(), getColumn()))
             return false;
-        boolean onWhiteSide = (this.row == 1 && this.column == 1) ||
-                              (this.row == 1 && this.column == 8);
-        boolean onBlackSide = (this.row == 8 && this.column == 1) ||
-                              (this.row == 8 && this.column == 8);
+        boolean onWhiteSide = (getRow() == 1 && getColumn() == 1) ||
+                              (getRow() == 1 && getColumn() == 8);
+        boolean onBlackSide = (getRow() == 8 && getColumn() == 1) ||
+                              (getRow() == 8 && getColumn() == 8);
         return (onWhiteSide && (color == ChessPieceColor.WHITE)) ||
                (onBlackSide && (color == ChessPieceColor.BLACK));
     }
@@ -40,8 +40,8 @@ public class Rook extends ChessPiece {
     {
         if (!super.isValidMove(newRow, newColumn))
             return false;
-        boolean rowMatch = (newRow == this.row);
-        boolean columnMatch = (newColumn == this.column);
+        boolean rowMatch = (newRow == getRow());
+        boolean columnMatch = (newColumn == getColumn());
         return (rowMatch || columnMatch);
     }
 }

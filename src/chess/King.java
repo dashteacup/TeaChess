@@ -50,8 +50,8 @@ public class King extends ChessPiece {
     {
         if (!super.isValidMove(row, column))
             return false;
-        int deltaRow = Math.abs(row - this.row);
-        int deltaColumn = Math.abs(column - this.column);
+        int deltaRow = Math.abs(row - getRow());
+        int deltaColumn = Math.abs(column - getColumn());
         return (deltaRow <= 1) && (deltaColumn <= 1);
     }
 }

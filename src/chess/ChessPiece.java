@@ -242,7 +242,7 @@ public abstract class ChessPiece {
     protected boolean bothPlacesOnTheBoard(int newRow, int newColumn)
     {
         return isOnTheBoard(newRow, newColumn) &&
-               isOnTheBoard(this.row, this.column);
+               isOnTheBoard(getRow(), getColumn());
     }
 
     /**
@@ -251,6 +251,6 @@ public abstract class ChessPiece {
      */
     protected boolean sourceAndDestinationSame(int newRow, int newColumn)
     {
-        return (this.row == newRow) && (this.column == newColumn);
+        return (getRow() == newRow) && (getColumn() == newColumn);
     }
 };

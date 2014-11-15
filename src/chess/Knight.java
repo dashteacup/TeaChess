@@ -53,8 +53,8 @@ public class Knight extends ChessPiece {
     {
         if (!super.isValidMove(row, column))
             return false;
-        int deltaRow = Math.abs(this.row - row);
-        int deltaColumn = Math.abs(this.column - column);
+        int deltaRow = Math.abs(getRow() - row);
+        int deltaColumn = Math.abs(getColumn() - column);
         if ((deltaRow == 2) && (deltaColumn == 1))
             return true;
         if ((deltaRow == 1) && (deltaColumn == 2))

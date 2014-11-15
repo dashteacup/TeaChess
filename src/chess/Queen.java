@@ -37,13 +37,13 @@ public class Queen extends ChessPiece {
         if (!super.isValidMove(row, column))
             return false;
         // up-down like rook
-        if (this.row == row)
+        if (getRow() == row)
             return true;
         // left-right like rook
-        if (this.column == column)
+        if (getColumn() == column)
             return true;
-        int deltaRow = Math.abs(this.row - row);
-        int deltaColumn = Math.abs(this.column - column);
+        int deltaRow = Math.abs(getRow() - row);
+        int deltaColumn = Math.abs(getColumn() - column);
         // move diagonally like bishop
         return (deltaRow == deltaColumn);
     }
