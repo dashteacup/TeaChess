@@ -21,10 +21,10 @@ public class Queen extends ChessPiece {
     @Override
     public boolean inValidStartingPosition()
     {
-        if (column != 4)
+        if (getColumn() != 4)
             return false;
-        return ((color == ChessPieceColor.WHITE) && (row == 1)) ||
-               ((color == ChessPieceColor.BLACK) && (row == 8));
+        return ((getColor() == ChessPieceColor.WHITE) && (getRow() == 1)) ||
+               ((getColor() == ChessPieceColor.BLACK) && (getRow() == 8));
     }
 
     /**

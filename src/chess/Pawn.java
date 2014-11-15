@@ -34,9 +34,9 @@ public class Pawn extends ChessPiece {
     {
         if (!isOnTheBoard(getRow(), getColumn()))
             return false;
-        if ((getRow() == 2) && (color == ChessPieceColor.WHITE))
+        if ((getRow() == 2) && (getColor() == ChessPieceColor.WHITE))
             return true;
-        return ((getRow() == 7) && (color == ChessPieceColor.BLACK));
+        return ((getRow() == 7) && (getColor() == ChessPieceColor.BLACK));
 
     }
 
@@ -54,12 +54,12 @@ public class Pawn extends ChessPiece {
         if (getColumn() != column)
             return false;
         boolean isMovingForward = false;
-        if (color == ChessPieceColor.WHITE) {
+        if (getColor() == ChessPieceColor.WHITE) {
             isMovingForward = (row == getRow() + 1);
             if (inValidStartingPosition())
                 isMovingForward = isMovingForward || (row == getRow() + 2);
         }
-        if (color == ChessPieceColor.BLACK) {
+        if (getColor() == ChessPieceColor.BLACK) {
             isMovingForward = (row == getRow() - 1);
             if (inValidStartingPosition())
                 isMovingForward = isMovingForward || (row == getRow() - 2);
@@ -83,9 +83,9 @@ public class Pawn extends ChessPiece {
         if (sourceAndDestinationSame(enemyRow, enemyColumn))
             return false;
         boolean isMovingForward = false;
-        if (color == ChessPieceColor.WHITE)
+        if (getColor() == ChessPieceColor.WHITE)
             isMovingForward = getRow() < enemyRow;
-        if (color == ChessPieceColor.BLACK)
+        if (getColor() == ChessPieceColor.BLACK)
             isMovingForward = getRow() > enemyRow;
         if (!isMovingForward)
             return false;

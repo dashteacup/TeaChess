@@ -34,10 +34,10 @@ public class Knight extends ChessPiece {
     @Override
     public boolean inValidStartingPosition()
     {
-        boolean isCorrectColumn = (column == 2) || (column == 7);
-        if ((color == ChessPieceColor.WHITE) && (row == 1))
+        boolean isCorrectColumn = (getColumn() == 2) || (getColumn() == 7);
+        if ((getColor() == ChessPieceColor.WHITE) && (getRow() == 1))
             return isCorrectColumn;
-        if ((color == ChessPieceColor.BLACK) && (row == 8))
+        if ((getColor() == ChessPieceColor.BLACK) && (getRow() == 8))
             return isCorrectColumn;
         return false;
 

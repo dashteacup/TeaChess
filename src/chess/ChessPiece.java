@@ -8,19 +8,19 @@ public abstract class ChessPiece {
      * Equivalent to chess term 'rank'. Valid values are 1-8.
      * Rows begin numbering from bottom to top.
      */
-    protected int row;
+    private int row;
 
     /**
      * Equivalent to chess term 'file'. Valid values are 1-8.
      * Note: I didn't use the letters typically used in chess notation.
      * Columns begin numbering from left to right.
      */
-    protected int column;
+    private int column;
 
     /**
      * Color of this particular chess piece.
      */
-    protected ChessPieceColor color;
+    private ChessPieceColor color;
 
     /**
      * Flag determining if the piece can hop over other pieces like a knight.

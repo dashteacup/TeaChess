@@ -32,9 +32,9 @@ public class King extends ChessPiece {
     @Override
     public boolean inValidStartingPosition()
     {
-        if (column == 5) {
-            boolean isWhiteKing = (color == ChessPieceColor.WHITE) && (row == 1);
-            boolean isBlackKing = (color == ChessPieceColor.BLACK) && (row == 8);
+        if (getColumn() == 5) {
+            boolean isWhiteKing = (getColor() == ChessPieceColor.WHITE) && (getRow() == 1);
+            boolean isBlackKing = (getColor() == ChessPieceColor.BLACK) && (getRow() == 8);
             return isWhiteKing || isBlackKing;
         }
         return false;

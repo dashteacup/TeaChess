@@ -27,8 +27,8 @@ public class Rook extends ChessPiece {
                               (getRow() == 1 && getColumn() == 8);
         boolean onBlackSide = (getRow() == 8 && getColumn() == 1) ||
                               (getRow() == 8 && getColumn() == 8);
-        return (onWhiteSide && (color == ChessPieceColor.WHITE)) ||
-               (onBlackSide && (color == ChessPieceColor.BLACK));
+        return (onWhiteSide && (getColor() == ChessPieceColor.WHITE)) ||
+               (onBlackSide && (getColor() == ChessPieceColor.BLACK));
     }
 
     /**

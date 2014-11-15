@@ -32,11 +32,11 @@ public class Bishop extends ChessPiece {
     @Override
     public boolean inValidStartingPosition()
     {
-        if ((color == ChessPieceColor.WHITE) && (row == 1)) {
-            return (column == 3) || (column == 6);
+        if ((getColor() == ChessPieceColor.WHITE) && (getRow() == 1)) {
+            return (getColumn() == 3) || (getColumn() == 6);
         }
-        else if ((color == ChessPieceColor.BLACK) && (row == 8)) {
-            return (column == 3) || (column == 6);
+        else if ((getColor() == ChessPieceColor.BLACK) && (getRow() == 8)) {
+            return (getColumn() == 3) || (getColumn() == 6);
         }
         return false;
     }
