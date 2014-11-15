@@ -32,11 +32,11 @@ public class Pawn extends ChessPiece {
     @Override
     public boolean inValidStartingPosition()
     {
-        if (!isOnTheBoard(this.row, this.column))
+        if (!isOnTheBoard(getRow(), getColumn()))
             return false;
-        if ((this.row == 2) && (color == ChessPieceColor.WHITE))
+        if ((getRow() == 2) && (color == ChessPieceColor.WHITE))
             return true;
-        return ((this.row == 7) && (color == ChessPieceColor.BLACK));
+        return ((getRow() == 7) && (color == ChessPieceColor.BLACK));
 
     }
 
@@ -51,18 +51,18 @@ public class Pawn extends ChessPiece {
         if (!super.isValidMove(row, column))
             return false;
         // no capturing
-        if (this.column != column)
+        if (getColumn() != column)
             return false;
         boolean isMovingForward = false;
         if (color == ChessPieceColor.WHITE) {
-            isMovingForward = (row == this.row + 1);
+            isMovingForward = (row == getRow() + 1);
             if (inValidStartingPosition())
-                isMovingForward = isMovingForward || (row == this.row + 2);
+                isMovingForward = isMovingForward || (row == getRow() + 2);
         }
         if (color == ChessPieceColor.BLACK) {
-            isMovingForward = (row == this.row - 1);
+            isMovingForward = (row == getRow() - 1);
             if (inValidStartingPosition())
-                isMovingForward = isMovingForward || (row == this.row - 2);
+                isMovingForward = isMovingForward || (row == getRow() - 2);
         }
         return isMovingForward;
     }
@@ -84,13 +84,13 @@ public class Pawn extends ChessPiece {
             return false;
         boolean isMovingForward = false;
         if (color == ChessPieceColor.WHITE)
-            isMovingForward = this.row < enemyRow;
+            isMovingForward = getRow() < enemyRow;
         if (color == ChessPieceColor.BLACK)
-            isMovingForward = this.row > enemyRow;
+            isMovingForward = getRow() > enemyRow;
         if (!isMovingForward)
             return false;
-        int deltaRow = Math.abs(this.row - enemyRow);
-        int deltaColumn = Math.abs(this.column - enemyColumn);
+        int deltaRow = Math.abs(getRow() - enemyRow);
+        int deltaColumn = Math.abs(getColumn() - enemyColumn);
         return (deltaRow == 1) && (deltaColumn == 1);
     }
 }
