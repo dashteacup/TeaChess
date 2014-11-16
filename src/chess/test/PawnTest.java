@@ -1,6 +1,7 @@
 package chess.test;
 
 import static org.junit.Assert.*;
+import static chess.File.*;
 
 import org.junit.Test;
 
@@ -12,21 +13,43 @@ import chess.Pawn;
  */
 public class PawnTest {
 
+
+    /**
+     * Confirm that Pawns placed in their starting positions have the right
+     * properties.
+     */
     @Test
     public void testConstructorWithValidInitialPositions()
     {
         // Pawns go on rank 2 for white
         Pawn white = new Pawn(2, 1, ChessPieceColor.WHITE);
         assertTrue(white.inValidStartingPosition());
+        assertEquals(a, white.getFile());
+        assertEquals(2, white.getRank());
+        assertEquals(ChessPieceColor.WHITE, white.getColor());
+
         Pawn white2 = new Pawn(2, 8, ChessPieceColor.WHITE);
         assertTrue(white2.inValidStartingPosition());
+        assertEquals(2, white2.getRow());
+        assertEquals(8, white2.getColumn());
+
         // Pawns go on rank 7 for black
-        Pawn black = new Pawn(7, 3, ChessPieceColor.BLACK);
+        Pawn black = new Pawn(c, 7, ChessPieceColor.BLACK);
         assertTrue(black.inValidStartingPosition());
+        assertEquals(7, black.getRow());
+        assertEquals(3, black.getColumn());
+        assertEquals(ChessPieceColor.BLACK, black.getColor());
+
         Pawn black2 = new Pawn(7, 8, ChessPieceColor.BLACK);
         assertTrue(black2.inValidStartingPosition());
+        assertEquals(h, black2.getFile());
+        assertEquals(7, black2.getRank());
     }
-    
+
+    /**
+     * Confirm that Pawns placed outside their normal starting position are
+     * recognized as such.
+     */
     @Test
     public void testConstructorWithIncorrectInitialPositions()
     {
@@ -38,6 +61,8 @@ public class PawnTest {
         assertFalse(wrongColorOnWhiteSide.inValidStartingPosition());
         Pawn wrongColorOnBlackSide = new Pawn(7, 8, ChessPieceColor.WHITE);
         assertFalse(wrongColorOnBlackSide.inValidStartingPosition());
+        Pawn leftSide = new Pawn(b, 3, ChessPieceColor.WHITE);
+        assertFalse(leftSide.inValidStartingPosition());
     }
 
     @Test
@@ -53,14 +78,14 @@ public class PawnTest {
         assertFalse(white.isValidMove(5, 1));
         assertFalse(white.isValidMove(1, 8));
     }
-    
+
     @Test
     public void testOffTheEdgeOfTheBoard()
     {
         Pawn off = new Pawn(8, 1, ChessPieceColor.WHITE);
         assertFalse(off.isValidMove(9, 1));
     }
-    
+
     @Test
     public void testIsValidMiddleMoveWhite()
     {
@@ -73,7 +98,7 @@ public class PawnTest {
         // no moving 2 spaces when not at start
         assertFalse(inTheMiddle.isValidMove(6, 4));
     }
-    
+
     @Test
     public void testIsValidStartingMoveBlack()
     {
@@ -91,7 +116,7 @@ public class PawnTest {
         // no capturing backwards
         assertFalse(black.canCapture(8, 4));
     }
-    
+
     @Test
     public void testMiddleMoveBlack()
     {
@@ -99,7 +124,7 @@ public class PawnTest {
         // forward
         assertTrue(middle.isValidMove(4, 5));
     }
-    
+
     @Test
     public void testBlackCapture()
     {
@@ -113,7 +138,7 @@ public class PawnTest {
         // can't capture forward
         assertFalse(black.canCapture(6, 1));
     }
-    
+
     @Test
     public void testWhiteCapture()
     {
@@ -124,7 +149,7 @@ public class PawnTest {
         assertFalse(white.canCapture(1, 7));
         // can't capture like bishop
         assertFalse(white.canCapture(4, 6));
-        
+
         // let's actually capture something (left)
         assertTrue(white.capture(3, 7));
         // capture right
