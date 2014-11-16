@@ -2,6 +2,7 @@ package chess;
 
 /**
  * Represents the Pawn chess piece.
+ * TODO: implement en passant capture
  */
 public class Pawn extends ChessPiece {
     /**
