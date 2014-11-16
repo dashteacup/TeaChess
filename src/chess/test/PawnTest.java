@@ -13,13 +13,12 @@ import chess.Pawn;
  */
 public class PawnTest {
 
-
     /**
      * Confirm that Pawns placed in their starting positions have the right
      * properties.
      */
     @Test
-    public void testConstructorWithValidInitialPositions()
+    public void initializeWithValidInitialPositions()
     {
         // Pawns go on rank 2 for white
         Pawn white = new Pawn(2, 1, ChessPieceColor.WHITE);
@@ -51,7 +50,7 @@ public class PawnTest {
      * recognized as such.
      */
     @Test
-    public void testConstructorWithIncorrectInitialPositions()
+    public void initializeWithIncorrectInitialPositions()
     {
         Pawn outOfBounds = new Pawn(2, 9, ChessPieceColor.WHITE);
         assertFalse(outOfBounds.inValidStartingPosition());
@@ -65,42 +64,62 @@ public class PawnTest {
         assertFalse(leftSide.inValidStartingPosition());
     }
 
+    /**
+     * Confirm that a white Pawn in its starting position can make all possible
+     * valid moves.
+     */
     @Test
-    public void testIsValidStartingMoveWhite()
+    public void confirmValidStartingMovesWhite()
     {
-        Pawn white = new Pawn(2, 1, ChessPieceColor.WHITE);
-        assertTrue(white.isValidMove(3, 1));
+        Pawn white = new Pawn(2, 3, ChessPieceColor.WHITE);
+        assertTrue(white.inValidStartingPosition());
+        // forward 1
+        assertTrue(white.isValidMove(3, 3));
         // forward 2 spaces at start
-        assertTrue(white.isValidMove(4, 1));
+        assertTrue(white.isValidMove(4, 3));
+
         // can't capture with the move command
         assertFalse(white.isValidMove(3, 2));
         // random far away places
         assertFalse(white.isValidMove(5, 1));
         assertFalse(white.isValidMove(1, 8));
+        // 3 forward, bad move
+        assertFalse(white.isValidMove(c, 5));
     }
 
+    /**
+     * Confirm that a black Pawn in its starting position can make all possible
+     * valid moves.
+     */
     @Test
-    public void testOffTheEdgeOfTheBoard()
+    public void confirmValidStartingMovesBlack()
     {
-        Pawn off = new Pawn(8, 1, ChessPieceColor.WHITE);
-        assertFalse(off.isValidMove(9, 1));
+        Pawn black = new Pawn(a, 7, ChessPieceColor.BLACK);
+        assertTrue(black.inValidStartingPosition());
+        // forward 1
+        assertTrue(black.isValidMove(6, 1));
+        // forward 2 at start
+        assertTrue(black.isValidMove(a, 5));
+
+        // can't capture with move
+        assertFalse(black.isValidMove(6, 2));
+        // 3 forward, bad move
+        assertFalse(black.isValidMove(a, 4));
+        // move to self
+        assertFalse(black.isValidMove(a, 7));
+        // random far away places
+        assertFalse(black.isValidMove(f, 1));
+        assertFalse(black.isValidMove(h, 5));
+        assertFalse(black.isValidMove(e, 5));
+        assertFalse(black.isValidMove(f, 8));
     }
 
+    /**
+     * Alternate function for testing valid moves at a black Pawn's starting
+     * position. Does everything in Row-Column notation.
+     */
     @Test
-    public void testIsValidMiddleMoveWhite()
-    {
-        Pawn inTheMiddle = new Pawn(4, 4, ChessPieceColor.WHITE);
-        assertTrue(inTheMiddle.isValidMove(5, 4));
-        // capture left
-        assertTrue(inTheMiddle.canCapture(5, 3));
-        // capture right
-        assertTrue(inTheMiddle.canCapture(5, 5));
-        // no moving 2 spaces when not at start
-        assertFalse(inTheMiddle.isValidMove(6, 4));
-    }
-
-    @Test
-    public void testIsValidStartingMoveBlack()
+    public void confirmValidStartingMovesBlackInRowColumnNotation()
     {
         Pawn black = new Pawn(7, 3, ChessPieceColor.BLACK);
         assertTrue(black.isValidMove(6, 3));
@@ -117,28 +136,49 @@ public class PawnTest {
         assertFalse(black.canCapture(8, 4));
     }
 
+    /**
+     * Confirm that Pawn moving off the edge of the board is an invalid move.
+     */
     @Test
-    public void testMiddleMoveBlack()
+    public void checkOffTheEdgeOfTheBoard()
     {
-        Pawn middle = new Pawn(5, 5, ChessPieceColor.BLACK);
-        // forward
-        assertTrue(middle.isValidMove(4, 5));
+        Pawn offTop = new Pawn(8, 1, ChessPieceColor.WHITE);
+        assertFalse(offTop.isValidMove(9, 1));
+        Pawn offBottom = new Pawn(d, 1, ChessPieceColor.BLACK);
+        assertFalse(offBottom.isValidMove(d, 0));
     }
 
+    /**
+     * Test a black Pawn's capture functionality.
+     */
     @Test
     public void testBlackCapture()
     {
         Pawn black = new Pawn(7, 1, ChessPieceColor.BLACK);
-        // capture right
+        // can capture right
         assertTrue(black.canCapture(6, 2));
-        // capture off left edge
+        // can't capture off left edge
         assertFalse(black.canCapture(6, 0));
         // can't capture self
         assertFalse(black.canCapture(7, 1));
         // can't capture forward
         assertFalse(black.canCapture(6, 1));
+        // can't capture backwards
+        assertFalse(black.canCapture(a, 8));
+        // can't capture back-right
+        assertFalse(black.canCapture(b, 8));
+
+        // actually capture right
+        assertTrue(black.capture(6, 2));
+        // can't capture forwards
+        assertFalse(black.capture(5, 2));
+        // capture left
+        assertTrue(black.capture(a, 5));
     }
 
+    /**
+     * Test a white Pawn's capture functionality.
+     */
     @Test
     public void testWhiteCapture()
     {
@@ -154,7 +194,67 @@ public class PawnTest {
         assertTrue(white.capture(3, 7));
         // capture right
         assertTrue(white.capture(4, 8));
-        // no capture forwards
+        // can't capture forwards
         assertFalse(white.capture(5, 8));
+        // can't capture back-left
+        assertFalse(white.capture(3, 7));
+        // capture left
+        assertTrue(white.capture(g, 5));
+    }
+
+    /**
+     * Confirm that valid/invalid moves for a white Pawn in the middle of the
+     * board are recognized properly.
+     */
+    @Test
+    public void confirmValidMiddleMovesWhite()
+    {
+        Pawn inTheMiddle = new Pawn(4, 4, ChessPieceColor.WHITE);
+        assertFalse(inTheMiddle.inValidStartingPosition());
+        // one forward
+        assertTrue(inTheMiddle.isValidMove(5, 4));
+        // capture left
+        assertTrue(inTheMiddle.canCapture(5, 3));
+        // capture right
+        assertTrue(inTheMiddle.canCapture(5, 5));
+
+        // no moving 2 spaces when not at start
+        assertFalse(inTheMiddle.isValidMove(6, 4));
+        // no capture back-right
+        assertFalse(inTheMiddle.canCapture(e, 3));
+        // no capture back-left
+        assertFalse(inTheMiddle.canCapture(c, 3));
+        // no going backwards
+        assertFalse(inTheMiddle.isValidMove(d, 3));
+        // no moving sideways
+        assertFalse(inTheMiddle.isValidMove(4, 5));
+    }
+
+    /**
+     * Confirm that valid/invalid moves for a black Pawn in the middle of the
+     * board are recognized properly.
+     */
+    @Test
+    public void confirmValidMiddleMovesBlack()
+    {
+        Pawn middle = new Pawn(5, 5, ChessPieceColor.BLACK);
+        assertFalse(middle.inValidStartingPosition());
+        // forward
+        assertTrue(middle.isValidMove(4, 5));
+        // capture right
+        assertTrue(middle.canCapture(f, 4));
+        // capture left
+        assertTrue(middle.canCapture(d, 4));
+
+        // no moving 2 spaces when not at start
+        assertFalse(middle.isValidMove(e, 3));
+        // no capture back-right
+        assertFalse(middle.canCapture(f, 6));
+        // no capture back-left
+        assertFalse(middle.canCapture(d, 6));
+        // no going backwards
+        assertFalse(middle.isValidMove(e, 6));
+        // no moving sideways
+        assertFalse(middle.isValidMove(d, 5));
     }
 }
