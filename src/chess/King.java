@@ -2,6 +2,7 @@ package chess;
 
 /**
  * Represents the King chess piece.
+ * TODO: implement castling
  */
 public class King extends ChessPiece {
     /**
