@@ -16,6 +16,17 @@ public class Queen extends ChessPiece {
     }
 
     /**
+     * Create a new Queen chess piece
+     * @param file letter in algebraic chess notation
+     * @param rank number indicating the row in algebraic chess notation
+     * @param color BLACK or WHITE
+     */
+    public Queen(File file, int rank, ChessPieceColor color)
+    {
+        super(file, rank, color);
+    }
+
+    /**
      * Determine if the Queen is in a valid starting position.
      */
     @Override
