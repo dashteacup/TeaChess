@@ -6,7 +6,7 @@ package chess;
  */
 public class Rook extends ChessPiece {
     /**
-     * Create a new rook chess piece
+     * Create a new Rook chess piece
      * @param row aka 'rank' valid 1 or 8
      * @param column aka 'file' valid 1 or 8 NOT a or h
      * @param color black or white
@@ -14,6 +14,17 @@ public class Rook extends ChessPiece {
     public Rook(int row, int column, ChessPieceColor color)
     {
         super(row, column, color);
+    }
+
+    /**
+     * Create a new Rook chess piece
+     * @param file letter in algebraic chess notation
+     * @param rank number indicating the row in algebraic chess notation
+     * @param color BLACK or WHITE
+     */
+    public Rook(File file, int rank, ChessPieceColor color)
+    {
+        super(file, rank, color);
     }
 
     /**
