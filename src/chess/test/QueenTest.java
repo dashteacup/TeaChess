@@ -61,6 +61,8 @@ public class QueenTest {
         assertFalse(middleOfBoard.inValidStartingPosition());
         Queen offTheBoard = new Queen(3, 9, ChessPieceColor.WHITE);
         assertFalse(offTheBoard.inValidStartingPosition());
+        Queen lowerRightCorner = new Queen(h, 1, ChessPieceColor.WHITE);
+        assertFalse(lowerRightCorner.inValidStartingPosition());
     }
 
     /**
@@ -94,7 +96,8 @@ public class QueenTest {
     }
 
     /**
-     * Confirm that invalid moves from the black Queen's start are recognized.
+     * Confirm that invalid moves from the black Queen's start are recognized
+     * properly.
      */
     @Test
     public void checkWrongMovesAtBlackQueenStart()
@@ -114,4 +117,94 @@ public class QueenTest {
         assertFalse(black.isValidMove(e, 6));
     }
 
+    /**
+     * Confirm that valid moves made by a white Queen in the middle of the board
+     * are recognized properly.
+     */
+    @Test
+    public void checkValidMovesInCenter()
+    {
+        Queen white = new Queen(f, 4, ChessPieceColor.WHITE);
+        // go up
+        assertTrue(white.isValidMove(f, 8));
+        // go up 3
+        assertTrue(white.isValidMove(f, 7));
+        // go up-right
+        assertTrue(white.isValidMove(h, 6));
+        // go up-right 1
+        assertTrue(white.isValidMove(g, 5));
+        // go right
+        assertTrue(white.isValidMove(h, 4));
+        // go right 1
+        assertTrue(white.isValidMove(g, 4));
+        // go down-right
+        assertTrue(white.isValidMove(h, 2));
+        // go down-right 1
+        assertTrue(white.isValidMove(g, 3));
+        // go down
+        assertTrue(white.isValidMove(f, 1));
+        // go down 2
+        assertTrue(white.isValidMove(f, 2));
+        // go down-left
+        assertTrue(white.isValidMove(c, 1));
+        // go left
+        assertTrue(white.isValidMove(a, 4));
+        // go left 4
+        assertTrue(white.isValidMove(b, 4));
+        // go up-left
+        assertTrue(white.isValidMove(b, 8));
+        // go up-left 2
+        assertTrue(white.isValidMove(d, 6));
+    }
+
+    /**
+     * Confirm that invalid moves made by a white Queen in the middle of the
+     * board are recognized as invalid.
+     */
+    @Test
+    public void checkWrongMovesInCenter()
+    {
+        Queen wrong = new Queen(f, 4, ChessPieceColor.WHITE);
+        // move like a Knight
+        assertFalse(wrong.isValidMove(d, 5));
+        // jump to lower left corner
+        assertFalse(wrong.isValidMove(a, 1));
+        // up 1, left all the way
+        assertFalse(wrong.isValidMove(a, 5));
+        // off right edge
+        assertFalse(wrong.isValidMove(4, 9));
+        // jump to upper right corner
+        assertFalse(wrong.isValidMove(h, 8));
+        // move to self
+        assertFalse(wrong.isValidMove(4, 6));
+    }
+
+    /**
+     * Walk a white Queen around the board from its starting position,
+     * confirming that valid moves succeed and invalid ones fail.
+     */
+    @Test
+    public void walkWhiteQueenFromStart()
+    {
+        Queen walker = new Queen(d, 1, ChessPieceColor.WHITE);
+        assertTrue(walker.inValidStartingPosition());
+        // up 3
+        assertTrue(walker.move(d, 4));
+        // down-left 2
+        assertTrue(walker.move(f, 2));
+        // up-right 2
+        assertTrue(walker.move(h, 4));
+        // bad, jump to upper left corner
+        assertFalse(walker.move(a, 8));
+        // capture left 6
+        assertTrue(walker.capture(b, 4));
+        // up 2
+        assertTrue(walker.move(b, 6));
+        // bad, knight move
+        assertFalse(walker.capture(d, 5));
+        // up-right 1
+        assertTrue(walker.move(c, 7));
+        // down-right 5
+        assertTrue(walker.capture(h, 2));
+    }
 }
