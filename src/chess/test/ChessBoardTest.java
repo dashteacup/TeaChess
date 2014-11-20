@@ -32,14 +32,6 @@ public class ChessBoardTest {
         assertNull(b.getBoard().get(5).get(1));
         assertNull(b.getBoard().get(5).get(8));
         assertNull(b.getBoard().get(6).get(7));
-
-        // check the frog/prince row's empty cells
-        for (int col = 2; col < 8; ++col) {
-            if (col == 5)
-                continue;
-            assertNull(b.getBoard().get(3).get(col));
-            assertNull(b.getBoard().get(6).get(col));
-        }
     }
 
     @Test
