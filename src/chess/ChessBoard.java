@@ -79,6 +79,7 @@ public class ChessBoard {
             if (!piece.canCapture(newRow, newColumn))
                 return false;
         }
+        // if the piece can hop, then intervening pieces don't matter
         if (piece.isHoppable()) {
             return true;
         }
@@ -101,8 +102,28 @@ public class ChessBoard {
     /**
      * Get the chess board.
      */
-    public ArrayList<ArrayList<ChessPiece>> getBoard() {
+    public ArrayList<ArrayList<ChessPiece>> getBoard()
+    {
         return board;
+    }
+
+    /**
+     * Get the chess piece at the given location.
+     */
+    public ChessPiece getPiece(int row, int column)
+    {
+        if (!( (1 <= row && row <= 8) && (1 <= column && column <= 8) )) {
+            throw new OffTheChessBoardException("row: " + row +  " column: " + column);
+        }
+        return board.get(row).get(column);
+    }
+
+    /**
+     * Get the chess piece at the location given in algebraic chess notation.
+     */
+    public ChessPiece getPiece(File file, int rank)
+    {
+        return getPiece(rank, file.getColumn());
     }
 
     /**
