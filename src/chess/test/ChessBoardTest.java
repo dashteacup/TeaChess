@@ -63,11 +63,11 @@ public class ChessBoardTest {
         assertNull(board.getBoard().get(1).get(0));
         assertNull(board.getBoard().get(8).get(0));
         // check middle
-        assertNull(board.getBoard().get(3).get(2));
-        assertNull(board.getBoard().get(4).get(4));
-        assertNull(board.getBoard().get(5).get(1));
-        assertNull(board.getBoard().get(5).get(8));
-        assertNull(board.getBoard().get(6).get(7));
+        assertNull(board.getPiece(3, 2));
+        assertNull(board.getPiece(4, 4));
+        assertNull(board.getPiece(5, 1));
+        assertNull(board.getPiece(5, 8));
+        assertNull(board.getPiece(6, 7));
     }
 
     /**
@@ -77,21 +77,21 @@ public class ChessBoardTest {
     public void intitializeFullBoardAndCheckWhiteSide()
     {
         // check white side
-        assertTrue(board.getBoard().get(1).get(1) instanceof Rook);
-        assertTrue(board.getBoard().get(1).get(2) instanceof Knight);
-        assertTrue(board.getBoard().get(1).get(3) instanceof Bishop);
-        assertTrue(board.getBoard().get(1).get(4) instanceof Queen);
-        assertTrue(board.getBoard().get(1).get(5) instanceof King);
-        assertTrue(board.getBoard().get(1).get(6) instanceof Bishop);
-        assertTrue(board.getBoard().get(1).get(7) instanceof Knight);
-        assertTrue(board.getBoard().get(1).get(8) instanceof Rook);
-        assertTrue(board.getBoard().get(2).get(1) instanceof Pawn);
-        assertTrue(board.getBoard().get(2).get(5) instanceof Pawn);
-        assertTrue(board.getBoard().get(2).get(8) instanceof Pawn);
+        assertTrue(board.getPiece(1, 1) instanceof Rook);
+        assertTrue(board.getPiece(1, 2) instanceof Knight);
+        assertTrue(board.getPiece(1, 3) instanceof Bishop);
+        assertTrue(board.getPiece(1, 4) instanceof Queen);
+        assertTrue(board.getPiece(1, 5) instanceof King);
+        assertTrue(board.getPiece(1, 6) instanceof Bishop);
+        assertTrue(board.getPiece(1, 7) instanceof Knight);
+        assertTrue(board.getPiece(1, 8) instanceof Rook);
+        assertTrue(board.getPiece(2, 1) instanceof Pawn);
+        assertTrue(board.getPiece(2, 5) instanceof Pawn);
+        assertTrue(board.getPiece(2, 8) instanceof Pawn);
 
         // check colors
-        assertEquals(ChessPieceColor.WHITE, board.getBoard().get(1).get(5).getColor());
-        assertEquals(ChessPieceColor.WHITE, board.getBoard().get(2).get(8).getColor());
+        assertEquals(ChessPieceColor.WHITE, board.getPiece(1, 5).getColor());
+        assertEquals(ChessPieceColor.WHITE, board.getPiece(2, 8).getColor());
     }
 
     /**
@@ -101,21 +101,21 @@ public class ChessBoardTest {
     public void initializeFullBoardAndCheckBlackSide()
     {
         // check black side
-        assertTrue(board.getBoard().get(8).get(1) instanceof Rook);
-        assertTrue(board.getBoard().get(8).get(2) instanceof Knight);
-        assertTrue(board.getBoard().get(8).get(3) instanceof Bishop);
-        assertTrue(board.getBoard().get(8).get(4) instanceof Queen);
-        assertTrue(board.getBoard().get(8).get(5) instanceof King);
-        assertTrue(board.getBoard().get(8).get(6) instanceof Bishop);
-        assertTrue(board.getBoard().get(8).get(7) instanceof Knight);
-        assertTrue(board.getBoard().get(8).get(8) instanceof Rook);
-        assertTrue(board.getBoard().get(7).get(1) instanceof Pawn);
-        assertTrue(board.getBoard().get(7).get(5) instanceof Pawn);
-        assertTrue(board.getBoard().get(7).get(8) instanceof Pawn);
+        assertTrue(board.getPiece(8, 1) instanceof Rook);
+        assertTrue(board.getPiece(8, 2) instanceof Knight);
+        assertTrue(board.getPiece(8, 3) instanceof Bishop);
+        assertTrue(board.getPiece(8, 4) instanceof Queen);
+        assertTrue(board.getPiece(8, 5) instanceof King);
+        assertTrue(board.getPiece(8, 6) instanceof Bishop);
+        assertTrue(board.getPiece(8, 7) instanceof Knight);
+        assertTrue(board.getPiece(8, 8) instanceof Rook);
+        assertTrue(board.getPiece(7, 1) instanceof Pawn);
+        assertTrue(board.getPiece(7, 5) instanceof Pawn);
+        assertTrue(board.getPiece(7, 8) instanceof Pawn);
 
         // check colors
-        assertEquals(ChessPieceColor.BLACK, board.getBoard().get(7).get(1).getColor());
-        assertEquals(ChessPieceColor.BLACK, board.getBoard().get(8).get(8).getColor());
+        assertEquals(ChessPieceColor.BLACK, board.getPiece(7, 1).getColor());
+        assertEquals(ChessPieceColor.BLACK, board.getPiece(8, 8).getColor());
     }
 
     /**
@@ -185,7 +185,7 @@ public class ChessBoardTest {
     }
 
     /**
-     * Confirm the getter throws an exceptino when given a rank of 0
+     * Confirm the getter throws an exception when given a rank of 0
      */
     @Test(expected = OffTheChessBoardException.class)
     public void getPieceFileRankWithRankZero()
