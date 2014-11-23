@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import chess.Bishop;
@@ -22,13 +23,27 @@ import chess.Rook;
  * TODO: I need to actually finish writing tests here.
  */
 public class ChessBoardTest {
+
+    /**
+     * A chess board object to test.
+     */
+    private ChessBoard board;
+
+    /**
+     * Create a new chess board object before every test.
+     */
+    @Before
+    public void runBeforeTests()
+    {
+        board = new ChessBoard();
+    }
+
     /**
      * Confirm that the ChessBoard has the proper size and shape.
      */
     @Test
     public void initializeFullBoardAndCheckBounds()
     {
-        ChessBoard board = new ChessBoard();
         // number of rows
         assertEquals(9, board.getBoard().size());
         // number of columns
@@ -44,7 +59,6 @@ public class ChessBoardTest {
     @Test
     public void initializeAndCheckForNull()
     {
-        ChessBoard board = new ChessBoard();
         // check zero column
         assertNull(board.getBoard().get(1).get(0));
         assertNull(board.getBoard().get(8).get(0));
@@ -62,8 +76,6 @@ public class ChessBoardTest {
     @Test
     public void intitializeFullBoardAndCheckWhiteSide()
     {
-        ChessBoard board = new ChessBoard();
-
         // check white side
         assertTrue(board.getBoard().get(1).get(1) instanceof Rook);
         assertTrue(board.getBoard().get(1).get(2) instanceof Knight);
@@ -88,8 +100,6 @@ public class ChessBoardTest {
     @Test
     public void initializeFullBoardAndCheckBlackSide()
     {
-        ChessBoard board = new ChessBoard();
-
         // check black side
         assertTrue(board.getBoard().get(8).get(1) instanceof Rook);
         assertTrue(board.getBoard().get(8).get(2) instanceof Knight);
@@ -115,7 +125,6 @@ public class ChessBoardTest {
     @Test
     public void getPieceRowColumnWithValidInput()
     {
-        ChessBoard board = new ChessBoard();
         // white right rook
         assertTrue(board.getPiece(1, 8) instanceof Rook);
         // white left bishop
@@ -138,7 +147,6 @@ public class ChessBoardTest {
     @Test(expected = OffTheChessBoardException.class)
     public void getPieceRowColumnWithRowZero()
     {
-        ChessBoard board = new ChessBoard();
         board.getPiece(0, 5);
     }
 
@@ -148,7 +156,6 @@ public class ChessBoardTest {
     @Test(expected = OffTheChessBoardException.class)
     public void getPieceRowColumnWithColumnNine()
     {
-        ChessBoard board = new ChessBoard();
         board.getPiece(8, 9);
     }
 
@@ -159,7 +166,6 @@ public class ChessBoardTest {
     @Test
     public void getPieceFileRankValidInput()
     {
-        ChessBoard board = new ChessBoard();
         // white left knight
         assertTrue(board.getPiece(File.b, 1) instanceof Knight);
         // white king
@@ -184,7 +190,6 @@ public class ChessBoardTest {
     @Test(expected = OffTheChessBoardException.class)
     public void getPieceFileRankWithRankZero()
     {
-        ChessBoard board = new ChessBoard();
         board.getPiece(File.c, 0);
     }
 
