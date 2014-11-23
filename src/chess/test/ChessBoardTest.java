@@ -39,68 +39,6 @@ public class ChessBoardTest {
     }
 
     /**
-     * Ensure elements that should be null are null.
-     */
-    @Test
-    public void initializeAndCheckForNull()
-    {
-        // check middle
-        assertNull(board.getPiece(3, 2));
-        assertNull(board.getPiece(4, 4));
-        assertNull(board.getPiece(5, 1));
-        assertNull(board.getPiece(5, 8));
-        assertNull(board.getPiece(6, 7));
-    }
-
-    /**
-     * Confirm that all the white pieces are in their proper starting position.
-     */
-    @Test
-    public void intitializeFullBoardAndCheckWhiteSide()
-    {
-        // check white side
-        assertTrue(board.getPiece(1, 1) instanceof Rook);
-        assertTrue(board.getPiece(1, 2) instanceof Knight);
-        assertTrue(board.getPiece(1, 3) instanceof Bishop);
-        assertTrue(board.getPiece(1, 4) instanceof Queen);
-        assertTrue(board.getPiece(1, 5) instanceof King);
-        assertTrue(board.getPiece(1, 6) instanceof Bishop);
-        assertTrue(board.getPiece(1, 7) instanceof Knight);
-        assertTrue(board.getPiece(1, 8) instanceof Rook);
-        assertTrue(board.getPiece(2, 1) instanceof Pawn);
-        assertTrue(board.getPiece(2, 5) instanceof Pawn);
-        assertTrue(board.getPiece(2, 8) instanceof Pawn);
-
-        // check colors
-        assertEquals(ChessPieceColor.WHITE, board.getPiece(1, 5).getColor());
-        assertEquals(ChessPieceColor.WHITE, board.getPiece(2, 8).getColor());
-    }
-
-    /**
-     * Confirm that all the black pieces are in their proper starting position.
-     */
-    @Test
-    public void initializeFullBoardAndCheckBlackSide()
-    {
-        // check black side
-        assertTrue(board.getPiece(8, 1) instanceof Rook);
-        assertTrue(board.getPiece(8, 2) instanceof Knight);
-        assertTrue(board.getPiece(8, 3) instanceof Bishop);
-        assertTrue(board.getPiece(8, 4) instanceof Queen);
-        assertTrue(board.getPiece(8, 5) instanceof King);
-        assertTrue(board.getPiece(8, 6) instanceof Bishop);
-        assertTrue(board.getPiece(8, 7) instanceof Knight);
-        assertTrue(board.getPiece(8, 8) instanceof Rook);
-        assertTrue(board.getPiece(7, 1) instanceof Pawn);
-        assertTrue(board.getPiece(7, 5) instanceof Pawn);
-        assertTrue(board.getPiece(7, 8) instanceof Pawn);
-
-        // check colors
-        assertEquals(ChessPieceColor.BLACK, board.getPiece(7, 1).getColor());
-        assertEquals(ChessPieceColor.BLACK, board.getPiece(8, 8).getColor());
-    }
-
-    /**
      * Confirm that the getter in row/column notation works properly with valid
      * input.
      */
@@ -173,6 +111,68 @@ public class ChessBoardTest {
     public void getPieceFileRankWithRankZero()
     {
         board.getPiece(File.c, 0);
+    }
+
+    /**
+     * Confirm that all the white pieces are in their proper starting position.
+     */
+    @Test
+    public void initializeAndCheckWhiteSide()
+    {
+        // check white side
+        assertTrue(board.getPiece(1, 1) instanceof Rook);
+        assertTrue(board.getPiece(1, 2) instanceof Knight);
+        assertTrue(board.getPiece(1, 3) instanceof Bishop);
+        assertTrue(board.getPiece(1, 4) instanceof Queen);
+        assertTrue(board.getPiece(1, 5) instanceof King);
+        assertTrue(board.getPiece(1, 6) instanceof Bishop);
+        assertTrue(board.getPiece(1, 7) instanceof Knight);
+        assertTrue(board.getPiece(1, 8) instanceof Rook);
+        assertTrue(board.getPiece(2, 1) instanceof Pawn);
+        assertTrue(board.getPiece(2, 5) instanceof Pawn);
+        assertTrue(board.getPiece(2, 8) instanceof Pawn);
+
+        // check colors
+        assertEquals(ChessPieceColor.WHITE, board.getPiece(1, 5).getColor());
+        assertEquals(ChessPieceColor.WHITE, board.getPiece(2, 8).getColor());
+    }
+
+    /**
+     * Confirm that all the black pieces are in their proper starting position.
+     */
+    @Test
+    public void initializeAndCheckBlackSide()
+    {
+        // check black side
+        assertTrue(board.getPiece(8, 1) instanceof Rook);
+        assertTrue(board.getPiece(8, 2) instanceof Knight);
+        assertTrue(board.getPiece(8, 3) instanceof Bishop);
+        assertTrue(board.getPiece(8, 4) instanceof Queen);
+        assertTrue(board.getPiece(8, 5) instanceof King);
+        assertTrue(board.getPiece(8, 6) instanceof Bishop);
+        assertTrue(board.getPiece(8, 7) instanceof Knight);
+        assertTrue(board.getPiece(8, 8) instanceof Rook);
+        assertTrue(board.getPiece(7, 1) instanceof Pawn);
+        assertTrue(board.getPiece(7, 5) instanceof Pawn);
+        assertTrue(board.getPiece(7, 8) instanceof Pawn);
+
+        // check colors
+        assertEquals(ChessPieceColor.BLACK, board.getPiece(7, 1).getColor());
+        assertEquals(ChessPieceColor.BLACK, board.getPiece(8, 8).getColor());
+    }
+
+    /**
+     * Ensure elements that should be null are null.
+     */
+    @Test
+    public void initializeAndCheckForNull()
+    {
+        // check middle
+        assertNull(board.getPiece(3, 2));
+        assertNull(board.getPiece(4, 4));
+        assertNull(board.getPiece(5, 1));
+        assertNull(board.getPiece(5, 8));
+        assertNull(board.getPiece(6, 7));
     }
 
 }
