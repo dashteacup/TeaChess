@@ -100,14 +100,6 @@ public class ChessBoard {
     }
 
     /**
-     * Get the chess board.
-     */
-    public ArrayList<ArrayList<ChessPiece>> getBoard()
-    {
-        return board;
-    }
-
-    /**
      * Get the chess piece at the given location.
      */
     public ChessPiece getPiece(int row, int column)

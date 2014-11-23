@@ -39,29 +39,11 @@ public class ChessBoardTest {
     }
 
     /**
-     * Confirm that the ChessBoard has the proper size and shape.
-     */
-    @Test
-    public void initializeFullBoardAndCheckBounds()
-    {
-        // number of rows
-        assertEquals(9, board.getBoard().size());
-        // number of columns
-        assertEquals(9, board.getBoard().get(1).size());
-        assertEquals(9, board.getBoard().get(8).size());
-        // check zero row, zero row has no columns
-        assertEquals(0, board.getBoard().get(0).size());
-    }
-
-    /**
      * Ensure elements that should be null are null.
      */
     @Test
     public void initializeAndCheckForNull()
     {
-        // check zero column
-        assertNull(board.getBoard().get(1).get(0));
-        assertNull(board.getBoard().get(8).get(0));
         // check middle
         assertNull(board.getPiece(3, 2));
         assertNull(board.getPiece(4, 4));
