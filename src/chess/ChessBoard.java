@@ -66,7 +66,7 @@ public class ChessBoard {
     /**
      * Determine if the indicated move is a valid chess move.
      */
-    public boolean checkValidMove(int oldRow, int oldColumn, int newRow, int newColumn)
+    public boolean isValidMove(int oldRow, int oldColumn, int newRow, int newColumn)
     {
         ChessPiece piece = board.get(oldRow).get(oldColumn);
         // moving to an empty space
