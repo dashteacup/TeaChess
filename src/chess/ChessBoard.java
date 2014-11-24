@@ -90,9 +90,9 @@ public class ChessBoard {
     }
 
     /**
-     * Actually make a move. Doesn't do error checking.
+     * Force a move. Doesn't do error checking.
      */
-    public void makeMove(int oldRow, int oldColumn, int newRow, int newColumn)
+    public void forceMove(int oldRow, int oldColumn, int newRow, int newColumn)
     {
         ChessPiece movingPiece = board.get(oldRow).get(oldColumn);
         board.get(newRow).set(newColumn, movingPiece);
