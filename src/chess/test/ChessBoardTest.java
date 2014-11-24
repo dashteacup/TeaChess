@@ -20,7 +20,6 @@ import chess.Rook;
 
 /**
  * Tests for the ChessBoard class.
- * TODO: I need to actually finish writing tests here.
  */
 public class ChessBoardTest {
 
@@ -65,7 +64,7 @@ public class ChessBoardTest {
      * Confirm that the getter throws an exception when given a row of zero.
      */
     @Test(expected = OffTheChessBoardException.class)
-    public void getPieceRowColumnWithRowZero()
+    public void getPieceRowColumnWithBadRow()
     {
         board.getPiece(0, 5);
     }
@@ -74,7 +73,7 @@ public class ChessBoardTest {
      * Confirm that the getter throws an exception when given a column of 9.
      */
     @Test(expected = OffTheChessBoardException.class)
-    public void getPieceRowColumnWithColumnNine()
+    public void getPieceRowColumnWithBadColumn()
     {
         board.getPiece(8, 9);
     }
@@ -84,7 +83,7 @@ public class ChessBoardTest {
      * input.
      */
     @Test
-    public void getPieceFileRankValidInput()
+    public void getPieceFileRankWithValidInput()
     {
         // white left knight
         assertTrue(board.getPiece(File.b, 1) instanceof Knight);
@@ -105,12 +104,12 @@ public class ChessBoardTest {
     }
 
     /**
-     * Confirm the getter throws an exception when given a rank of 0
+     * Confirm the getter throws an exception when given a rank of 9
      */
     @Test(expected = OffTheChessBoardException.class)
-    public void getPieceFileRankWithRankZero()
+    public void getPieceFileRankWithBadRank()
     {
-        board.getPiece(File.c, 0);
+        board.getPiece(File.c, 9);
     }
 
     /**
@@ -162,12 +161,11 @@ public class ChessBoardTest {
     }
 
     /**
-     * Ensure elements that should be null are null.
+     * Ensure that elements in the middle are null.
      */
     @Test
-    public void initializeAndCheckForNull()
+    public void initializeAndCheckMiddle()
     {
-        // check middle
         assertNull(board.getPiece(3, 2));
         assertNull(board.getPiece(4, 4));
         assertNull(board.getPiece(5, 1));
