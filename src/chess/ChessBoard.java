@@ -128,8 +128,8 @@ public class ChessBoard {
         int deltaColumn = Math.abs(oldColumn - newColumn);
         // horizontal movement
         if (deltaRow == 0 && deltaColumn != 0) {
-            int lower = (oldColumn < newColumn) ? oldColumn : newColumn;
-            int upper = (oldColumn > newColumn) ? oldColumn : newColumn;
+            int lower = Math.min(oldColumn, newColumn);
+            int upper = Math.max(oldColumn, newColumn);
             for (int column = lower + 1; column < upper; ++column) {
                 if (getPiece(oldRow, column) != null)
                     return false;
@@ -138,8 +138,8 @@ public class ChessBoard {
         }
         // vertical movement
         else if (deltaRow != 0 && deltaColumn == 0) {
-            int lower = (oldRow < newRow) ? oldRow : newRow;
-            int upper = (oldRow > newRow) ? oldRow : newRow;
+            int lower = Math.min(oldRow, newRow);
+            int upper = Math.max(oldRow, newRow);
             for (int row = lower + 1; row < upper; ++row) {
                 if (getPiece(row, oldColumn) != null)
                     return false;
