@@ -68,9 +68,9 @@ public class ChessBoard {
      */
     public boolean isValidMove(int oldRow, int oldColumn, int newRow, int newColumn)
     {
-        ChessPiece piece = board.get(oldRow).get(oldColumn);
+        ChessPiece piece = getPiece(oldRow, oldColumn);
         // moving to an empty space
-        if (board.get(newRow).get(newColumn) == null) {
+        if (getPiece(newRow, newColumn) == null) {
             if (!piece.isValidMove(newRow, newColumn))
                 return false;
         }
@@ -90,11 +90,11 @@ public class ChessBoard {
     }
 
     /**
-     * Force a move. Doesn't do error checking.
+     * Force a move. Doesn't do error checking or account for ChessPiece type.
      */
     public void forceMove(int oldRow, int oldColumn, int newRow, int newColumn)
     {
-        ChessPiece movingPiece = board.get(oldRow).get(oldColumn);
+        ChessPiece movingPiece = getPiece(oldRow, oldColumn);
         board.get(newRow).set(newColumn, movingPiece);
         board.get(oldRow).set(oldColumn, null);
     }
@@ -131,7 +131,7 @@ public class ChessBoard {
             int lower = (oldColumn < newColumn) ? oldColumn : newColumn;
             int upper = (oldColumn > newColumn) ? oldColumn : newColumn;
             for (int column = lower + 1; column < upper; ++column) {
-                if (board.get(oldRow).get(column) != null)
+                if (getPiece(oldRow, column) != null)
                     return false;
             }
             return true;
@@ -141,7 +141,7 @@ public class ChessBoard {
             int lower = (oldRow < newRow) ? oldRow : newRow;
             int upper = (oldRow > newRow) ? oldRow : newRow;
             for (int row = lower + 1; row < upper; ++row) {
-                if (board.get(row).get(oldColumn) != null)
+                if (getPiece(row, oldColumn) != null)
                     return false;
             }
             return true;
