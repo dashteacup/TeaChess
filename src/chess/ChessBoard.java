@@ -73,17 +73,16 @@ public class ChessBoard {
         if (getPiece(newRow, newColumn) == null) {
             if (!piece.isValidMove(newRow, newColumn))
                 return false;
-        }
         // the space is occupied
-        else {
+        } else {
             if (!piece.canCapture(newRow, newColumn))
                 return false;
         }
         // if the piece can hop, then intervening pieces don't matter
         if (piece.isHoppable()) {
             return true;
-        }
-        else if (!hasClearPath(oldRow, oldColumn, newRow, newColumn)) {
+        // otherwise, make sure there's nothing between the two positions
+        } else if (!hasClearPath(oldRow, oldColumn, newRow, newColumn)) {
             return false;
         }
         return true;
@@ -130,24 +129,24 @@ public class ChessBoard {
         if (deltaRow == 0 && deltaColumn != 0) {
             int lower = Math.min(oldColumn, newColumn);
             int upper = Math.max(oldColumn, newColumn);
+            // check every space between the two columns
             for (int column = lower + 1; column < upper; ++column) {
                 if (getPiece(oldRow, column) != null)
                     return false;
             }
             return true;
-        }
         // vertical movement
-        else if (deltaRow != 0 && deltaColumn == 0) {
+        } else if (deltaRow != 0 && deltaColumn == 0) {
             int lower = Math.min(oldRow, newRow);
             int upper = Math.max(oldRow, newRow);
+            // check every space between the two rows
             for (int row = lower + 1; row < upper; ++row) {
                 if (getPiece(row, oldColumn) != null)
                     return false;
             }
             return true;
-        }
         // diagonal movement
-        else if (deltaRow == deltaColumn) {
+        } else if (deltaRow == deltaColumn) {
             // TODO: fix this
             return true;
         }
