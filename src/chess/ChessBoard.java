@@ -118,6 +118,28 @@ public class ChessBoard {
     }
 
     /**
+     * Determine if there is a ChessPiece at the given location.
+     * @param row (1-8)
+     * @param column (1-8)
+     * @return true if the space is empty, false otherwise
+     */
+    public boolean emptySpace(int row, int column)
+    {
+        return getPiece(row, column) == null;
+    }
+
+    /**
+     * Determine if there is a ChessPiece at the given location.
+     * @param file in algebraic chess notation
+     * @param rank in algebraic chess notation (1-8)
+     * @return true if the space is empty, false otherwise
+     */
+    public boolean emptySpace(File file, int rank)
+    {
+        return emptySpace(rank, file.getColumn());
+    }
+
+    /**
      * Determine if there is a clear (unobstructed) path between the two positions on the
      * chess board. Do not use this function on hoppable chess pieces.
      */
