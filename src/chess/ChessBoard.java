@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 /**
  * Represents the chess board itself.
- * TODO: This isn't completely functional at the moment.
  */
 public class ChessBoard {
     /**
