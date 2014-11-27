@@ -153,7 +153,7 @@ public class ChessBoard {
             int upper = Math.max(oldColumn, newColumn);
             // check every space between the two columns
             for (int column = lower + 1; column < upper; ++column) {
-                if (getPiece(oldRow, column) != null)
+                if (!emptySpace(oldRow, column))
                     return false;
             }
             return true;
@@ -163,14 +163,55 @@ public class ChessBoard {
             int upper = Math.max(oldRow, newRow);
             // check every space between the two rows
             for (int row = lower + 1; row < upper; ++row) {
-                if (getPiece(row, oldColumn) != null)
+                if (!emptySpace(row, oldColumn))
                     return false;
             }
             return true;
         // diagonal movement
         } else if (deltaRow == deltaColumn) {
-            // TODO: fix this
-            return true;
+            // beneath target
+            if (oldRow < newRow) {
+                // heading up-right
+                if (oldColumn < newColumn) {
+                    for (int row = oldRow + 1, col = oldColumn + 1;
+                         row < newRow && col < newColumn;
+                         row++, col++) {
+                        if (!emptySpace(row, col))
+                            return false;
+                    }
+                    return true;
+                // heading up-left
+                } else {
+                    for (int row = oldRow + 1, col = oldColumn - 1;
+                         row < newRow && col > newColumn;
+                         ++row, --col) {
+                        if (!emptySpace(row, col))
+                            return false;
+                    }
+                    return true;
+                }
+            // above target
+            } else {
+                // heading down-right
+                if (oldColumn < newColumn) {
+                    for (int row = oldRow - 1, col = oldColumn + 1;
+                         row > newRow && col < newColumn;
+                         --row, ++col) {
+                        if (!emptySpace(row, col))
+                            return false;
+                    }
+                    return true;
+                // heading down-left
+                } else {
+                    for (int row = oldRow - 1, col = oldColumn - 1;
+                         row > newRow && col > newColumn;
+                         --row, --col) {
+                        if (!emptySpace(row, col))
+                            return false;
+                    }
+                    return true;
+                }
+            }
         }
         // All non-hoppable pieces move either vertically, horizontally, or diagonally
         return false;
