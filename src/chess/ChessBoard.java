@@ -70,7 +70,7 @@ public class ChessBoard {
     {
         ChessPiece piece = getPiece(oldRow, oldColumn);
         // moving to an empty space
-        if (getPiece(newRow, newColumn) == null) {
+        if (emptySpace(newRow, newColumn)) {
             if (!piece.isValidMove(newRow, newColumn))
                 return false;
         // the space is occupied
@@ -82,10 +82,9 @@ public class ChessBoard {
         if (piece.isHoppable()) {
             return true;
         // otherwise, make sure there's nothing between the two positions
-        } else if (!hasClearPath(oldRow, oldColumn, newRow, newColumn)) {
-            return false;
+        } else {
+            return hasClearPath(oldRow, oldColumn, newRow, newColumn);
         }
-        return true;
     }
 
     /**
