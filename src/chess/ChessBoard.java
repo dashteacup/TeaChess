@@ -94,6 +94,7 @@ public class ChessBoard {
         ChessPiece movingPiece = getPiece(oldRow, oldColumn);
         board.get(newRow).set(newColumn, movingPiece);
         board.get(oldRow).set(oldColumn, null);
+        movingPiece.move(newRow, newColumn);
     }
 
     /**
