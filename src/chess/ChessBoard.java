@@ -143,8 +143,8 @@ public class ChessBoard {
      */
     private boolean hasClearPath(int oldRow, int oldColumn, int newRow, int newColumn)
     {
-        int deltaRow = Math.abs(oldRow - newRow);
-        int deltaColumn = Math.abs(oldColumn - newColumn);
+        int deltaRow = newRow - oldRow;
+        int deltaColumn = newColumn - oldColumn;
         // horizontal movement
         if (deltaRow == 0 && deltaColumn != 0) {
             int lower = Math.min(oldColumn, newColumn);
@@ -166,50 +166,34 @@ public class ChessBoard {
             }
             return true;
         // diagonal movement
-        } else if (deltaRow == deltaColumn) {
-            // beneath target
-            if (oldRow < newRow) {
-                // heading up-right
-                if (oldColumn < newColumn) {
-                    for (int row = oldRow + 1, col = oldColumn + 1;
-                         row < newRow && col < newColumn;
-                         row++, col++) {
-                        if (!emptySpace(row, col))
-                            return false;
-                    }
-                    return true;
-                // heading up-left
-                } else {
-                    for (int row = oldRow + 1, col = oldColumn - 1;
-                         row < newRow && col > newColumn;
-                         ++row, --col) {
-                        if (!emptySpace(row, col))
-                            return false;
-                    }
-                    return true;
+        } else if (Math.abs(deltaRow) == Math.abs(deltaColumn)) {
+            int spacesApart = Math.abs(deltaRow);
+            // up-right
+            if (deltaRow > 0 && deltaColumn > 0) {
+                for (int offset = 1; offset < spacesApart; ++offset) {
+                    if (!emptySpace(oldRow + offset, oldColumn + offset))
+                        return false;
                 }
-            // above target
-            } else {
-                // heading down-right
-                if (oldColumn < newColumn) {
-                    for (int row = oldRow - 1, col = oldColumn + 1;
-                         row > newRow && col < newColumn;
-                         --row, ++col) {
-                        if (!emptySpace(row, col))
-                            return false;
-                    }
-                    return true;
-                // heading down-left
-                } else {
-                    for (int row = oldRow - 1, col = oldColumn - 1;
-                         row > newRow && col > newColumn;
-                         --row, --col) {
-                        if (!emptySpace(row, col))
-                            return false;
-                    }
-                    return true;
+            // up-left
+            } else if (deltaRow > 0 && deltaColumn < 0) {
+                for (int offset = 1; offset < spacesApart; ++offset) {
+                    if (!emptySpace(oldRow + offset, oldColumn - offset))
+                        return false;
+                }
+            // down-right
+            } else if (deltaRow < 0 && deltaColumn > 0) {
+                for (int offset = 1; offset < spacesApart; ++offset) {
+                    if (!emptySpace(oldRow - offset, oldColumn + offset))
+                        return false;
+                }
+            // down-left
+            } else { // (deltaRow < 0 && deltaColumn < 0)
+                for (int offset = 1; offset < spacesApart; ++offset) {
+                    if (!emptySpace(oldRow - offset, oldColumn - offset))
+                        return false;
                 }
             }
+            return true; // found no occupied spaces across the diagonal
         }
         // All non-hoppable pieces move either vertically, horizontally, or diagonally
         return false;
