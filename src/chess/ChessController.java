@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Controller Class for the chess game project. 
+ * Controller Class for the chess game project.
  */
 public class ChessController implements ActionListener {
 
@@ -19,18 +19,19 @@ public class ChessController implements ActionListener {
         currentPlayerColor = ChessPieceColor.WHITE;
         pieceSelected = false;
     }
-    
+
     /**
      * Run the main game loop.
      */
-    public static void main(String[] args) 
+    public static void main(String[] args)
     {
         new ChessController();
     }
-    
+
     /**
      * Handle user actions.
      */
+    @Override
     public void actionPerformed(ActionEvent event)
     {
         // Clicked the new game menu item.
@@ -44,9 +45,9 @@ public class ChessController implements ActionListener {
             buttonLastPicked = (ChessSpaceButton) event.getSource();
             buttonClickedAction();
         }
-                    
+
     }
-    
+
     /**
      * Actions to be performed when receiving a button clicked event.
      */
@@ -73,11 +74,11 @@ public class ChessController implements ActionListener {
                 selectedColumn = newColumn;
                 pieceSelected = true;
             }
-        } 
+        }
     }
 
     /**
-     * Change the color of the current player from black to white or white to black. 
+     * Change the color of the current player from black to white or white to black.
      */
     private void changePlayers()
     {
@@ -95,32 +96,32 @@ public class ChessController implements ActionListener {
      * The game's Model of the chess board.
      */
     private ChessBoard modelBoard;
-    
+
     /**
      * The game's View.
      */
     private ChessGameView view;
-    
+
     /**
      * The button last selected by the user.
      */
     private ChessSpaceButton buttonLastPicked;
-    
+
     /**
      * Color of the player whose turn we are doing.
      */
     private ChessPieceColor currentPlayerColor;
-    
+
     /**
      * Determine if the player has picked a piece to move.
      */
     private boolean pieceSelected;
-    
+
     /**
      * selected row
      */
     private int selectedRow;
-    
+
     /**
      * selected column
      */
