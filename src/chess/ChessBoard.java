@@ -67,6 +67,9 @@ public class ChessBoard {
      */
     public boolean isValidMove(int oldRow, int oldColumn, int newRow, int newColumn)
     {
+        // There must be a piece to move
+        if (emptySpace(oldRow, oldColumn))
+            return false;
         ChessPiece piece = getPiece(oldRow, oldColumn);
         // moving to an empty space
         if (emptySpace(newRow, newColumn)) {
@@ -96,9 +99,6 @@ public class ChessBoard {
      */
     public boolean move(int oldRow, int oldColumn, int newRow, int newColumn)
     {
-        // has to have a piece at the start position
-        if (emptySpace(oldRow, oldColumn))
-            return false;
         if (isValidMove(oldRow, oldColumn, newRow, newColumn)) {
             forceMove(oldRow, oldColumn, newRow, newColumn);
             return true;
