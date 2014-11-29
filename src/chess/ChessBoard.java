@@ -87,6 +87,39 @@ public class ChessBoard {
     }
 
     /**
+     * Move a ChessPiece from one position to another in row/column notation.
+     * @param oldRow of the piece to move (1-8)
+     * @param oldColumn of the piece to move (1-8)
+     * @param newRow to move to (1-8)
+     * @param newColumn to move to (1-8)
+     * @return true if the move succeeds, false otherwise
+     */
+    public boolean move(int oldRow, int oldColumn, int newRow, int newColumn)
+    {
+        // has to have a piece at the start position
+        if (emptySpace(oldRow, oldColumn))
+            return false;
+        if (isValidMove(oldRow, oldColumn, newRow, newColumn)) {
+            forceMove(oldRow, oldColumn, newRow, newColumn);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Move a ChessPiece from one position to another in algebraic chess notation.
+     * @param oldFile of the piece to move (a-h)
+     * @param oldRank of the piece to move (1-8)
+     * @param newFile to move to (a-h)
+     * @param newRank to move to (1-8)
+     * @return true if the move succeeds, false otherwise
+     */
+    public boolean move(File oldFile, int oldRank, File newFile, int newRank)
+    {
+        return move(oldRank, oldFile.getColumn(), newRank, newFile.getColumn());
+    }
+
+    /**
      * Force a move. Doesn't do error checking or account for ChessPiece type.
      */
     public void forceMove(int oldRow, int oldColumn, int newRow, int newColumn)
