@@ -1,6 +1,7 @@
 package chess.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static chess.File.*;
@@ -183,4 +184,17 @@ public class ChessBoardTest {
         assertNull(board.getPiece(6, 7));
     }
 
+    /**
+     * Confirm that empty/occupied spaces are recognized properly.
+     */
+    @Test
+    public void emptySpace()
+    {
+        // empty
+        assertTrue(board.emptySpace(c, 4));
+        assertTrue(board.emptySpace(6, 8));
+        // occupied
+        assertFalse(board.emptySpace(h, 8));
+        assertFalse(board.emptySpace(2, 1));
+    }
 }
