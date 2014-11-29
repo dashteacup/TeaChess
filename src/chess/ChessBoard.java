@@ -84,12 +84,10 @@ public class ChessBoard {
             }
         }
         // if the piece can hop, then intervening pieces don't matter
-        if (piece.isHoppable()) {
+        if (piece.isHoppable())
             return true;
         // otherwise, make sure there's nothing between the two positions
-        } else {
-            return hasClearPath(oldRow, oldColumn, newRow, newColumn);
-        }
+        return hasClearPath(oldRow, oldColumn, newRow, newColumn);
     }
 
     /**
