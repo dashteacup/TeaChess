@@ -77,11 +77,11 @@ public class ChessBoard {
                 return false;
         // the space is occupied
         } else {
-            if (!piece.canCapture(newRow, newColumn))
+            if ( (!piece.canCapture(newRow, newColumn))
+                 || // can't capture your own color
+                 (piece.getColor() == getPiece(newRow, newColumn).getColor()) ) {
                 return false;
-            // can't capture your own color
-            if (piece.getColor() == getPiece(newRow, newColumn).getColor())
-                return false;
+            }
         }
         // if the piece can hop, then intervening pieces don't matter
         if (piece.isHoppable()) {
