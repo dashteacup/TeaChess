@@ -70,10 +70,20 @@ public class ChessBoardTest {
     }
 
     /**
-     * Confirm that the getter throws an exception when given a column of 9.
+     * Confirm that the getter throws an exception when given a column of zero.
      */
     @Test(expected = OffTheChessBoardException.class)
     public void getPieceRowColumnWithBadColumn()
+    {
+        board.getPiece(8, 0);
+    }
+
+
+    /**
+     * Confirm that the getter throws an exception when given a column of 9.
+     */
+    @Test(expected = OffTheChessBoardException.class)
+    public void getPieceRowColumnWithBadColumn9()
     {
         board.getPiece(8, 9);
     }
