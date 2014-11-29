@@ -3,6 +3,7 @@ package chess.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static chess.File.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +11,6 @@ import org.junit.Test;
 import chess.Bishop;
 import chess.ChessBoard;
 import chess.ChessPieceColor;
-import chess.File;
 import chess.King;
 import chess.Knight;
 import chess.OffTheChessBoardException;
@@ -96,21 +96,21 @@ public class ChessBoardTest {
     public void getPieceFileRankWithValidInput()
     {
         // white left knight
-        assertTrue(board.getPiece(File.b, 1) instanceof Knight);
+        assertTrue(board.getPiece(b, 1) instanceof Knight);
         // white king
-        assertTrue(board.getPiece(File.e, 1) instanceof King);
+        assertTrue(board.getPiece(e, 1) instanceof King);
         // white right pawn
-        assertTrue(board.getPiece(File.h, 2) instanceof Pawn);
+        assertTrue(board.getPiece(h, 2) instanceof Pawn);
         // black queen
-        assertTrue(board.getPiece(File.d, 8) instanceof Queen);
+        assertTrue(board.getPiece(d, 8) instanceof Queen);
         // black right rook
-        assertTrue(board.getPiece(File.h, 8) instanceof Rook);
+        assertTrue(board.getPiece(h, 8) instanceof Rook);
         // empty space
-        assertNull(board.getPiece(File.a, 5));
+        assertNull(board.getPiece(a, 5));
         // black left knight has right color
-        assertEquals(ChessPieceColor.BLACK, board.getPiece(File.b, 8).getColor());
+        assertEquals(ChessPieceColor.BLACK, board.getPiece(b, 8).getColor());
         // white pawn has right color
-        assertEquals(ChessPieceColor.WHITE, board.getPiece(File.f, 2).getColor());
+        assertEquals(ChessPieceColor.WHITE, board.getPiece(f, 2).getColor());
     }
 
     /**
@@ -119,7 +119,7 @@ public class ChessBoardTest {
     @Test(expected = OffTheChessBoardException.class)
     public void getPieceFileRankWithBadRank()
     {
-        board.getPiece(File.c, 9);
+        board.getPiece(c, 9);
     }
 
     /**
