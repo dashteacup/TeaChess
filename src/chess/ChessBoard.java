@@ -79,6 +79,9 @@ public class ChessBoard {
         } else {
             if (!piece.canCapture(newRow, newColumn))
                 return false;
+            // can't capture your own color
+            if (piece.getColor() == getPiece(newRow, newColumn).getColor())
+                return false;
         }
         // if the piece can hop, then intervening pieces don't matter
         if (piece.isHoppable()) {
@@ -100,7 +103,13 @@ public class ChessBoard {
     public boolean move(int oldRow, int oldColumn, int newRow, int newColumn)
     {
         if (isValidMove(oldRow, oldColumn, newRow, newColumn)) {
-            forceMove(oldRow, oldColumn, newRow, newColumn);
+            ChessPiece movingPiece = getPiece(oldRow, oldColumn);
+            if (movingPiece.canCapture(newRow, newColumn))
+                movingPiece.capture(newRow, newColumn);
+            else
+                movingPiece.move(newRow, newColumn);
+            board.get(newRow).set(newColumn, movingPiece);
+            board.get(oldRow).set(oldColumn, null);
             return true;
         }
         return false;
@@ -117,17 +126,6 @@ public class ChessBoard {
     public boolean move(File oldFile, int oldRank, File newFile, int newRank)
     {
         return move(oldRank, oldFile.getColumn(), newRank, newFile.getColumn());
-    }
-
-    /**
-     * Force a move. Doesn't do error checking or account for ChessPiece type.
-     */
-    public void forceMove(int oldRow, int oldColumn, int newRow, int newColumn)
-    {
-        ChessPiece movingPiece = getPiece(oldRow, oldColumn);
-        board.get(newRow).set(newColumn, movingPiece);
-        board.get(oldRow).set(oldColumn, null);
-        movingPiece.move(newRow, newColumn);
     }
 
     /**

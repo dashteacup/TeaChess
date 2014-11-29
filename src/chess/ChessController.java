@@ -60,7 +60,7 @@ public class ChessController implements ActionListener {
                 // have to translate board positions.. I should rewrite chessboard to be consistant
                 if (modelBoard.isValidMove(8 - selectedRow, 1 + selectedColumn, 8 - newRow, 1 + newColumn)) {
                     view.moveChessPiece(selectedRow, selectedColumn, newRow, newColumn);
-                    modelBoard.forceMove(8 - selectedRow, 1 + selectedColumn, 8 - newRow, 1 + newColumn);
+                    modelBoard.move(8 - selectedRow, 1 + selectedColumn, 8 - newRow, 1 + newColumn);
                     changePlayers();
                 }
             }
