@@ -64,6 +64,11 @@ public class ChessBoard {
 
     /**
      * Determine if the indicated move is a valid chess move.
+     * @param oldRow of the piece to move (1-8)
+     * @param oldColumn of the piece to move (1-8)
+     * @param newRow to move to (1-8)
+     * @param newColumn to move to (1-8)
+     * @return true if it's a valid move, false otherwise
      */
     public boolean isValidMove(int oldRow, int oldColumn, int newRow, int newColumn)
     {
@@ -88,6 +93,20 @@ public class ChessBoard {
             return true;
         // otherwise, make sure there's nothing between the two positions
         return hasClearPath(oldRow, oldColumn, newRow, newColumn);
+    }
+
+    /**
+     * Determine if the indicated move in algebraic chess notation is a valid
+     * chess move.
+     * @param oldFile of the piece to move (a-h)
+     * @param oldRank of the piece to move (1-8)
+     * @param newFile to move to (a-h)
+     * @param newRank to move to (1-8)
+     * @return true if it's a valid move, false otherwise
+     */
+    public boolean isValidMove(File oldFile, int oldRank, File newFile, int newRank)
+    {
+        return isValidMove(oldRank, oldFile.getColumn(), newRank, newFile.getColumn());
     }
 
     /**
