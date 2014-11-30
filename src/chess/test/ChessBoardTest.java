@@ -197,4 +197,50 @@ public class ChessBoardTest {
         assertFalse(board.emptySpace(h, 8));
         assertFalse(board.emptySpace(2, 1));
     }
+
+    /**
+     * Confirm that empty spaces can't make moves.
+     */
+    @Test
+    public void isValidMoveEmptySpace()
+    {
+        assertFalse(board.isValidMove(a, 5, a, 4));
+        assertFalse(board.isValidMove(h, 3, a, 6));
+    }
+
+    /**
+     * Confirm that moves for a black pawn are recognized as valid/invalid.
+     */
+    @Test
+    public void isValidMoveBlackPawn()
+    {
+        // 1 forward
+        assertTrue(board.isValidMove(c, 7, c, 6));
+        // 2 forward
+        assertTrue(board.isValidMove(c, 7, c, 5));
+        // bad, 3 forward
+        assertFalse(board.isValidMove(c, 7, c, 4));
+        // bad, 1 back
+        assertFalse(board.isValidMove(c, 7, c, 8));
+        // bad, capture without a piece in new spot
+        assertFalse(board.isValidMove(c, 7, d, 6));
+        // bad, random place on board
+        assertFalse(board.isValidMove(c, 7, f, 3));
+    }
+
+    /**
+     * Confirm that moves for a white Knight are recognized as valid/invalid.
+     */
+    @Test
+    public void isValidMoveWhiteKnight()
+    {
+        // up 2, left 1
+        assertTrue(board.isValidMove(g, 1, f, 3));
+        // up 2, right 1
+        assertTrue(board.isValidMove(g, 1, h, 3));
+        // bad, capture friendly
+        assertFalse(board.isValidMove(g, 1, e, 2));
+        // bad, random spot on board
+        assertFalse(board.isValidMove(g, 1, d, 4));
+    }
 }
