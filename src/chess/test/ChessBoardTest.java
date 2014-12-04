@@ -243,4 +243,22 @@ public class ChessBoardTest {
         // bad, random spot on board
         assertFalse(board.isValidMove(g, 1, d, 4));
     }
+
+    /**
+     * Test pawn movement and capture functionality.
+     */
+    @Test
+    public void pawnCapture()
+    {
+        // white up 2
+        assertTrue(board.move(c, 2, c, 4));
+        // black down 2
+        assertTrue(board.move(d, 7, d, 5));
+        // can white capture up-right?
+        assertTrue(board.isValidMove(c, 4, d, 5));
+        // black capture down-left
+        assertTrue(board.move(d, 5, c, 4));
+        // bad, black capture empty space down-right
+        assertFalse(board.move(c, 4, d, 3));
+    }
 }
