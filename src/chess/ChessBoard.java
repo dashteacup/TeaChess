@@ -150,7 +150,7 @@ public class ChessBoard {
      */
     public ChessPiece getPiece(int row, int column)
     {
-        if (!( (1 <= row && row <= 8) && (1 <= column && column <= 8) )) {
+        if (!isOnTheBoard(row, column)) {
             throw new OffTheChessBoardException("row: " + row +  " column: " + column);
         }
         return board.get(row).get(column);
@@ -246,6 +246,19 @@ public class ChessBoard {
         }
         // All non-hoppable pieces move either vertically, horizontally, or diagonally
         return false;
+    }
+
+    /**
+     * Determine if a given position is on the ChessBoard.
+     * @param row to inspect (1-8 is valid)
+     * @param column to inspect (1-8 is valid)
+     * @return true if the position is on the board, false otherwise.
+     */
+    private boolean isOnTheBoard(int row, int column)
+    {
+        boolean validRow = (1 <= row && row <= 8);
+        boolean validColumn = (1 <= column && column <= 8);
+        return validRow && validColumn;
     }
 
     /**
