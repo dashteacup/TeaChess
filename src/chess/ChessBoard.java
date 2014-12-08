@@ -164,6 +164,25 @@ public class ChessBoard {
         return getPiece(rank, file.getColumn());
     }
 
+
+    /**
+     * Add a ChessPiece to the board. If a ChessPiece already exists at the new
+     * ChessPiece's location, it will be replaced with the new piece.
+     * @param piece to add to the board
+     * @return true if the piece is successfully added, false otherwise
+     */
+    public boolean addPiece(ChessPiece piece)
+    {
+        if (piece == null)
+            return false;
+        int row = piece.getRow();
+        int column = piece.getColumn();
+        if (!isOnTheBoard(row, column))
+            return false;
+        board.get(row).set(column, piece);
+        return true;
+    }
+
     /**
      * Determine if there is a ChessPiece at the given location.
      * @param row (1-8)

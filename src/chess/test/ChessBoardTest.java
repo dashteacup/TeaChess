@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import chess.Bishop;
 import chess.ChessBoard;
+import chess.ChessPiece;
 import chess.ChessPieceColor;
 import chess.King;
 import chess.Knight;
@@ -182,6 +183,44 @@ public class ChessBoardTest {
         assertNull(board.getPiece(5, 1));
         assertNull(board.getPiece(5, 8));
         assertNull(board.getPiece(6, 7));
+    }
+
+
+    /**
+     * Confirm that a ChessPiece successfully added to the board has the right
+     * properties.
+     */
+    @Test
+    public void addPiece()
+    {
+        Rook rook = new Rook(b, 4, ChessPieceColor.WHITE);
+        assertTrue(board.addPiece(rook));
+        ChessPiece pieceAtLocation = board.getPiece(b, 4);
+        // refer to same object?
+        assertEquals(rook, pieceAtLocation);
+        // check internal state
+        assertEquals(4, pieceAtLocation.getRow());
+        assertEquals(2, pieceAtLocation.getColumn());
+        assertEquals(ChessPieceColor.WHITE, pieceAtLocation.getColor());
+    }
+
+    /**
+     * Ensure that a null piece cannot be added.
+     */
+    @Test
+    public void addPieceNull()
+    {
+        assertFalse(board.addPiece(null));
+    }
+
+    /**
+     * Ensure that pieces with locations off the board cannot be added.
+     */
+    @Test
+    public void addPieceOffTheBoard()
+    {
+        Pawn pawn = new Pawn(6, 0, ChessPieceColor.BLACK);
+        assertFalse(board.addPiece(pawn));
     }
 
     /**
