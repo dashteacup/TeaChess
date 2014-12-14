@@ -263,8 +263,8 @@ public class ChessBoard {
             }
             return true; // found no occupied spaces across the diagonal
         }
-        // All non-hoppable pieces move either vertically, horizontally, or diagonally
-        return false;
+        // All non-hoppable pieces move either vertically, horizontally, or diagonally.
+        return false; // This line should never actually execute.
     }
 
     /**

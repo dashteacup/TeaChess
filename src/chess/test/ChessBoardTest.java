@@ -319,6 +319,62 @@ public class ChessBoardTest {
     }
 
     /**
+     * Ensure that up-right diagonal moves fail if something blocks their way.
+     */
+    @Test
+    public void hasClearPathDiagonalUpRight()
+    {
+        Bishop bishop = new Bishop(c, 3, ChessPieceColor.WHITE);
+        assertTrue(board.addPiece(bishop));
+        // can't move up-right past a piece
+        assertFalse(board.move(c, 3, h, 8));
+        // capture up-right
+        assertTrue(board.move(c, 3, g, 7));
+    }
+
+    /**
+     * Ensure that up-left moves fail if something blocks their way.
+     */
+    @Test
+    public void hasClearPathDiagonalUpLeft()
+    {
+        Queen queen = new Queen(g, 3, ChessPieceColor.WHITE);
+        assertTrue(board.addPiece(queen));
+        // can't move up-left past a piece
+        assertFalse(board.move(g, 3, b, 8));
+        // capture up-left
+        assertTrue(board.move(g, 3, c, 7));
+    }
+
+    /**
+     * Ensure that down-right moves fail if something blocks their way.
+     */
+    @Test
+    public void hasClearPathDiagonalDownRight()
+    {
+        Queen queen = new Queen(a, 6, ChessPieceColor.BLACK);
+        assertTrue(board.addPiece(queen));
+        // can't move down-right past a piece
+        assertFalse(board.move(a, 6, f, 1));
+        // capture down-right
+        assertTrue(board.move(a, 6, e, 2));
+    }
+
+    /**
+     * Ensure that down-left moves fail if something blocks their way.
+     */
+    @Test
+    public void hasClearPathDiagonalDownLeft()
+    {
+        Bishop bishop = new Bishop(h, 5, ChessPieceColor.BLACK);
+        assertTrue(board.addPiece(bishop));
+        // can't move down-left past a piece
+        assertFalse(board.move(h, 5, d, 1));
+        // capture down-left
+        assertTrue(board.move(h, 5, e, 2));
+    }
+
+    /**
      * Test pawn movement and capture functionality.
      */
     @Test
