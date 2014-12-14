@@ -35,7 +35,7 @@ public class ChessGameView {
         gameWindow.setVisible(true);
         gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    
+
     /**
      * Set the board position to what it should be in a new game.
      */
@@ -44,19 +44,19 @@ public class ChessGameView {
         JPanel totalLayoutPanel = new JPanel(new BorderLayout());
         statusLabel = new JLabel("White's turn.");
         totalLayoutPanel.add(statusLabel, BorderLayout.PAGE_START);
-        
+
         // make the chess board's panel
         JPanel boardPanel = new JPanel();
         boardPanel.setPreferredSize(new Dimension(windowWidth, windowHeight));
         boardPanel.setLayout(new GridLayout(chessBoardRows, chessBoardColumns));
-        buttonCollection = new ChessSpaceButton[chessBoardRows][chessBoardColumns]; 
-        addButtons(boardPanel);        
+        buttonCollection = new ChessSpaceButton[chessBoardRows][chessBoardColumns];
+        addButtons(boardPanel);
         totalLayoutPanel.add(boardPanel, BorderLayout.CENTER);
-        
+
         gameWindow.setContentPane(totalLayoutPanel);
         gameWindow.setVisible(true);
     }
-  
+
     /**
      * Move the graphical representation of a chess piece to another space.
      */
@@ -64,7 +64,7 @@ public class ChessGameView {
     {
         buttonCollection[oldRow][oldColumn].movePiece(buttonCollection[newRow][newColumn]);
     }
-    
+
     /**
      * @param message to display in the status area
      */
@@ -82,7 +82,7 @@ public class ChessGameView {
         JMenu file = new JMenu("File");
         JMenuItem newGame = new JMenuItem("New Game");
         newGame.addActionListener(myController);
-        file.add(newGame); 
+        file.add(newGame);
         menubar.add(file);
         window.setJMenuBar(menubar);
     }
@@ -97,7 +97,7 @@ public class ChessGameView {
         for (int row = 0; row < chessBoardRows; ++row) {
             if (row % 2 == 0)
                 backgroundColor = lightSpace;
-            else 
+            else
                 backgroundColor = darkSpace;
             for (int column = 0; column < chessBoardColumns; ++column) {
                 ChessSpaceButton b = new ChessSpaceButton(row, column, backgroundColor, myController);
@@ -105,7 +105,7 @@ public class ChessGameView {
                 buttonCollection[row][column] = b;
                 backgroundColor = nextColor(backgroundColor);
             }
-        }        
+        }
         setUpNewGameButtonIcons();
     }
 
@@ -149,11 +149,11 @@ public class ChessGameView {
         buttonCollection[2][4].setPiece("blackPrince.png");
         buttonCollection[5][4].setPiece("whitePrince.png");
     }
-    
+
     /**
      * Helper function to allow swapping back and forth between black and white.
      * @param c the current color
-     * @return lightSpace if input is darkSpace, darkSpace if input is lightSpace 
+     * @return lightSpace if input is darkSpace, darkSpace if input is lightSpace
      */
     private Color nextColor(Color c)
     {
@@ -163,7 +163,7 @@ public class ChessGameView {
             return darkSpace;
         return lightSpace;
     }
-    
+
     /**
      * Reference to the controller that handles the game loop.
      */
@@ -173,38 +173,38 @@ public class ChessGameView {
      * Default height of the game window.
      */
     private final static int windowHeight = 700;
-    
+
     /**
      * Default width of the game window.
      */
     private final static int windowWidth = 700;
-    
+
     /**
      * Number of rows on a chess board.
      */
     private final static int chessBoardRows = 8;
-    
+
     /**
      * Number of columns on a chess board.
      */
     private final static int chessBoardColumns = 8;
-    
+
     /**
      * Color of the lighter spaces on the chess board.
      */
     private final static Color lightSpace = new Color(1.0f, 0.808f, 0.62f);
-    
+
     /**
      * Color of the darker spaces on the chess board.
      */
     private final static Color darkSpace = new Color(0.82f, 0.545f, 0.278f);
-        
+
     /**
      * Collection holding references to all the button objects representing spaces
      * on a chess board.
      */
     private ChessSpaceButton buttonCollection[][];
-    
+
     /**
      * The window for this game.
      */
