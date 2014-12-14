@@ -23,6 +23,7 @@ public class ChessGameView {
     public ChessGameView(ChessController gameController)
     {
         try {
+            // Use the cross platform look because native doesn't have correct colors.
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch(Exception e) {
             //silently ignore
