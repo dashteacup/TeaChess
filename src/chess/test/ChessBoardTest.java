@@ -284,6 +284,41 @@ public class ChessBoardTest {
     }
 
     /**
+     * Ensure that horizontal moves fail if something blocks their way.
+     */
+    @Test
+    public void hasClearPathHorizontal()
+    {
+        Rook rightRook = new Rook(g, 4, ChessPieceColor.WHITE);
+        assertTrue(board.addPiece(rightRook));
+        // rook left all the way
+        assertTrue(board.isValidMove(g, 4, a, 4));
+        // put something in the way
+        Rook leftRook = new Rook(c, 4, ChessPieceColor.BLACK);
+        assertTrue(board.addPiece(leftRook));
+        // right rook can't move left over a piece
+        assertFalse(board.move(g, 4, b, 4));
+        // left rook can't move right over a piece
+        assertFalse(board.move(c, 4, h, 4));
+        // right rook CAN capture left
+        assertTrue(board.move(g, 4, c, 4));
+    }
+
+    /**
+     * Ensure that vertical moves fail if something blocks their way.
+     */
+    @Test
+    public void hasClearPathVertical()
+    {
+        Queen queen = new Queen(e, 3, ChessPieceColor.WHITE);
+        assertTrue(board.addPiece(queen));
+        // can't move up over a piece
+        assertFalse(board.move(e, 3, e, 8));
+        // can capture up
+        assertTrue(board.move(e, 3, e, 7));
+    }
+
+    /**
      * Test pawn movement and capture functionality.
      */
     @Test
