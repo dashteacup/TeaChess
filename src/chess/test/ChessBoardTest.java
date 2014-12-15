@@ -391,4 +391,40 @@ public class ChessBoardTest {
         // bad, black capture empty space down-right
         assertFalse(board.move(c, 4, d, 3));
     }
+
+    /**
+     * Run a simulated partial chess game.
+     */
+    @Test
+    public void testMultipleMoves()
+    {
+        // white pawn up 2
+        assertTrue(board.move(h, 2, h, 4));
+        // black knight down 2 left 1
+        assertTrue(board.move(g, 8, f, 6));
+        // white rook up 2
+        assertTrue(board.move(h, 1, h, 3));
+        // black pawn down 1
+        assertTrue(board.move(g, 7, g, 6));
+        // white rook left 3
+        assertTrue(board.move(h, 3, e, 3));
+        // black bishop down-right 2
+        assertTrue(board.move(f, 8, h, 6));
+        // white pawn up 2
+        assertTrue(board.move(d, 2, d, 4));
+        // black bishop capture rook
+        assertTrue(board.move(h, 6, e, 3));
+        // white queen up 2
+        assertTrue(board.move(d, 1, d, 3));
+        // black king right
+        assertTrue(board.move(e, 8, f, 8));
+        // white queen capture bishop
+        assertTrue(board.move(d, 3, e, 3));
+        // black knight down 2 right 1
+        assertTrue(board.move(f, 6, g, 4));
+        // white queen capture pawn
+        assertTrue(board.move(e, 3, e, 7));
+        // black king capture queen
+        assertTrue(board.move(f, 8, e, 7));
+    }
 }
