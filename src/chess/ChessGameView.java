@@ -28,6 +28,10 @@ public class ChessGameView {
         } catch(Exception e) {
             //silently ignore
         }
+        if (System.getProperty("os.name").contains("OS X")) {
+            // setup mac menu bar
+            System.setProperty("apple.laf.useScreenMenuBar", "true");
+        }
         myController = gameController;
         gameWindow = new JFrame("Chess Program");
         gameWindow.setSize(windowWidth, windowHeight);
