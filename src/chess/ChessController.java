@@ -40,8 +40,7 @@ public class ChessController implements ActionListener {
             modelBoard = new ChessBoard();
             currentPlayerColor = ChessPieceColor.WHITE;
             pieceSelected = false;
-        }
-        else {
+        } else {
             buttonLastPicked = (ChessSpaceButton) event.getSource();
             buttonClickedAction();
         }
@@ -66,8 +65,7 @@ public class ChessController implements ActionListener {
                 }
             }
             pieceSelected = false;
-        }
-        else {
+        } else {
             // Can't move around empty spaces
             if (!buttonLastPicked.isEmptySpace() && buttonLastPicked.getPieceColor() == currentPlayerColor) {
                 selectedRow = newRow;
@@ -85,8 +83,7 @@ public class ChessController implements ActionListener {
         if (currentPlayerColor == ChessPieceColor.WHITE) {
             currentPlayerColor = ChessPieceColor.BLACK;
             view.setStatusLabel("Black's turn.");
-        }
-        else {
+        } else {
             currentPlayerColor = ChessPieceColor.WHITE;
             view.setStatusLabel("White's turn.");
         }
