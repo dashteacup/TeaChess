@@ -145,14 +145,6 @@ public class ChessGameView {
         // set up kings
         buttonCollection[0][4].setPiece("blackKing.png");
         buttonCollection[7][4].setPiece("whiteKing.png");
-        // set up frogs
-        buttonCollection[2][0].setPiece("blackFrog.png");
-        buttonCollection[2][7].setPiece("blackFrog.png");
-        buttonCollection[5][0].setPiece("whiteFrog.png");
-        buttonCollection[5][7].setPiece("whiteFrog.png");
-        // set up princes
-        buttonCollection[2][4].setPiece("blackPrince.png");
-        buttonCollection[5][4].setPiece("whitePrince.png");
     }
 
     /**
