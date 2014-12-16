@@ -13,11 +13,8 @@ public class ChessController implements ActionListener {
      */
     public ChessController()
     {
-        modelBoard = new ChessBoard();
         view = new ChessGameView(this);
-        // White player always goes first in chess.
-        currentPlayerColor = ChessPieceColor.WHITE;
-        pieceSelected = false;
+        setupNewChessGame();
     }
 
     /**
@@ -37,12 +34,9 @@ public class ChessController implements ActionListener {
         // Clicked the new game menu item.
         if (event.getActionCommand() == "New Game") {
             view.startNewGame();
-            modelBoard = new ChessBoard();
-            currentPlayerColor = ChessPieceColor.WHITE;
-            pieceSelected = false;
+            setupNewChessGame();
         } else {
-            buttonLastPicked = (ChessSpaceButton) event.getSource();
-            buttonClickedAction();
+            buttonClickedAction((ChessSpaceButton) event.getSource());
         }
 
     }
@@ -50,29 +44,47 @@ public class ChessController implements ActionListener {
     /**
      * Actions to be performed when receiving a button clicked event.
      */
-    public void buttonClickedAction()
+    public void buttonClickedAction(ChessSpaceButton buttonClicked)
     {
-        int newRow = buttonLastPicked.getRow();
-        int newColumn = buttonLastPicked.getColumn();
+        final int clickedRow = buttonClicked.getRow();
+        final int clickedColumn = buttonClicked.getColumn();
+        System.out.println("r:" + clickedRow + ", c:" + clickedColumn);
         if (pieceSelected) {
-            // No moving to your own place, just deselect current piece.
-            if (!(newRow == selectedRow && newColumn == selectedColumn)) {
-                // have to translate board positions.. I should rewrite chessboard to be consistant
-                if (modelBoard.isValidMove(8 - selectedRow, 1 + selectedColumn, 8 - newRow, 1 + newColumn)) {
-                    view.moveChessPiece(selectedRow, selectedColumn, newRow, newColumn);
-                    modelBoard.move(8 - selectedRow, 1 + selectedColumn, 8 - newRow, 1 + newColumn);
-                    changePlayers();
-                }
+            final int selectedRow = currentlySelectedButton.getRow();
+            final int selectedColumn = currentlySelectedButton.getColumn();
+            // have to translate board positions because the model and view have different layout
+            if (modelBoard.isValidMove(8 - selectedRow, 1 + selectedColumn, 8 - clickedRow, 1 + clickedColumn)) {
+                view.moveChessPiece(selectedRow, selectedColumn, clickedRow, clickedColumn);
+                modelBoard.move(8 - selectedRow, 1 + selectedColumn, 8 - clickedRow, 1 + clickedColumn);
+                changePlayers();
+                currentlySelectedButton.deselectSpace();
+                pieceSelected = false;
+            // selecting a new piece of the same color
+            } else if (buttonClicked.getPieceColor() == currentPlayerColor) {
+                currentlySelectedButton.deselectSpace();
+                buttonClicked.selectSpace();
+                currentlySelectedButton = buttonClicked;
             }
-            pieceSelected = false;
-        } else {
-            // Can't move around empty spaces
-            if (!buttonLastPicked.isEmptySpace() && buttonLastPicked.getPieceColor() == currentPlayerColor) {
-                selectedRow = newRow;
-                selectedColumn = newColumn;
-                pieceSelected = true;
-            }
+            // do nothing if it's an invalid move
+        // no piece currently selected
+        } else if (!buttonClicked.isEmptySpace() && buttonClicked.getPieceColor() == currentPlayerColor) {
+            buttonClicked.selectSpace();
+            currentlySelectedButton = buttonClicked;
+            pieceSelected = true;
         }
+    }
+
+    /**
+     * Prepare the controller for a new chess game. This sets all variables except
+     * the view to their default values.
+     */
+    private void setupNewChessGame()
+    {
+        modelBoard = new ChessBoard();
+        // White player always goes first in chess.
+        currentPlayerColor = ChessPieceColor.WHITE;
+        pieceSelected = false;
+        currentlySelectedButton = null;
     }
 
     /**
@@ -83,16 +95,11 @@ public class ChessController implements ActionListener {
         if (currentPlayerColor == ChessPieceColor.WHITE) {
             currentPlayerColor = ChessPieceColor.BLACK;
             view.setStatusLabel("Black's turn.");
-        } else {
+        } else { // (currentPlayerColor == ChessPieceColor.BLACK)
             currentPlayerColor = ChessPieceColor.WHITE;
             view.setStatusLabel("White's turn.");
         }
     }
-
-    /**
-     * The game's Model of the chess board.
-     */
-    private ChessBoard modelBoard;
 
     /**
      * The game's View.
@@ -100,9 +107,9 @@ public class ChessController implements ActionListener {
     private ChessGameView view;
 
     /**
-     * The button last selected by the user.
+     * The game's Model of the chess board.
      */
-    private ChessSpaceButton buttonLastPicked;
+    private ChessBoard modelBoard;
 
     /**
      * Color of the player whose turn we are doing.
@@ -115,12 +122,7 @@ public class ChessController implements ActionListener {
     private boolean pieceSelected;
 
     /**
-     * selected row
+     * The button corresponding with the chess piece you intend to move.
      */
-    private int selectedRow;
-
-    /**
-     * selected column
-     */
-    private int selectedColumn;
+    private ChessSpaceButton currentlySelectedButton;
 }

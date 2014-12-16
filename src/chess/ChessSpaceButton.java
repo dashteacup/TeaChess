@@ -22,16 +22,17 @@ public class ChessSpaceButton extends JButton {
      */
     public ChessSpaceButton(int row, int column, Color backgroundColor, ActionListener listener)
     {
-        super();
         emptySpace = true;
         pieceColor = ChessPieceColor.NONE;
-        setBackground(backgroundColor);
-        setOpaque(true);
-        Border whiteBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
-        setBorder(whiteBorder);
-        addActionListener(listener);
+        unselectedBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
+        selectedBorder = BorderFactory.createMatteBorder(3, 3, 3, 3, Color.BLACK);
         this.row = row;
         this.column = column;
+
+        setBackground(backgroundColor);
+        setOpaque(true);
+        setBorder(unselectedBorder);
+        addActionListener(listener);
     }
 
     /**
@@ -58,6 +59,22 @@ public class ChessSpaceButton extends JButton {
         newSpace.setPieceColor(getPieceColor());
         newSpace.setSpaceOccupied();
         setEmptySpace();
+    }
+
+    /**
+     * Mark this space as selected.
+     */
+    public void selectSpace()
+    {
+        setBorder(selectedBorder);
+    }
+
+    /**
+     * Mark this space as unselected.
+     */
+    public void deselectSpace()
+    {
+        setBorder(unselectedBorder);
     }
 
     /**
@@ -127,6 +144,16 @@ public class ChessSpaceButton extends JButton {
      * Color of the chess piece in this space.
      */
     private ChessPieceColor pieceColor;
+
+    /**
+     * The border style of an unselected space on the chess board.
+     */
+    private Border unselectedBorder;
+
+    /**
+     * The border style of a selected space on the chess board.
+     */
+    private Border selectedBorder;
 
     /**
      * Row in the grid layout of buttons. Valid values 0 - 7.
