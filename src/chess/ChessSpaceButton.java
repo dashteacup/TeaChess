@@ -3,8 +3,10 @@ package chess;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.border.Border;
 
 /**
  * Custom button type made so I can store additional information on a JButton.
@@ -18,19 +20,22 @@ public class ChessSpaceButton extends JButton {
      * @param backgroundColor the background color of this space.
      * @param listener the ActionListener that will receive this space's events.
      */
-    public ChessSpaceButton(int row, int column, Color backgroundColor, ActionListener listener) 
+    public ChessSpaceButton(int row, int column, Color backgroundColor, ActionListener listener)
     {
         super();
         emptySpace = true;
         pieceColor = ChessPieceColor.NONE;
         setBackground(backgroundColor);
+        setOpaque(true);
+        Border whiteBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
+        setBorder(whiteBorder);
         addActionListener(listener);
         this.row = row;
         this.column = column;
     }
-    
+
     /**
-     * Make this space have a chess piece based on the given image. 
+     * Make this space have a chess piece based on the given image.
      * @param iconSource file name of the chess piece's image
      */
     public void setPiece(String iconSource)
@@ -42,7 +47,7 @@ public class ChessSpaceButton extends JButton {
         else if (iconSource.startsWith("black"))
             pieceColor = ChessPieceColor.BLACK;
     }
-    
+
     /**
      * Move one space's button properties to another space
      * @param newSpace the button that this space will move to.
@@ -58,7 +63,7 @@ public class ChessSpaceButton extends JButton {
     /**
      * Determine if this chess space is empty.
      */
-    public boolean isEmptySpace() 
+    public boolean isEmptySpace()
     {
         return emptySpace;
     }
@@ -66,7 +71,7 @@ public class ChessSpaceButton extends JButton {
     /**
      * Make this space empty.
      */
-    public void setEmptySpace() 
+    public void setEmptySpace()
     {
         emptySpace = true;
         pieceColor = ChessPieceColor.NONE;
@@ -92,7 +97,7 @@ public class ChessSpaceButton extends JButton {
     /**
      * @param pieceColor the pieceColor to set
      */
-    public void setPieceColor(ChessPieceColor pieceColor) 
+    public void setPieceColor(ChessPieceColor pieceColor)
     {
         this.pieceColor = pieceColor;
     }
@@ -100,7 +105,7 @@ public class ChessSpaceButton extends JButton {
     /**
      * @return the row of this chess space in the grid layout of buttons.
      */
-    public int getRow() 
+    public int getRow()
     {
         return row;
     }
@@ -108,7 +113,7 @@ public class ChessSpaceButton extends JButton {
     /**
      * @return the column of this chess space in the grid layout of buttons.
      */
-    public int getColumn() 
+    public int getColumn()
     {
         return column;
     }
@@ -117,7 +122,7 @@ public class ChessSpaceButton extends JButton {
      * Flag marking whether or not this space contains a chess piece.
      */
     private boolean emptySpace;
-    
+
     /**
      * Color of the chess piece in this space.
      */
@@ -132,9 +137,9 @@ public class ChessSpaceButton extends JButton {
      * Column in the grid layout of buttons. Valid values 0 - 7.
      */
     private int column;
-    
+
     /**
-     * Path to the directory where the image files are stored. 
+     * Path to the directory where the image files are stored.
      */
     private final static String imageDirectory = "src/chess/images/";
 }

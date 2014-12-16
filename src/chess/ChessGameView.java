@@ -23,10 +23,9 @@ public class ChessGameView {
     public ChessGameView(ChessController gameController)
     {
         try {
-            // Use the cross platform look because native doesn't have correct colors.
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch(Exception e) {
-            //silently ignore
+            System.err.println(e.getMessage());
         }
         if (System.getProperty("os.name").contains("OS X")) {
             // setup mac menu bar
@@ -100,6 +99,7 @@ public class ChessGameView {
     {
         Color backgroundColor;
         for (int row = 0; row < chessBoardRows; ++row) {
+            // initial color for this row
             if (row % 2 == 0)
                 backgroundColor = lightSpace;
             else
