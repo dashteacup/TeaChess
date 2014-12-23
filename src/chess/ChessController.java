@@ -30,6 +30,7 @@ public class ChessController implements ActionListener {
         // Clicked the close menu item.
         } else if (event.getActionCommand() == "Close") {
             System.exit(0);
+        // Clicked one of the chess spaces
         } else {
             buttonClickedAction((ChessSpaceButton) event.getSource());
         }
