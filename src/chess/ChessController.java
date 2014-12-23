@@ -27,6 +27,9 @@ public class ChessController implements ActionListener {
         if (event.getActionCommand() == "New Game") {
             view.startNewGame();
             setupNewChessGame();
+        // Clicked the close menu item.
+        } else if (event.getActionCommand() == "Close") {
+            System.exit(0);
         } else {
             buttonClickedAction((ChessSpaceButton) event.getSource());
         }

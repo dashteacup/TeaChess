@@ -74,9 +74,14 @@ public class ChessGameView {
     {
         JMenuBar menubar = new JMenuBar();
         JMenu file = new JMenu("File");
+        // New Game menu item
         JMenuItem newGame = new JMenuItem("New Game");
         newGame.addActionListener(myController);
         file.add(newGame);
+        // Close menu item
+        JMenuItem close = new JMenuItem("Close");
+        close.addActionListener(myController);
+        file.add(close);
         menubar.add(file);
         window.setJMenuBar(menubar);
     }
