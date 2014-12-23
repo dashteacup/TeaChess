@@ -33,7 +33,6 @@ public class ChessController implements ActionListener {
         } else {
             buttonClickedAction((ChessSpaceButton) event.getSource());
         }
-
     }
 
     /**
