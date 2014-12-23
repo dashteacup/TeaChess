@@ -43,7 +43,6 @@ public class ChessController implements ActionListener {
     {
         final int clickedRow = buttonClicked.getRow();
         final int clickedColumn = buttonClicked.getColumn();
-        System.out.println("r:" + clickedRow + ", c:" + clickedColumn);
         if (pieceSelected) {
             final int selectedRow = currentlySelectedButton.getRow();
             final int selectedColumn = currentlySelectedButton.getColumn();
