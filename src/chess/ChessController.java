@@ -18,14 +18,6 @@ public class ChessController implements ActionListener {
     }
 
     /**
-     * Run the main game loop.
-     */
-    public static void main(String[] args)
-    {
-        new ChessController();
-    }
-
-    /**
      * Handle user actions.
      */
     @Override

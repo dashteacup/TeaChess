@@ -11,7 +11,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 
 /**
  * View Class for the chess board.
@@ -22,15 +21,6 @@ public class ChessGameView {
      */
     public ChessGameView(ChessController gameController)
     {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch(Exception e) {
-            System.err.println(e.getMessage());
-        }
-        if (System.getProperty("os.name").contains("OS X")) {
-            // setup mac menu bar
-            System.setProperty("apple.laf.useScreenMenuBar", "true");
-        }
         myController = gameController;
         gameWindow = new JFrame("Chess Program");
         gameWindow.setSize(windowWidth, windowHeight);
