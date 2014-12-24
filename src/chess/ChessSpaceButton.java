@@ -25,7 +25,8 @@ public class ChessSpaceButton extends JButton {
         emptySpace = true;
         pieceColor = ChessPieceColor.NONE;
         unselectedBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
-        selectedBorder = BorderFactory.createMatteBorder(3, 3, 3, 3, Color.BLACK);
+        selectedBorder = BorderFactory.createMatteBorder(5, 5, 5, 5, Color.BLACK);
+        highlightedBorder = BorderFactory.createMatteBorder(3, 3, 3, 3, Color.GREEN);
         this.row = row;
         this.column = column;
 
@@ -75,6 +76,14 @@ public class ChessSpaceButton extends JButton {
     public void deselectSpace()
     {
         setBorder(unselectedBorder);
+    }
+
+    /**
+     * Highlight this space. This is used to indicate valid moves.
+     */
+    public void highlightSpace()
+    {
+        setBorder(highlightedBorder);
     }
 
     /**
@@ -154,6 +163,11 @@ public class ChessSpaceButton extends JButton {
      * The border style of a selected space on the chess board.
      */
     private Border selectedBorder;
+
+    /**
+     * The border style of a highlighted space on the chess board.
+     */
+    private Border highlightedBorder;
 
     /**
      * Row in the grid layout of buttons. Valid values 0 - 7.

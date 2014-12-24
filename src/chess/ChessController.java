@@ -53,13 +53,14 @@ public class ChessController implements ActionListener {
                 modelBoard.move(viewRowToModel(selectedRow), viewColumnToModel(selectedColumn),
                                 viewRowToModel(clickedRow),  viewColumnToModel(clickedColumn));
                 changePlayers();
-                currentlySelectedButton.deselectSpace();
                 pieceSelected = false;
+                clearMarkedSpaces();
             // selecting a new piece of the same color
             } else if (buttonClicked.getPieceColor() == currentPlayerColor) {
-                currentlySelectedButton.deselectSpace();
+                clearMarkedSpaces();
                 buttonClicked.selectSpace();
                 currentlySelectedButton = buttonClicked;
+                highlightValidMoves();
             }
             // do nothing if it's an invalid move
         // no piece currently selected
@@ -67,6 +68,7 @@ public class ChessController implements ActionListener {
             buttonClicked.selectSpace();
             currentlySelectedButton = buttonClicked;
             pieceSelected = true;
+            highlightValidMoves();
         }
     }
 
@@ -115,6 +117,35 @@ public class ChessController implements ActionListener {
     private int viewColumnToModel(int viewColumn)
     {
         return 1 + viewColumn;
+    }
+
+    /**
+     * Highlight all valid moves for the currently selected piece.
+     */
+    private void highlightValidMoves()
+    {
+        int selectedRow = currentlySelectedButton.getRow();
+        int selectedColumn = currentlySelectedButton.getColumn();
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                if (modelBoard.isValidMove(viewRowToModel(selectedRow), viewColumnToModel(selectedColumn),
+                                           viewRowToModel(row),         viewColumnToModel(col))) {
+                    view.getSpace(row, col).highlightSpace();
+                }
+            }
+        }
+    }
+
+    /**
+     * Clear all selected and highlighted spaces.
+     */
+    private void clearMarkedSpaces()
+    {
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                view.getSpace(row, col).deselectSpace();
+            }
+        }
     }
 
     /**
