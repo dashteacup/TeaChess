@@ -62,8 +62,23 @@ public class ChessGameView {
     /**
      * @param message to display in the status area
      */
-    public void setStatusLabel(String message) {
+    public void setStatusLabel(String message)
+    {
         statusLabel.setText(message);
+    }
+
+    /**
+     * Get the chess space at the given row and column in the view.
+     * @param row of the chess space (0-7)
+     * @param column of the chess space (0-7)
+     * @return the chess space
+     */
+    public ChessSpaceButton getSpace(int row, int column)
+    {
+        if (!( (0 <= row && row <= 7) && (0 <= column && column <= 7) )) {
+            throw new OffTheChessBoardException("row: " + row + " col: " + column);
+        }
+        return buttonCollection[row][column];
     }
 
     /**
