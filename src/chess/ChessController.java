@@ -47,9 +47,11 @@ public class ChessController implements ActionListener {
             final int selectedRow = currentlySelectedButton.getRow();
             final int selectedColumn = currentlySelectedButton.getColumn();
             // have to translate board positions because the model and view have different layout
-            if (modelBoard.isValidMove(8 - selectedRow, 1 + selectedColumn, 8 - clickedRow, 1 + clickedColumn)) {
+            if (modelBoard.isValidMove(viewRowToModel(selectedRow), viewColumnToModel(selectedColumn),
+                                       viewRowToModel(clickedRow),  viewColumnToModel(clickedColumn))) {
                 view.moveChessPiece(selectedRow, selectedColumn, clickedRow, clickedColumn);
-                modelBoard.move(8 - selectedRow, 1 + selectedColumn, 8 - clickedRow, 1 + clickedColumn);
+                modelBoard.move(viewRowToModel(selectedRow), viewColumnToModel(selectedColumn),
+                                viewRowToModel(clickedRow),  viewColumnToModel(clickedColumn));
                 changePlayers();
                 currentlySelectedButton.deselectSpace();
                 pieceSelected = false;
@@ -93,6 +95,26 @@ public class ChessController implements ActionListener {
             currentPlayerColor = ChessPieceColor.WHITE;
             view.setStatusLabel("White's turn.");
         }
+    }
+
+    /**
+     * Translate a row in the chess board's view to its row in the model.
+     * @param viewRow the row in the view
+     * @return the corresponding row in the model
+     */
+    private int viewRowToModel(int viewRow)
+    {
+        return 8 - viewRow;
+    }
+
+    /**
+     * Translate a column in the chess board's view to its column in the model
+     * @param viewColumn the column in the view
+     * @return the corresponding column in the model
+     */
+    private int viewColumnToModel(int viewColumn)
+    {
+        return 1 + viewColumn;
     }
 
     /**
