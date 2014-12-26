@@ -24,11 +24,13 @@ public class ChessSpaceButton extends JButton {
     {
         emptySpace = true;
         pieceColor = ChessPieceColor.NONE;
-        unselectedBorder = BorderFactory.createLineBorder(Color.WHITE);
-        selectedBorder = BorderFactory.createLineBorder(Color.BLACK, 5);
-        highlightedBorder = BorderFactory.createLineBorder(Color.GREEN, 3);
         this.row = row;
         this.column = column;
+
+        unselectedBorder = BorderFactory.createLineBorder(Color.WHITE);
+        selectedBorder = BorderFactory.createLineBorder(Color.BLACK, 5);
+        Border highlighting = BorderFactory.createLineBorder(Color.GREEN, 3);
+        highlightedBorder = BorderFactory.createCompoundBorder(unselectedBorder, highlighting);
 
         setBackground(backgroundColor);
         setOpaque(true);
