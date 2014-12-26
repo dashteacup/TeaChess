@@ -184,5 +184,5 @@ public class ChessSpaceButton extends JButton {
      */
     // TODO: Make this work on systems that don't use forward slash as path
     // separator (Windows).
-    private final static String IMAGE_DIRECTORY = "src/chess/images/";
+    private static final String IMAGE_DIRECTORY = "src/chess/images/";
 }

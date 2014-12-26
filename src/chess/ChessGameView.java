@@ -177,32 +177,32 @@ public class ChessGameView {
     /**
      * Default height of the game window.
      */
-    private final static int WINDOW_HEIGHT = 700;
+    private static final int WINDOW_HEIGHT = 700;
 
     /**
      * Default width of the game window.
      */
-    private final static int WINDOW_WIDTH = 700;
+    private static final int WINDOW_WIDTH = 700;
 
     /**
      * Number of rows on a chess board.
      */
-    private final static int CHESS_BOARD_ROWS = 8;
+    private static final int CHESS_BOARD_ROWS = 8;
 
     /**
      * Number of columns on a chess board.
      */
-    private final static int CHESS_BOARD_COLUMNS = 8;
+    private static final int CHESS_BOARD_COLUMNS = 8;
 
     /**
      * Color of the lighter spaces on the chess board.
      */
-    private final static Color LIGHT_SPACE = new Color(1.0f, 0.808f, 0.62f);
+    private static final Color LIGHT_SPACE = new Color(1.0f, 0.808f, 0.62f);
 
     /**
      * Color of the darker spaces on the chess board.
      */
-    private final static Color DARK_SPACE = new Color(0.82f, 0.545f, 0.278f);
+    private static final Color DARK_SPACE = new Color(0.82f, 0.545f, 0.278f);
 
     /**
      * Collection holding references to all the button objects representing spaces
