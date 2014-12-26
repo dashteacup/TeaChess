@@ -17,14 +17,13 @@ import javax.swing.JPanel;
  */
 public class ChessGameView {
     /**
-     * Create a new gui for the chess program.
+     * Create a new frame (top-level container) for the chess program.
      */
     public ChessGameView(ChessController gameController)
     {
         myController = gameController;
         gameWindow = new JFrame("TeaChess");
         gameWindow.setSize(windowWidth, windowHeight);
-        startNewGame();
         setUpMenu(gameWindow);
         gameWindow.setVisible(true);
         gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

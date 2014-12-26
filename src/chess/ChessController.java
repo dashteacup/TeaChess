@@ -25,7 +25,6 @@ public class ChessController implements ActionListener {
     {
         // Clicked the new game menu item.
         if (event.getActionCommand() == "New Game") {
-            view.startNewGame();
             setupNewChessGame();
         // Clicked the close menu item.
         } else if (event.getActionCommand() == "Close") {
@@ -73,11 +72,12 @@ public class ChessController implements ActionListener {
     }
 
     /**
-     * Prepare the controller for a new chess game. This sets all variables except
-     * the view to their default values.
+     * Prepare a new chess game. This sets the model, the view, and all
+     * controller variables to their default values.
      */
     private void setupNewChessGame()
     {
+        view.startNewGame();
         modelBoard = new ChessBoard();
         // White player always goes first in chess.
         currentPlayerColor = ChessPieceColor.WHITE;
