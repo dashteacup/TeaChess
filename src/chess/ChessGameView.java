@@ -25,7 +25,6 @@ public class ChessGameView {
         gameWindow = new JFrame("TeaChess");
         gameWindow.setSize(windowWidth, windowHeight);
         setUpMenu(gameWindow);
-        gameWindow.setVisible(true);
         gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
