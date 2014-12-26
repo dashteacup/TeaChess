@@ -22,7 +22,7 @@ public class ChessGameView {
     public ChessGameView(ChessController gameController)
     {
         myController = gameController;
-        gameWindow = new JFrame("Chess Program");
+        gameWindow = new JFrame("TeaChess");
         gameWindow.setSize(windowWidth, windowHeight);
         startNewGame();
         setUpMenu(gameWindow);
