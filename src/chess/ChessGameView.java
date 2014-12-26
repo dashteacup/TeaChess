@@ -23,7 +23,7 @@ public class ChessGameView {
     {
         myController = gameController;
         gameWindow = new JFrame("TeaChess");
-        gameWindow.setSize(windowWidth, windowHeight);
+        gameWindow.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setUpMenu(gameWindow);
         gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -39,9 +39,9 @@ public class ChessGameView {
 
         // make the chess board's panel
         JPanel boardPanel = new JPanel();
-        boardPanel.setPreferredSize(new Dimension(windowWidth, windowHeight));
-        boardPanel.setLayout(new GridLayout(chessBoardRows, chessBoardColumns));
-        buttonCollection = new ChessSpaceButton[chessBoardRows][chessBoardColumns];
+        boardPanel.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
+        boardPanel.setLayout(new GridLayout(CHESS_BOARD_ROWS, CHESS_BOARD_COLUMNS));
+        buttonCollection = new ChessSpaceButton[CHESS_BOARD_ROWS][CHESS_BOARD_COLUMNS];
         addButtons(boardPanel);
         totalLayoutPanel.add(boardPanel, BorderLayout.CENTER);
 
@@ -106,13 +106,13 @@ public class ChessGameView {
     private void addButtons(JPanel boardPanel)
     {
         Color backgroundColor;
-        for (int row = 0; row < chessBoardRows; ++row) {
+        for (int row = 0; row < CHESS_BOARD_ROWS; ++row) {
             // initial color for this row
             if (row % 2 == 0)
-                backgroundColor = lightSpace;
+                backgroundColor = LIGHT_SPACE;
             else
-                backgroundColor = darkSpace;
-            for (int column = 0; column < chessBoardColumns; ++column) {
+                backgroundColor = DARK_SPACE;
+            for (int column = 0; column < CHESS_BOARD_COLUMNS; ++column) {
                 ChessSpaceButton b = new ChessSpaceButton(row, column, backgroundColor, myController);
                 boardPanel.add(b);
                 buttonCollection[row][column] = b;
@@ -128,7 +128,7 @@ public class ChessGameView {
     private void setUpNewGameButtonIcons()
     {
         // set up pawns
-        for (int i = 0; i < chessBoardColumns; ++i) {
+        for (int i = 0; i < CHESS_BOARD_COLUMNS; ++i) {
             buttonCollection[1][i].setPiece("blackPawn.png");
             buttonCollection[6][i].setPiece("whitePawn.png");
         }
@@ -158,15 +158,15 @@ public class ChessGameView {
     /**
      * Helper function to allow swapping back and forth between black and white.
      * @param c the current color
-     * @return lightSpace if input is darkSpace, darkSpace if input is lightSpace
+     * @return LIGHT_SPACE if input is DARK_SPACE, DARK_SPACE if input is LIGHT_SPACE
      */
     private Color nextColor(Color c)
     {
-        if (c == darkSpace)
-            return lightSpace;
-        else if (c == lightSpace)
-            return darkSpace;
-        return lightSpace;
+        if (c == DARK_SPACE)
+            return LIGHT_SPACE;
+        else if (c == LIGHT_SPACE)
+            return DARK_SPACE;
+        return LIGHT_SPACE;
     }
 
     /**
@@ -177,32 +177,32 @@ public class ChessGameView {
     /**
      * Default height of the game window.
      */
-    private final static int windowHeight = 700;
+    private final static int WINDOW_HEIGHT = 700;
 
     /**
      * Default width of the game window.
      */
-    private final static int windowWidth = 700;
+    private final static int WINDOW_WIDTH = 700;
 
     /**
      * Number of rows on a chess board.
      */
-    private final static int chessBoardRows = 8;
+    private final static int CHESS_BOARD_ROWS = 8;
 
     /**
      * Number of columns on a chess board.
      */
-    private final static int chessBoardColumns = 8;
+    private final static int CHESS_BOARD_COLUMNS = 8;
 
     /**
      * Color of the lighter spaces on the chess board.
      */
-    private final static Color lightSpace = new Color(1.0f, 0.808f, 0.62f);
+    private final static Color LIGHT_SPACE = new Color(1.0f, 0.808f, 0.62f);
 
     /**
      * Color of the darker spaces on the chess board.
      */
-    private final static Color darkSpace = new Color(0.82f, 0.545f, 0.278f);
+    private final static Color DARK_SPACE = new Color(0.82f, 0.545f, 0.278f);
 
     /**
      * Collection holding references to all the button objects representing spaces

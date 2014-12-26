@@ -15,10 +15,10 @@ public class ChessBoard {
     {
         board = new ArrayList<ArrayList<ChessPiece>>();
         // make rows
-        for (int row = 0; row < boardSize; ++row)
+        for (int row = 0; row < BOARD_SIZE; ++row)
             board.add(new ArrayList<ChessPiece>());
         // make columns, ignore the 0th row
-        for (int row = 1; row < boardSize; ++row) {
+        for (int row = 1; row < BOARD_SIZE; ++row) {
             // Want to index the board from 1 like in algebraic chess notation.
             // 0th column on every row is null.
             board.get(row).add(null);
@@ -34,18 +34,18 @@ public class ChessBoard {
                 board.get(row).add(new Rook  (row,  8, ChessPieceColor.WHITE));
                 break;
             case 2:
-                for (int col = 1; col < boardSize; ++col)
+                for (int col = 1; col < BOARD_SIZE; ++col)
                     board.get(row).add(new Pawn(row, col, ChessPieceColor.WHITE));
                 break;
             case 3:
             case 4:
             case 5:
             case 6:
-                for (int col = 1; col < boardSize; ++col)
+                for (int col = 1; col < BOARD_SIZE; ++col)
                     board.get(row).add(null);
                 break;
             case 7:
-                for (int col = 1; col < boardSize; ++col)
+                for (int col = 1; col < BOARD_SIZE; ++col)
                     board.get(row).add(new Pawn(row, col, ChessPieceColor.BLACK));
                 break;
             case 8:
@@ -284,7 +284,7 @@ public class ChessBoard {
      * Set to nine so I can index from 1-8 normally. The [0] element
      * will always be empty.
      */
-    private static final int boardSize = 9;
+    private static final int BOARD_SIZE = 9;
 
     /**
      * The board held in a 2 dimensional array;

@@ -42,7 +42,7 @@ public class ChessSpaceButton extends JButton {
      */
     public void setPiece(String iconSource)
     {
-        setIcon(new ImageIcon(imageDirectory + iconSource));
+        setIcon(new ImageIcon(IMAGE_DIRECTORY + iconSource));
         emptySpace = false;
         if (iconSource.startsWith("white"))
             pieceColor = ChessPieceColor.WHITE;
@@ -184,5 +184,5 @@ public class ChessSpaceButton extends JButton {
      */
     // TODO: Make this work on systems that don't use forward slash as path
     // separator (Windows).
-    private final static String imageDirectory = "src/chess/images/";
+    private final static String IMAGE_DIRECTORY = "src/chess/images/";
 }
