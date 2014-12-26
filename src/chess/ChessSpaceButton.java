@@ -24,9 +24,9 @@ public class ChessSpaceButton extends JButton {
     {
         emptySpace = true;
         pieceColor = ChessPieceColor.NONE;
-        unselectedBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
-        selectedBorder = BorderFactory.createMatteBorder(5, 5, 5, 5, Color.BLACK);
-        highlightedBorder = BorderFactory.createMatteBorder(3, 3, 3, 3, Color.GREEN);
+        unselectedBorder = BorderFactory.createLineBorder(Color.WHITE);
+        selectedBorder = BorderFactory.createLineBorder(Color.BLACK, 5);
+        highlightedBorder = BorderFactory.createLineBorder(Color.GREEN, 3);
         this.row = row;
         this.column = column;
 
