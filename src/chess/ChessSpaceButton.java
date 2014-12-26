@@ -180,7 +180,9 @@ public class ChessSpaceButton extends JButton {
     private int column;
 
     /**
-     * Path to the directory where the image files are stored.
+     * Path to the directory where the chess piece image files are stored.
      */
+    // TODO: Make this work on systems that don't use forward slash as path
+    // separator (Windows).
     private final static String imageDirectory = "src/chess/images/";
 }
