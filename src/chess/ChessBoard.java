@@ -227,24 +227,10 @@ public class ChessBoard {
         int deltaColumn = newColumn - oldColumn;
         // horizontal movement
         if (deltaRow == 0 && deltaColumn != 0) {
-            int lower = Math.min(oldColumn, newColumn);
-            int upper = Math.max(oldColumn, newColumn);
-            // check every space between the two columns
-            for (int column = lower + 1; column < upper; ++column) {
-                if (!emptySpace(oldRow, column))
-                    return false;
-            }
-            return true;
+            return hasClearHorizontal(oldRow, oldColumn, newColumn);
         // vertical movement
         } else if (deltaRow != 0 && deltaColumn == 0) {
-            int lower = Math.min(oldRow, newRow);
-            int upper = Math.max(oldRow, newRow);
-            // check every space between the two rows
-            for (int row = lower + 1; row < upper; ++row) {
-                if (!emptySpace(row, oldColumn))
-                    return false;
-            }
-            return true;
+            return hasClearVertical(oldColumn, oldRow, newRow);
         // diagonal movement
         } else if (Math.abs(deltaRow) == Math.abs(deltaColumn)) {
             int spacesApart = Math.abs(deltaRow);
@@ -277,6 +263,46 @@ public class ChessBoard {
         }
         // All non-hoppable pieces move either vertically, horizontally, or diagonally.
         return false; // This line should never actually execute.
+    }
+
+    /**
+     * Determine if there are any chess pieces between two columns on the chess
+     * board.
+     * @param row of the chess piece
+     * @param startColumn of the chess piece
+     * @param endColumn of the chess piece
+     * @return true if there are no pieces between the start and end, false
+     * otherwise
+     */
+    private boolean hasClearHorizontal(int row, int startColumn, int endColumn) {
+        int lower = Math.min(startColumn, endColumn);
+        int upper = Math.max(startColumn, endColumn);
+        // check every space between the two columns
+        for (int column = lower + 1; column < upper; ++column) {
+            if (!emptySpace(row, column))
+                return false;
+        }
+        return true;
+    }
+
+    /**
+     * Determine if there are any chess pieces between two rows on the chess
+     * board.
+     * @param column of the chess piece
+     * @param startRow of the chess piece
+     * @param endRow of the chess piece
+     * @return true if there are no pieces between the start and end, false
+     * otherwise
+     */
+    private boolean hasClearVertical(int column, int startRow, int endRow) {
+        int lower = Math.min(startRow, endRow);
+        int upper = Math.max(startRow, endRow);
+        // check every space between the two rows
+        for (int row = lower + 1; row < upper; ++row) {
+            if (!emptySpace(row, column))
+                return false;
+        }
+        return true;
     }
 
     /**
