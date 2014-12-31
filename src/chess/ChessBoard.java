@@ -233,33 +233,11 @@ public class ChessBoard {
             return hasClearVertical(oldColumn, oldRow, newRow);
         // diagonal movement
         } else if (Math.abs(deltaRow) == Math.abs(deltaColumn)) {
-            int spacesApart = Math.abs(deltaRow);
-            // up-right
-            if (deltaRow > 0 && deltaColumn > 0) {
-                for (int offset = 1; offset < spacesApart; ++offset) {
-                    if (!emptySpace(oldRow + offset, oldColumn + offset))
-                        return false;
-                }
-            // up-left
-            } else if (deltaRow > 0 && deltaColumn < 0) {
-                for (int offset = 1; offset < spacesApart; ++offset) {
-                    if (!emptySpace(oldRow + offset, oldColumn - offset))
-                        return false;
-                }
-            // down-right
-            } else if (deltaRow < 0 && deltaColumn > 0) {
-                for (int offset = 1; offset < spacesApart; ++offset) {
-                    if (!emptySpace(oldRow - offset, oldColumn + offset))
-                        return false;
-                }
-            // down-left
-            } else { // (deltaRow < 0 && deltaColumn < 0)
-                for (int offset = 1; offset < spacesApart; ++offset) {
-                    if (!emptySpace(oldRow - offset, oldColumn - offset))
-                        return false;
-                }
-            }
-            return true; // found no occupied spaces across the diagonal
+            return hasClearDiagonal(oldRow,
+                                    oldColumn,
+                                    Math.abs(deltaRow),
+                                    Integer.signum(deltaRow),
+                                    Integer.signum(deltaColumn));
         }
         // All non-hoppable pieces move either vertically, horizontally, or diagonally.
         return false; // This line should never actually execute.
@@ -300,6 +278,23 @@ public class ChessBoard {
         // check every space between the two rows
         for (int row = lower + 1; row < upper; ++row) {
             if (!emptySpace(row, column))
+                return false;
+        }
+        return true;
+    }
+
+    /**
+     * Determine if any chess pieces block the diagonal movement of a chess piece.
+     * @param row of the piece to move
+     * @param column of the piece to move
+     * @param spacesApart the number of steps between the piece and its destination
+     * @param rowStep the size of a single step between rows (-1 or 1)
+     * @param columnStep the size of a single step between columns (-1 or 1)
+     * @return true if no pieces block the diagonal moving piece, false otherwise
+     */
+    private boolean hasClearDiagonal(int row, int column, int spacesApart, int rowStep, int columnStep) {
+        for (int offset = 1; offset < spacesApart; ++offset) {
+            if (!emptySpace(row + (offset * rowStep), column + (offset * columnStep)))
                 return false;
         }
         return true;
