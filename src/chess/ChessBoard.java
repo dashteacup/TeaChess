@@ -7,6 +7,17 @@ import java.util.ArrayList;
  */
 public class ChessBoard {
     /**
+     * Set to nine so I can index from 1-8 normally. The [0] element
+     * will always be empty.
+     */
+    private static final int BOARD_SIZE = 9;
+
+    /**
+     * The board held in a 2 dimensional array;
+     */
+    private ArrayList<ArrayList<ChessPiece>> board;
+
+    /**
      * Build new standard sized chess board.
      * Currently, empty elements are set to null, I think I need to do
      * something better than that.
@@ -312,15 +323,4 @@ public class ChessBoard {
         boolean validColumn = (1 <= column && column <= 8);
         return validRow && validColumn;
     }
-
-    /**
-     * Set to nine so I can index from 1-8 normally. The [0] element
-     * will always be empty.
-     */
-    private static final int BOARD_SIZE = 9;
-
-    /**
-     * The board held in a 2 dimensional array;
-     */
-    private ArrayList<ArrayList<ChessPiece>> board;
 }

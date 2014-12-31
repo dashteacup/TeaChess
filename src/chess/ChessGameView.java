@@ -17,6 +17,57 @@ import javax.swing.JPanel;
  */
 public class ChessGameView {
     /**
+     * Default height of the game window.
+     */
+    private static final int WINDOW_HEIGHT = 700;
+
+    /**
+     * Default width of the game window.
+     */
+    private static final int WINDOW_WIDTH = 700;
+
+    /**
+     * Number of rows on a chess board.
+     */
+    private static final int CHESS_BOARD_ROWS = 8;
+
+    /**
+     * Number of columns on a chess board.
+     */
+    private static final int CHESS_BOARD_COLUMNS = 8;
+
+    /**
+     * Color of the lighter spaces on the chess board.
+     */
+    private static final Color LIGHT_SPACE = new Color(1.0f, 0.808f, 0.62f);
+
+    /**
+     * Color of the darker spaces on the chess board.
+     */
+    private static final Color DARK_SPACE = new Color(0.82f, 0.545f, 0.278f);
+
+    /**
+     * Reference to the controller that handles the game loop.
+     */
+    protected ChessController myController;
+
+    /**
+     * Collection holding references to all the button objects representing spaces
+     * on a chess board.
+     */
+    private ChessSpaceButton buttonCollection[][];
+
+    /**
+     * The window for this game.
+     */
+    private JFrame gameWindow;
+
+    /**
+     * Gives status information about the currently running game.
+     */
+    private JLabel statusLabel;
+
+    /**
      * Create a new frame (top-level container) for the chess program.
      */
     public ChessGameView(ChessController gameController)
@@ -168,56 +219,5 @@ public class ChessGameView {
             return DARK_SPACE;
         return LIGHT_SPACE;
     }
-
-    /**
-     * Reference to the controller that handles the game loop.
-     */
-    protected ChessController myController;
-
-    /**
-     * Default height of the game window.
-     */
-    private static final int WINDOW_HEIGHT = 700;
-
-    /**
-     * Default width of the game window.
-     */
-    private static final int WINDOW_WIDTH = 700;
-
-    /**
-     * Number of rows on a chess board.
-     */
-    private static final int CHESS_BOARD_ROWS = 8;
-
-    /**
-     * Number of columns on a chess board.
-     */
-    private static final int CHESS_BOARD_COLUMNS = 8;
-
-    /**
-     * Color of the lighter spaces on the chess board.
-     */
-    private static final Color LIGHT_SPACE = new Color(1.0f, 0.808f, 0.62f);
-
-    /**
-     * Color of the darker spaces on the chess board.
-     */
-    private static final Color DARK_SPACE = new Color(0.82f, 0.545f, 0.278f);
-
-    /**
-     * Collection holding references to all the button objects representing spaces
-     * on a chess board.
-     */
-    private ChessSpaceButton buttonCollection[][];
-
-    /**
-     * The window for this game.
-     */
-    private JFrame gameWindow;
-
-    /**
-     * Gives status information about the currently running game.
-     */
-    private JLabel statusLabel;
 
 }

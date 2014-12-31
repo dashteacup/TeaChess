@@ -14,6 +14,48 @@ import javax.swing.border.Border;
 @SuppressWarnings("serial")
 public class ChessSpaceButton extends JButton {
     /**
+     * Path to the directory where the chess piece image files are stored.
+     */
+    // TODO: Make this work on systems that don't use forward slash as path
+    // separator (Windows).
+    private static final String IMAGE_DIRECTORY = "src/chess/images/";
+
+    /**
+     * Flag marking whether or not this space contains a chess piece.
+     */
+    private boolean emptySpace;
+
+    /**
+     * Color of the chess piece in this space.
+     */
+    private ChessPieceColor pieceColor;
+
+    /**
+     * The border style of an unselected space on the chess board.
+     */
+    private Border unselectedBorder;
+
+    /**
+     * The border style of a selected space on the chess board.
+     */
+    private Border selectedBorder;
+
+    /**
+     * The border style of a highlighted space on the chess board.
+     */
+    private Border highlightedBorder;
+
+    /**
+     * Row in the grid layout of buttons. Valid values 0 - 7.
+     */
+    private int row;
+
+    /**
+     * Column in the grid layout of buttons. Valid values 0 - 7.
+     */
+    private int column;
+
+    /**
      * Create a new empty chess space button
      * @param row in the grid layout of buttons
      * @param column in the grid layout of buttons
@@ -145,46 +187,4 @@ public class ChessSpaceButton extends JButton {
     {
         return column;
     }
-
-    /**
-     * Flag marking whether or not this space contains a chess piece.
-     */
-    private boolean emptySpace;
-
-    /**
-     * Color of the chess piece in this space.
-     */
-    private ChessPieceColor pieceColor;
-
-    /**
-     * The border style of an unselected space on the chess board.
-     */
-    private Border unselectedBorder;
-
-    /**
-     * The border style of a selected space on the chess board.
-     */
-    private Border selectedBorder;
-
-    /**
-     * The border style of a highlighted space on the chess board.
-     */
-    private Border highlightedBorder;
-
-    /**
-     * Row in the grid layout of buttons. Valid values 0 - 7.
-     */
-    private int row;
-
-    /**
-     * Column in the grid layout of buttons. Valid values 0 - 7.
-     */
-    private int column;
-
-    /**
-     * Path to the directory where the chess piece image files are stored.
-     */
-    // TODO: Make this work on systems that don't use forward slash as path
-    // separator (Windows).
-    private static final String IMAGE_DIRECTORY = "src/chess/images/";
 }

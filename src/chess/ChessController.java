@@ -9,6 +9,31 @@ import java.awt.event.ActionListener;
 public class ChessController implements ActionListener {
 
     /**
+     * The game's View.
+     */
+    private ChessGameView view;
+
+    /**
+     * The game's Model of the chess board.
+     */
+    private ChessBoard modelBoard;
+
+    /**
+     * Color of the player whose turn we are doing.
+     */
+    private ChessPieceColor currentPlayerColor;
+
+    /**
+     * Determine if the player has picked a piece to move.
+     */
+    private boolean pieceSelected;
+
+    /**
+     * The button corresponding with the chess piece you intend to move.
+     */
+    private ChessSpaceButton currentlySelectedButton;
+
+    /**
      * Create a new game controller.
      */
     public ChessController()
@@ -147,29 +172,4 @@ public class ChessController implements ActionListener {
             }
         }
     }
-
-    /**
-     * The game's View.
-     */
-    private ChessGameView view;
-
-    /**
-     * The game's Model of the chess board.
-     */
-    private ChessBoard modelBoard;
-
-    /**
-     * Color of the player whose turn we are doing.
-     */
-    private ChessPieceColor currentPlayerColor;
-
-    /**
-     * Determine if the player has picked a piece to move.
-     */
-    private boolean pieceSelected;
-
-    /**
-     * The button corresponding with the chess piece you intend to move.
-     */
-    private ChessSpaceButton currentlySelectedButton;
 }
