@@ -147,6 +147,9 @@ public class ChessBoard {
 
     /**
      * Get the chess piece at the given location.
+     * @param row of the chess piece (1-8)
+     * @param column of the chess piece (1-8)
+     * @return the chess piece at the given location
      */
     public ChessPiece getPiece(int row, int column)
     {
@@ -158,6 +161,9 @@ public class ChessBoard {
 
     /**
      * Get the chess piece at the location given in algebraic chess notation.
+     * @param file of the chess piece (a-h)
+     * @param rank of the chess piece (1-8)
+     * @return the chess piece at the given location
      */
     public ChessPiece getPiece(File file, int rank)
     {
@@ -208,6 +214,12 @@ public class ChessBoard {
     /**
      * Determine if there is a clear (unobstructed) path between the two positions on the
      * chess board. Do not use this function on hoppable chess pieces.
+     * @param oldRow of the piece to move
+     * @param oldColumn of the piece to move
+     * @param newRow where the piece will be moved
+     * @param newColumn where the piece will be moved
+     * @return true if there is a clear path between the old position and the
+     * new one, false otherwise
      */
     private boolean hasClearPath(int oldRow, int oldColumn, int newRow, int newColumn)
     {
