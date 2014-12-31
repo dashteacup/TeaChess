@@ -49,7 +49,7 @@ public class ChessGameView {
     /**
      * Reference to the controller that handles the game loop.
      */
-    protected ChessController myController;
+    private ChessController myController;
 
     /**
      * Collection holding references to all the button objects representing spaces
