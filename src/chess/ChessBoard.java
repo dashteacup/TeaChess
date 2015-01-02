@@ -69,6 +69,8 @@ public class ChessBoard {
                 board.get(row).add(new Knight(row, 7, ChessPieceColor.BLACK));
                 board.get(row).add(new Rook  (row, 8, ChessPieceColor.BLACK));
                 break;
+            default:
+                assert false : row; // never happens
             }
         }
     }
@@ -234,6 +236,9 @@ public class ChessBoard {
      */
     private boolean hasClearPath(int oldRow, int oldColumn, int newRow, int newColumn)
     {
+        assert !emptySpace(oldRow, oldColumn);
+        assert !(oldRow == newRow && oldColumn == newColumn);
+        assert !getPiece(oldRow, oldColumn).isHoppable();
         int deltaRow = newRow - oldRow;
         int deltaColumn = newColumn - oldColumn;
         // horizontal movement
@@ -251,7 +256,8 @@ public class ChessBoard {
                                     Integer.signum(deltaColumn));
         }
         // All non-hoppable pieces move either vertically, horizontally, or diagonally.
-        return false; // This line should never actually execute.
+        assert false; // This line should never actually execute.
+        return false;
     }
 
     /**
@@ -263,7 +269,10 @@ public class ChessBoard {
      * @return true if there are no pieces between the start and end, false
      * otherwise
      */
-    private boolean hasClearHorizontal(int row, int startColumn, int endColumn) {
+    private boolean hasClearHorizontal(int row, int startColumn, int endColumn)
+    {
+        assert isOnTheBoard(row, startColumn) : startColumn;
+        assert isOnTheBoard(row, endColumn) : endColumn;
         int lower = Math.min(startColumn, endColumn);
         int upper = Math.max(startColumn, endColumn);
         // check every space between the two columns
@@ -283,7 +292,10 @@ public class ChessBoard {
      * @return true if there are no pieces between the start and end, false
      * otherwise
      */
-    private boolean hasClearVertical(int column, int startRow, int endRow) {
+    private boolean hasClearVertical(int column, int startRow, int endRow)
+    {
+        assert isOnTheBoard(startRow, column) : startRow;
+        assert isOnTheBoard(endRow, column) : endRow;
         int lower = Math.min(startRow, endRow);
         int upper = Math.max(startRow, endRow);
         // check every space between the two rows
@@ -303,7 +315,12 @@ public class ChessBoard {
      * @param columnStep the size of a single step between columns (-1 or 1)
      * @return true if no pieces block the diagonal moving piece, false otherwise
      */
-    private boolean hasClearDiagonal(int row, int column, int spacesApart, int rowStep, int columnStep) {
+    private boolean hasClearDiagonal(int row, int column, int spacesApart, int rowStep, int columnStep)
+    {
+        assert isOnTheBoard(row, column);
+        assert isOnTheBoard(row + spacesApart * rowStep, column + spacesApart * columnStep);
+        assert rowStep == 1 || rowStep == -1 : rowStep;
+        assert columnStep == 1 || columnStep == -1 : columnStep;
         for (int offset = 1; offset < spacesApart; ++offset) {
             if (!emptySpace(row + (offset * rowStep), column + (offset * columnStep)))
                 return false;
