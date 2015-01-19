@@ -131,8 +131,8 @@ public class ChessGameView {
     }
 
     /**
-     * Create the game's menu.
-     * @param window to put the menu in.
+     * Create the game's menu bar.
+     * @return a new JMenuBar
      */
     private JMenuBar createGameMenuBar()
     {
@@ -153,7 +153,7 @@ public class ChessGameView {
 
     /**
      * Add all the buttons representing the squares and pieces on the chess board.
-     * @param boardPanel
+     * @param boardPanel to add the buttons to
      */
     private void addButtons(JPanel boardPanel)
     {
