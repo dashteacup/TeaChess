@@ -167,7 +167,7 @@ public class ChessBoard {
     public ChessPiece getPiece(int row, int column)
     {
         if (!isOnTheBoard(row, column)) {
-            throw new OffTheChessBoardException("row: " + row +  " column: " + column);
+            throw new OffTheChessBoardException(row, column);
         }
         return board.get(row).get(column);
     }

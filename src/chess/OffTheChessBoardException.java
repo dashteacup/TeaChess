@@ -18,6 +18,17 @@ public class OffTheChessBoardException extends IndexOutOfBoundsException {
     }
 
     /**
+     * Construct an OffTheChessBoardException with a detail message indicating
+     * the position accessed.
+     * @param row of location accessed
+     * @param column of location accessed
+     */
+    public OffTheChessBoardException(int row, int column)
+    {
+        super("row: " + row + " column: " + column);
+    }
+
+    /**
      * Construct an OffTheChessBoardException with the specified detail message.
      * @param s the detail message
      */

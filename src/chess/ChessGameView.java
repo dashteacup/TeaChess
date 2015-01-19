@@ -125,7 +125,7 @@ public class ChessGameView {
     public ChessSpaceButton getSpace(int row, int column)
     {
         if (!( (0 <= row && row <= 7) && (0 <= column && column <= 7) )) {
-            throw new OffTheChessBoardException("row: " + row + " col: " + column);
+            throw new OffTheChessBoardException(row, column);
         }
         return buttonCollection[row][column];
     }
