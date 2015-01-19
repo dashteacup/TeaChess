@@ -75,7 +75,7 @@ public class ChessGameView {
         myController = gameController;
         gameWindow = new JFrame("TeaChess");
         gameWindow.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        setUpMenu(gameWindow);
+        gameWindow.setJMenuBar(createGameMenuBar());
         gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
@@ -134,20 +134,21 @@ public class ChessGameView {
      * Create the game's menu.
      * @param window to put the menu in.
      */
-    private void setUpMenu(JFrame window)
+    private JMenuBar createGameMenuBar()
     {
-        JMenuBar menubar = new JMenuBar();
-        JMenu file = new JMenu("File");
-        // New Game menu item
-        JMenuItem newGame = new JMenuItem("New Game");
-        newGame.addActionListener(myController);
-        file.add(newGame);
-        // Close menu item
-        JMenuItem close = new JMenuItem("Close");
-        close.addActionListener(myController);
-        file.add(close);
-        menubar.add(file);
-        window.setJMenuBar(menubar);
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu("File");
+
+        JMenuItem newGameMenuItem = new JMenuItem("New Game");
+        newGameMenuItem.addActionListener(myController);
+        fileMenu.add(newGameMenuItem);
+
+        JMenuItem closeMenuItem = new JMenuItem("Close");
+        closeMenuItem.addActionListener(myController);
+        fileMenu.add(closeMenuItem);
+
+        menuBar.add(fileMenu);
+        return menuBar;
     }
 
     /**
