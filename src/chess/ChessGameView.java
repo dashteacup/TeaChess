@@ -187,6 +187,7 @@ public class ChessGameView {
      */
     private void addButtons(JPanel boardPanel)
     {
+        assert boardPanel != null;
         Color backgroundColor;
         for (int row = 0; row < CHESS_BOARD_ROWS; ++row) {
             // initial color for this row
@@ -209,6 +210,9 @@ public class ChessGameView {
      */
     private void setUpNewGameButtonIcons()
     {
+        assert buttonCollection != null;
+        assert buttonCollection.length == CHESS_BOARD_ROWS : buttonCollection.length;
+        assert buttonCollection[7].length == CHESS_BOARD_COLUMNS : buttonCollection[7].length;
         // set up pawns
         for (int i = 0; i < CHESS_BOARD_COLUMNS; ++i) {
             buttonCollection[1][i].setPiece("blackPawn.png");
