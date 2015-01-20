@@ -3,8 +3,10 @@ package chess;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -84,18 +86,16 @@ public class ChessGameView {
      */
     public void startNewGame()
     {
+        // layout for the entire frame
         JPanel totalLayoutPanel = new JPanel(new BorderLayout());
-        statusLabel = new JLabel("White's turn.");
-        totalLayoutPanel.add(statusLabel, BorderLayout.PAGE_START);
 
-        // make the chess board's panel
-        JPanel boardPanel = new JPanel();
-        boardPanel.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
-        boardPanel.setLayout(new GridLayout(CHESS_BOARD_ROWS, CHESS_BOARD_COLUMNS));
-        buttonCollection = new ChessSpaceButton[CHESS_BOARD_ROWS][CHESS_BOARD_COLUMNS];
-        addButtons(boardPanel);
-        totalLayoutPanel.add(boardPanel, BorderLayout.CENTER);
+        // layout for the content (chess board and status labels)
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.add(createStatusBarPanel());
+        contentPanel.add(createChessBoardPanel());
 
+        totalLayoutPanel.add(contentPanel, BorderLayout.CENTER);
         gameWindow.setContentPane(totalLayoutPanel);
         gameWindow.setVisible(true);
     }
@@ -149,6 +149,36 @@ public class ChessGameView {
 
         menuBar.add(fileMenu);
         return menuBar;
+    }
+
+    /**
+     * Create a status bar panel for displaying information about the current
+     * game's state.
+     * @return a new status bar panel
+     */
+    private JPanel createStatusBarPanel()
+    {
+        JPanel statusBarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 80, 5));
+        statusLabel = new JLabel("White's turn.");
+        statusBarPanel.add(statusLabel);
+
+        JLabel checkCondition = new JLabel("Not in Check.");
+        statusBarPanel.add(checkCondition);
+        return statusBarPanel;
+    }
+
+    /**
+     * Create the panel that holds the whole chess board.
+     * @return a new chess board panel
+     */
+    private JPanel createChessBoardPanel()
+    {
+        JPanel boardPanel = new JPanel();
+        boardPanel.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
+        boardPanel.setLayout(new GridLayout(CHESS_BOARD_ROWS, CHESS_BOARD_COLUMNS));
+        buttonCollection = new ChessSpaceButton[CHESS_BOARD_ROWS][CHESS_BOARD_COLUMNS];
+        addButtons(boardPanel);
+        return boardPanel;
     }
 
     /**
