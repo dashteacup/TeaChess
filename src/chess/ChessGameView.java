@@ -3,9 +3,10 @@ package chess;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -91,7 +92,7 @@ public class ChessGameView {
 
         // layout for the content (chess board and status labels)
         JPanel contentPanel = new JPanel();
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.PAGE_AXIS));
         contentPanel.add(createStatusBarPanel());
         contentPanel.add(createChessBoardPanel());
 
@@ -109,11 +110,25 @@ public class ChessGameView {
     }
 
     /**
-     * @param message to display in the status area
+     * Set the current player label to the appropriate text and color.
+     * @param playerColor of the current player
      */
-    public void setStatusLabel(String message)
+    public void setCurrentPlayer(ChessPieceColor playerColor)
     {
-        statusLabel.setText(message);
+        switch(playerColor) {
+        case WHITE:
+            statusLabel.setText("White's turn.");
+            statusLabel.setBackground(Color.WHITE);
+            statusLabel.setForeground(Color.BLACK);
+            break;
+        case BLACK:
+            statusLabel.setText("Black's turn.");
+            statusLabel.setBackground(Color.BLACK);
+            statusLabel.setForeground(Color.WHITE);
+            break;
+        case NONE:
+            break;
+        }
     }
 
     /**
@@ -158,11 +173,21 @@ public class ChessGameView {
      */
     private JPanel createStatusBarPanel()
     {
-        JPanel statusBarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 80, 5));
-        statusLabel = new JLabel("White's turn.");
+        JPanel statusBarPanel = new JPanel();
+        statusBarPanel.setLayout(new BoxLayout(statusBarPanel, BoxLayout.LINE_AXIS));
+
+        statusLabel = new JLabel();
+        setCurrentPlayer(ChessPieceColor.WHITE);
+        statusLabel.setOpaque(true); // show bg color
+        int horizontalBorder = 20;
+        int verticalBorder = horizontalBorder / 2;
+        statusLabel.setBorder(BorderFactory.createEmptyBorder(verticalBorder, horizontalBorder, verticalBorder, horizontalBorder));
         statusBarPanel.add(statusLabel);
 
+        statusBarPanel.add(Box.createHorizontalGlue());
+
         JLabel checkCondition = new JLabel("Not in Check.");
+        checkCondition.setBorder(BorderFactory.createEmptyBorder(verticalBorder, horizontalBorder, verticalBorder, horizontalBorder));
         statusBarPanel.add(checkCondition);
         return statusBarPanel;
     }

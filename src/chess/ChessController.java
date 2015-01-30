@@ -116,16 +116,17 @@ public class ChessController implements ActionListener {
      */
     private void changePlayers()
     {
-        assert currentPlayerColor == ChessPieceColor.WHITE ||
-               currentPlayerColor == ChessPieceColor.BLACK
-               : currentPlayerColor;
-        assert view != null;
-        if (currentPlayerColor == ChessPieceColor.WHITE) {
+        switch(currentPlayerColor) {
+        case WHITE:
             currentPlayerColor = ChessPieceColor.BLACK;
-            view.setStatusLabel("Black's turn.");
-        } else { // (currentPlayerColor == ChessPieceColor.BLACK)
+            view.setCurrentPlayer(ChessPieceColor.BLACK);
+            break;
+        case BLACK:
             currentPlayerColor = ChessPieceColor.WHITE;
-            view.setStatusLabel("White's turn.");
+            view.setCurrentPlayer(ChessPieceColor.WHITE);
+            break;
+        case NONE:
+            break;
         }
     }
 
