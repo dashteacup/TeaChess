@@ -22,12 +22,12 @@ public class ChessGameView {
     /**
      * Default height of the game window.
      */
-    private static final int WINDOW_HEIGHT = 700;
+    private static final int WINDOW_HEIGHT = 600;
 
     /**
      * Default width of the game window.
      */
-    private static final int WINDOW_WIDTH = 700;
+    private static final int WINDOW_WIDTH = 600;
 
     /**
      * Number of rows on a chess board.
