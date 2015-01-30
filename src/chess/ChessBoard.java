@@ -225,6 +225,48 @@ public class ChessBoard {
     }
 
     /**
+     * Determine if the current player is in check (i.e. their king is exposed
+     * to attack).
+     * @param currentPlayer to determine if checked
+     * @return true if in check, false otherwise
+     */
+    public boolean inCheck(ChessPieceColor currentPlayer)
+    {
+        ChessPiece myKing = getKing(currentPlayer);
+        for (int row = 1; row <= 8; row++) {
+            for (int col = 1; col <= 8; col++) {
+                ChessPiece attackingPiece = getPiece(row, col);
+                // has to be an enemy piece
+                if (attackingPiece != null && attackingPiece.getColor() != currentPlayer) {
+                    // can this peace capture the king?
+                    if (isValidMove(row, col, myKing.getRow(), myKing.getColumn()))
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Return a reference to the king of the given player. Assumes that there is
+     * exactly one king for each player.
+     * @param player the King's color
+     * @return the king of the player
+     */
+    private ChessPiece getKing(ChessPieceColor player)
+    {
+        for (int row = 1; row <= 8; row++) {
+            for (int col = 1; col <= 8; col++) {
+                ChessPiece piece = getPiece(row, col);
+                if (piece != null && (piece.getColor() == player) && (piece instanceof King))
+                    return piece;
+            }
+        }
+        assert false; // the board has to have a king
+        return null;
+    }
+
+    /**
      * Determine if there is a clear (unobstructed) path between the two positions on the
      * chess board. Do not use this function on hoppable chess pieces.
      * @param oldRow of the piece to move

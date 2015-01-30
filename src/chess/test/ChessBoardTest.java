@@ -376,6 +376,39 @@ public class ChessBoardTest {
     }
 
     /**
+     * Confirm that the board can recognize when a player is in or out of check.
+     */
+    @Test
+    public void inCheck()
+    {
+        // nothing should be in check at game start
+        assertFalse(board.inCheck(WHITE));
+        assertFalse(board.inCheck(BLACK));
+        // move white pawn before queen up 1
+        board.move(d, 2, d, 3);
+        // move black pawn before king down 1
+        board.move(e, 7, e, 6);
+        // move white pawn before king up 1
+        board.move(e, 2, e, 3);
+        // move black bishop to put the white king in check
+        board.move(f, 8, b, 4);
+        assertTrue(board.inCheck(WHITE));
+        // black king is still not in check
+        assertFalse(board.inCheck(BLACK));
+        // block with queen, making the white king safe
+        board.move(d, 1, d, 2);
+        assertFalse(board.inCheck(WHITE));
+        // move black king down 1
+        board.move(e, 8, e, 7);
+        // move white queen to put the black king in check
+        board.move(d, 2, b, 4);
+        assertTrue(board.inCheck(BLACK));
+        // move black king to safety
+        board.move(e, 7, f, 6);
+        assertFalse(board.inCheck(BLACK));
+    }
+
+    /**
      * Test pawn movement and capture functionality.
      */
     @Test
