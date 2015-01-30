@@ -199,7 +199,7 @@ public class ChessGameView {
     private JPanel createChessBoardPanel()
     {
         JPanel boardPanel = new JPanel();
-        boardPanel.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
+        boardPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         boardPanel.setLayout(new GridLayout(CHESS_BOARD_ROWS, CHESS_BOARD_COLUMNS));
         buttonCollection = new ChessSpaceButton[CHESS_BOARD_ROWS][CHESS_BOARD_COLUMNS];
         addButtons(boardPanel);
