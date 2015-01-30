@@ -116,6 +116,7 @@ public class ChessController implements ActionListener {
      */
     private void changePlayers()
     {
+        assert view != null;
         switch(currentPlayerColor) {
         case WHITE:
             currentPlayerColor = ChessPieceColor.BLACK;
@@ -126,6 +127,7 @@ public class ChessController implements ActionListener {
             view.setCurrentPlayer(ChessPieceColor.WHITE);
             break;
         case NONE:
+            assert false;
             break;
         }
     }
