@@ -5,6 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static chess.File.*;
+import static chess.ChessPieceColor.WHITE;
+import static chess.ChessPieceColor.BLACK;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +14,6 @@ import org.junit.Test;
 import chess.Bishop;
 import chess.ChessBoard;
 import chess.ChessPiece;
-import chess.ChessPieceColor;
 import chess.King;
 import chess.Knight;
 import chess.OffTheChessBoardException;
@@ -57,9 +58,9 @@ public class ChessBoardTest {
         // empty space
         assertNull(board.getPiece(4, 4));
         // black pawn has right color
-        assertEquals(ChessPieceColor.BLACK, board.getPiece(7, 4).getColor());
+        assertEquals(BLACK, board.getPiece(7, 4).getColor());
         // white queen has right color
-        assertEquals(ChessPieceColor.WHITE, board.getPiece(1, 4).getColor());
+        assertEquals(WHITE, board.getPiece(1, 4).getColor());
     }
 
     /**
@@ -110,9 +111,9 @@ public class ChessBoardTest {
         // empty space
         assertNull(board.getPiece(a, 5));
         // black left knight has right color
-        assertEquals(ChessPieceColor.BLACK, board.getPiece(b, 8).getColor());
+        assertEquals(BLACK, board.getPiece(b, 8).getColor());
         // white pawn has right color
-        assertEquals(ChessPieceColor.WHITE, board.getPiece(f, 2).getColor());
+        assertEquals(WHITE, board.getPiece(f, 2).getColor());
     }
 
     /**
@@ -144,8 +145,8 @@ public class ChessBoardTest {
         assertTrue(board.getPiece(2, 8) instanceof Pawn);
 
         // check colors
-        assertEquals(ChessPieceColor.WHITE, board.getPiece(1, 5).getColor());
-        assertEquals(ChessPieceColor.WHITE, board.getPiece(2, 8).getColor());
+        assertEquals(WHITE, board.getPiece(1, 5).getColor());
+        assertEquals(WHITE, board.getPiece(2, 8).getColor());
     }
 
     /**
@@ -168,8 +169,8 @@ public class ChessBoardTest {
         assertTrue(board.getPiece(7, 8) instanceof Pawn);
 
         // check colors
-        assertEquals(ChessPieceColor.BLACK, board.getPiece(7, 1).getColor());
-        assertEquals(ChessPieceColor.BLACK, board.getPiece(8, 8).getColor());
+        assertEquals(BLACK, board.getPiece(7, 1).getColor());
+        assertEquals(BLACK, board.getPiece(8, 8).getColor());
     }
 
     /**
@@ -193,7 +194,7 @@ public class ChessBoardTest {
     @Test
     public void addPiece()
     {
-        Rook rook = new Rook(b, 4, ChessPieceColor.WHITE);
+        Rook rook = new Rook(b, 4, WHITE);
         assertTrue(board.addPiece(rook));
         ChessPiece pieceAtLocation = board.getPiece(b, 4);
         // refer to same object?
@@ -201,7 +202,7 @@ public class ChessBoardTest {
         // check internal state
         assertEquals(4, pieceAtLocation.getRow());
         assertEquals(2, pieceAtLocation.getColumn());
-        assertEquals(ChessPieceColor.WHITE, pieceAtLocation.getColor());
+        assertEquals(WHITE, pieceAtLocation.getColor());
     }
 
     /**
@@ -219,7 +220,7 @@ public class ChessBoardTest {
     @Test
     public void addPieceOffTheBoard()
     {
-        Pawn pawn = new Pawn(6, 0, ChessPieceColor.BLACK);
+        Pawn pawn = new Pawn(6, 0, BLACK);
         assertFalse(board.addPiece(pawn));
     }
 
@@ -289,12 +290,12 @@ public class ChessBoardTest {
     @Test
     public void hasClearPathHorizontal()
     {
-        Rook rightRook = new Rook(g, 4, ChessPieceColor.WHITE);
+        Rook rightRook = new Rook(g, 4, WHITE);
         assertTrue(board.addPiece(rightRook));
         // rook left all the way
         assertTrue(board.isValidMove(g, 4, a, 4));
         // put something in the way
-        Rook leftRook = new Rook(c, 4, ChessPieceColor.BLACK);
+        Rook leftRook = new Rook(c, 4, BLACK);
         assertTrue(board.addPiece(leftRook));
         // right rook can't move left over a piece
         assertFalse(board.move(g, 4, b, 4));
@@ -310,7 +311,7 @@ public class ChessBoardTest {
     @Test
     public void hasClearPathVertical()
     {
-        Queen queen = new Queen(e, 3, ChessPieceColor.WHITE);
+        Queen queen = new Queen(e, 3, WHITE);
         assertTrue(board.addPiece(queen));
         // can't move up over a piece
         assertFalse(board.move(e, 3, e, 8));
@@ -324,7 +325,7 @@ public class ChessBoardTest {
     @Test
     public void hasClearPathDiagonalUpRight()
     {
-        Bishop bishop = new Bishop(c, 3, ChessPieceColor.WHITE);
+        Bishop bishop = new Bishop(c, 3, WHITE);
         assertTrue(board.addPiece(bishop));
         // can't move up-right past a piece
         assertFalse(board.move(c, 3, h, 8));
@@ -338,7 +339,7 @@ public class ChessBoardTest {
     @Test
     public void hasClearPathDiagonalUpLeft()
     {
-        Queen queen = new Queen(g, 3, ChessPieceColor.WHITE);
+        Queen queen = new Queen(g, 3, WHITE);
         assertTrue(board.addPiece(queen));
         // can't move up-left past a piece
         assertFalse(board.move(g, 3, b, 8));
@@ -352,7 +353,7 @@ public class ChessBoardTest {
     @Test
     public void hasClearPathDiagonalDownRight()
     {
-        Queen queen = new Queen(a, 6, ChessPieceColor.BLACK);
+        Queen queen = new Queen(a, 6, BLACK);
         assertTrue(board.addPiece(queen));
         // can't move down-right past a piece
         assertFalse(board.move(a, 6, f, 1));
@@ -366,7 +367,7 @@ public class ChessBoardTest {
     @Test
     public void hasClearPathDiagonalDownLeft()
     {
-        Bishop bishop = new Bishop(h, 5, ChessPieceColor.BLACK);
+        Bishop bishop = new Bishop(h, 5, BLACK);
         assertTrue(board.addPiece(bishop));
         // can't move down-left past a piece
         assertFalse(board.move(h, 5, d, 1));
