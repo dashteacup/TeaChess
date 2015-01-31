@@ -23,11 +23,6 @@ public abstract class ChessPiece {
     private ChessPieceColor color;
 
     /**
-     * Flag determining if the piece can hop over other pieces like a knight.
-     */
-    protected boolean hoppable;
-
-    /**
      * Create a new chess piece
      * @param row aka 'rank' valid 1-8
      * @param column aka 'file' valid 1-8 NOT a-h
@@ -38,7 +33,6 @@ public abstract class ChessPiece {
         this.row = row;
         this.column = column;
         this.color = color;
-        this.hoppable = false;
     }
 
     /**
@@ -218,10 +212,11 @@ public abstract class ChessPiece {
 
     /**
      * Determine if the chess piece can hop over other chess pieces like a Knight.
+     * Generic chess pieces are not hoppable.
      */
     public boolean isHoppable()
     {
-        return hoppable;
+        return false;
     }
 
     /**

@@ -13,7 +13,6 @@ public class Knight extends ChessPiece {
     public Knight(int row, int column, ChessPieceColor color)
     {
         super(row, column, color);
-        hoppable = true;
     }
 
     /**
@@ -25,7 +24,6 @@ public class Knight extends ChessPiece {
     public Knight(File file, int rank, ChessPieceColor color)
     {
         super(file, rank, color);
-        hoppable = true;
     }
 
     /**
@@ -60,5 +58,15 @@ public class Knight extends ChessPiece {
         if ((deltaRow == 1) && (deltaColumn == 2))
             return true;
         return false;
+    }
+
+    /**
+     * Knights are hoppable.
+     * @return true
+     */
+    @Override
+    public boolean isHoppable()
+    {
+        return true;
     }
 }
