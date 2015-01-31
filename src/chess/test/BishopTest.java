@@ -11,7 +11,7 @@ import chess.Bishop;
 import chess.ChessPieceColor;
 
 /**
- * Tests for the Bishop class.
+ * Tests for the {@link Bishop} class.
  */
 public class BishopTest {
 

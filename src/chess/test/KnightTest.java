@@ -9,7 +9,7 @@ import chess.ChessPieceColor;
 import chess.Knight;
 
 /**
- * Tests for the Knight class.
+ * Tests for the {@link Knight} class.
  */
 public class KnightTest {
 
@@ -232,7 +232,7 @@ public class KnightTest {
      * same way they move.
      */
     @Test
-    public void checkCapture() 
+    public void checkCapture()
     {
         Knight white = new Knight(4, 4, ChessPieceColor.WHITE);
         // up 2, left 1

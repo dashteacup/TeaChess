@@ -18,7 +18,7 @@ import chess.ChessPieceColor;
 import chess.King;
 
 /**
- * Tests for the King class.
+ * Tests for the {@link King} class.
  */
 public class KingTest {
 

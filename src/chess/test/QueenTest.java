@@ -9,7 +9,7 @@ import chess.ChessPieceColor;
 import chess.Queen;
 
 /**
- * Tests for the Queen class.
+ * Tests for the {@link Queen} class.
  */
 public class QueenTest {
 

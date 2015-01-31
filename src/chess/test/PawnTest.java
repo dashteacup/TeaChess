@@ -9,7 +9,7 @@ import chess.ChessPieceColor;
 import chess.Pawn;
 
 /**
- * Tests for the Pawn Class.
+ * Tests for the {@link Pawn} Class.
  */
 public class PawnTest {
 

@@ -11,7 +11,7 @@ import chess.ChessPieceColor;
 import chess.Rook;
 
 /**
- * Tests for the Rook class
+ * Tests for the {@link Rook} class
  */
 public class RookTest {
 

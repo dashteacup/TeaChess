@@ -22,7 +22,7 @@ import chess.Queen;
 import chess.Rook;
 
 /**
- * Tests for the ChessBoard class.
+ * Tests for the {@link ChessBoard} class.
  */
 public class ChessBoardTest {
 
