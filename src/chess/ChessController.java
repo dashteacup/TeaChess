@@ -77,6 +77,12 @@ public class ChessController implements ActionListener {
                 modelBoard.move(viewRowToModel(selectedRow), viewColumnToModel(selectedColumn),
                                 viewRowToModel(clickedRow),  viewColumnToModel(clickedColumn));
                 changePlayers();
+                // TODO: properly handle check/checkmate
+                if (modelBoard.inCheck(currentPlayerColor)) {
+                    view.setCheckCondition(currentPlayerColor);
+                } else {
+                    view.setCheckCondition(ChessPieceColor.NONE);
+                }
                 pieceSelected = false;
                 clearMarkedSpaces();
             // selecting a new piece of the same color

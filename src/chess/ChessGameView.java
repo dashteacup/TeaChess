@@ -71,6 +71,11 @@ public class ChessGameView {
     private JLabel currentPlayerLabel;
 
     /**
+     * A label that shows if a player's king is in check.
+     */
+    private JLabel checkConditionLabel;
+
+    /**
      * Create a new frame (top-level container) for the chess program.
      */
     public ChessGameView(ChessController gameController)
@@ -110,6 +115,20 @@ public class ChessGameView {
     }
 
     /**
+     * Get the chess space at the given row and column in the view.
+     * @param row of the chess space (0-7)
+     * @param column of the chess space (0-7)
+     * @return the chess space
+     */
+    public ChessSpaceButton getSpace(int row, int column)
+    {
+        if (!( (0 <= row && row <= 7) && (0 <= column && column <= 7) )) {
+            throw new OffTheChessBoardException(row, column);
+        }
+        return buttonCollection[row][column];
+    }
+
+    /**
      * Set the current player label to the appropriate text and color.
      * @param playerColor of the current player
      */
@@ -132,17 +151,24 @@ public class ChessGameView {
     }
 
     /**
-     * Get the chess space at the given row and column in the view.
-     * @param row of the chess space (0-7)
-     * @param column of the chess space (0-7)
-     * @return the chess space
+     * Set the label that shows if a player's king is in check.
+     * @param playerColor of the player in check
      */
-    public ChessSpaceButton getSpace(int row, int column)
+    public void setCheckCondition(ChessPieceColor playerColor)
     {
-        if (!( (0 <= row && row <= 7) && (0 <= column && column <= 7) )) {
-            throw new OffTheChessBoardException(row, column);
+        checkConditionLabel.setOpaque(true);
+        switch (playerColor) {
+        case WHITE:
+            checkConditionLabel.setText("White King in check.");
+            break;
+        case BLACK:
+            checkConditionLabel.setText("Black King in check.");
+            break;
+        case NONE:
+            checkConditionLabel.setText("");
+            checkConditionLabel.setOpaque(false); // hide background
+            break;
         }
-        return buttonCollection[row][column];
     }
 
     /**
@@ -186,7 +212,9 @@ public class ChessGameView {
 
         statusBarPanel.add(Box.createHorizontalGlue());
 
-        JLabel checkConditionLabel = new JLabel("Not in Check.");
+        checkConditionLabel = new JLabel();
+        checkConditionLabel.setBackground(Color.PINK);
+        checkConditionLabel.setOpaque(false); // hide bg color initially
         checkConditionLabel.setBorder(BorderFactory.createEmptyBorder(verticalBorder, horizontalBorder, verticalBorder, horizontalBorder));
         statusBarPanel.add(checkConditionLabel);
         return statusBarPanel;
