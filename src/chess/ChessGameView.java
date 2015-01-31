@@ -66,9 +66,9 @@ public class ChessGameView {
     private JFrame gameWindow;
 
     /**
-     * Gives status information about the currently running game.
+     * A label that shows who can make the next move.
      */
-    private JLabel statusLabel;
+    private JLabel currentPlayerLabel;
 
     /**
      * Create a new frame (top-level container) for the chess program.
@@ -117,14 +117,14 @@ public class ChessGameView {
     {
         switch(playerColor) {
         case WHITE:
-            statusLabel.setText("White's turn.");
-            statusLabel.setBackground(Color.WHITE);
-            statusLabel.setForeground(Color.BLACK);
+            currentPlayerLabel.setText("White's turn.");
+            currentPlayerLabel.setBackground(Color.WHITE);
+            currentPlayerLabel.setForeground(Color.BLACK);
             break;
         case BLACK:
-            statusLabel.setText("Black's turn.");
-            statusLabel.setBackground(Color.BLACK);
-            statusLabel.setForeground(Color.WHITE);
+            currentPlayerLabel.setText("Black's turn.");
+            currentPlayerLabel.setBackground(Color.BLACK);
+            currentPlayerLabel.setForeground(Color.WHITE);
             break;
         case NONE:
             break;
@@ -176,19 +176,19 @@ public class ChessGameView {
         JPanel statusBarPanel = new JPanel();
         statusBarPanel.setLayout(new BoxLayout(statusBarPanel, BoxLayout.LINE_AXIS));
 
-        statusLabel = new JLabel();
+        currentPlayerLabel = new JLabel();
         setCurrentPlayer(ChessPieceColor.WHITE);
-        statusLabel.setOpaque(true); // show bg color
+        currentPlayerLabel.setOpaque(true); // show bg color
         int horizontalBorder = 20;
         int verticalBorder = horizontalBorder / 2;
-        statusLabel.setBorder(BorderFactory.createEmptyBorder(verticalBorder, horizontalBorder, verticalBorder, horizontalBorder));
-        statusBarPanel.add(statusLabel);
+        currentPlayerLabel.setBorder(BorderFactory.createEmptyBorder(verticalBorder, horizontalBorder, verticalBorder, horizontalBorder));
+        statusBarPanel.add(currentPlayerLabel);
 
         statusBarPanel.add(Box.createHorizontalGlue());
 
-        JLabel checkCondition = new JLabel("Not in Check.");
-        checkCondition.setBorder(BorderFactory.createEmptyBorder(verticalBorder, horizontalBorder, verticalBorder, horizontalBorder));
-        statusBarPanel.add(checkCondition);
+        JLabel checkConditionLabel = new JLabel("Not in Check.");
+        checkConditionLabel.setBorder(BorderFactory.createEmptyBorder(verticalBorder, horizontalBorder, verticalBorder, horizontalBorder));
+        statusBarPanel.add(checkConditionLabel);
         return statusBarPanel;
     }
 
