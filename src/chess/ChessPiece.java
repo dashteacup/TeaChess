@@ -3,7 +3,8 @@ package chess;
 /**
  * Represents a generic chess piece.
  */
-public abstract class ChessPiece {
+public abstract class ChessPiece implements Cloneable {
+
     /**
      * Equivalent to chess term 'rank'. Valid values are 1-8.
      * Rows begin numbering from bottom to top.
@@ -44,6 +45,16 @@ public abstract class ChessPiece {
     public ChessPiece(File file, int rank, ChessPieceColor color)
     {
         this(rank, file.getColumn(), color);
+    }
+
+    /**
+     * Chess pieces only have primitives for fields, so shallow copies via clone
+     * work fine.
+     */
+    @Override
+    public ChessPiece clone() throws CloneNotSupportedException
+    {
+        return (ChessPiece) super.clone();
     }
 
     /**

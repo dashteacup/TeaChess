@@ -13,17 +13,15 @@ public class ChessBoard {
     /**
      * The board held in a 2 dimensional array;
      */
-    private ChessPiece[][] board;
+    private ChessPiece[][] board = new ChessPiece[BOARD_SIZE][BOARD_SIZE];
 
     /**
-     * Build new standard sized chess board.
-     * Currently, empty elements are set to null, I think I need to do
-     * something better than that.
+     * Build new standard sized chess board with all chess pieces in their
+     * starting positions. Currently, empty elements are set to null, I
+     * think I need to do something better than that.
      */
     public ChessBoard()
     {
-        board = new ChessPiece[BOARD_SIZE][BOARD_SIZE];
-
         // init white side
         int row = 1;
         int col = 1;
@@ -53,6 +51,26 @@ public class ChessBoard {
         board[row][col] = new Bishop(row, col++, ChessPieceColor.BLACK);
         board[row][col] = new Knight(row, col++, ChessPieceColor.BLACK);
         board[row][col] = new Rook  (row, col++, ChessPieceColor.BLACK);
+    }
+
+    /**
+     * ChessBoard copy constructor. Duplicate the current chess board layout.
+     */
+    public ChessBoard(ChessBoard sourceBoard)
+    {
+        for (int row = 1; row < BOARD_SIZE; row++) {
+            for (int col = 1; col < BOARD_SIZE; col++) {
+                ChessPiece piece = sourceBoard.getPiece(row, col);
+                if (piece != null) {
+                    try {
+                        board[row][col] = piece.clone();
+                    } catch (CloneNotSupportedException e) {
+                        e.printStackTrace();
+                        System.exit(1); // this shouldn't happen
+                    }
+                }
+            }
+        }
     }
 
     /**

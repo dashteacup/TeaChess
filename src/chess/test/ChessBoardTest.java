@@ -186,6 +186,28 @@ public class ChessBoardTest {
         assertNull(board.getPiece(6, 7));
     }
 
+    /**
+     * Ensure the copy constructor creates a correct deep copy of the
+     * ChessBoard.
+     */
+    @Test
+    public void copyConstructor()
+    {
+        ChessBoard copyBoard = new ChessBoard(board);
+        // copy has a knight in the right starting place
+        assertTrue(copyBoard.getPiece(b, 1) instanceof Knight);
+        // move the original board's knight
+        board.move(b, 1, a, 3);
+        assertTrue(board.getPiece(a, 3) instanceof Knight);
+        // knight didn't move in the copy
+        assertFalse(copyBoard.getPiece(a, 3) instanceof Knight);
+        // move the copy's knight somewhere else
+        copyBoard.move(b, 1, c, 3);
+        assertTrue(copyBoard.getPiece(c, 3) instanceof Knight);
+        // it doesn't affect the original board
+        assertFalse(board.getPiece(c, 3) instanceof Knight);
+    }
+
 
     /**
      * Confirm that a ChessPiece successfully added to the board has the right
