@@ -1,7 +1,5 @@
 package chess;
 
-import java.util.ArrayList;
-
 /**
  * Represents the chess board itself.
  */
@@ -15,7 +13,7 @@ public class ChessBoard {
     /**
      * The board held in a 2 dimensional array;
      */
-    private ArrayList<ArrayList<ChessPiece>> board;
+    private ChessPiece[][] board;
 
     /**
      * Build new standard sized chess board.
@@ -24,55 +22,37 @@ public class ChessBoard {
      */
     public ChessBoard()
     {
-        board = new ArrayList<ArrayList<ChessPiece>>();
-        // make rows
-        for (int row = 0; row < BOARD_SIZE; ++row)
-            board.add(new ArrayList<ChessPiece>());
-        // make columns, ignore the 0th row
-        for (int row = 1; row < BOARD_SIZE; ++row) {
-            // Want to index the board from 1 like in algebraic chess notation.
-            // 0th column on every row is null.
-            board.get(row).add(null);
-            switch(row) {
-            case 1:
-                board.get(row).add(new Rook  (row,  1, ChessPieceColor.WHITE));
-                board.get(row).add(new Knight(row,  2, ChessPieceColor.WHITE));
-                board.get(row).add(new Bishop(row,  3, ChessPieceColor.WHITE));
-                board.get(row).add(new Queen (row,  4, ChessPieceColor.WHITE));
-                board.get(row).add(new King  (row,  5, ChessPieceColor.WHITE));
-                board.get(row).add(new Bishop(row,  6, ChessPieceColor.WHITE));
-                board.get(row).add(new Knight(row,  7, ChessPieceColor.WHITE));
-                board.get(row).add(new Rook  (row,  8, ChessPieceColor.WHITE));
-                break;
-            case 2:
-                for (int col = 1; col < BOARD_SIZE; ++col)
-                    board.get(row).add(new Pawn(row, col, ChessPieceColor.WHITE));
-                break;
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-                for (int col = 1; col < BOARD_SIZE; ++col)
-                    board.get(row).add(null);
-                break;
-            case 7:
-                for (int col = 1; col < BOARD_SIZE; ++col)
-                    board.get(row).add(new Pawn(row, col, ChessPieceColor.BLACK));
-                break;
-            case 8:
-                board.get(row).add(new Rook  (row, 1, ChessPieceColor.BLACK));
-                board.get(row).add(new Knight(row, 2, ChessPieceColor.BLACK));
-                board.get(row).add(new Bishop(row, 3, ChessPieceColor.BLACK));
-                board.get(row).add(new Queen (row, 4, ChessPieceColor.BLACK));
-                board.get(row).add(new King  (row, 5, ChessPieceColor.BLACK));
-                board.get(row).add(new Bishop(row, 6, ChessPieceColor.BLACK));
-                board.get(row).add(new Knight(row, 7, ChessPieceColor.BLACK));
-                board.get(row).add(new Rook  (row, 8, ChessPieceColor.BLACK));
-                break;
-            default:
-                assert false : row; // never happens
-            }
-        }
+        board = new ChessPiece[BOARD_SIZE][BOARD_SIZE];
+
+        // init white side
+        int row = 1;
+        int col = 1;
+        board[row][col] = new Rook  (row, col++, ChessPieceColor.WHITE);
+        board[row][col] = new Knight(row, col++, ChessPieceColor.WHITE);
+        board[row][col] = new Bishop(row, col++, ChessPieceColor.WHITE);
+        board[row][col] = new Queen (row, col++, ChessPieceColor.WHITE);
+        board[row][col] = new King  (row, col++, ChessPieceColor.WHITE);
+        board[row][col] = new Bishop(row, col++, ChessPieceColor.WHITE);
+        board[row][col] = new Knight(row, col++, ChessPieceColor.WHITE);
+        board[row][col] = new Rook  (row, col++, ChessPieceColor.WHITE);
+        row = 2;
+        for (col = 1; col < BOARD_SIZE; col++)
+            board[row][col] = new Pawn(row, col, ChessPieceColor.WHITE);
+
+        // init black side
+        row = 7;
+        for (col = 1; col < BOARD_SIZE; col++)
+            board[row][col] = new Pawn(row, col, ChessPieceColor.BLACK);
+        row = 8;
+        col = 1;
+        board[row][col] = new Rook  (row, col++, ChessPieceColor.BLACK);
+        board[row][col] = new Knight(row, col++, ChessPieceColor.BLACK);
+        board[row][col] = new Bishop(row, col++, ChessPieceColor.BLACK);
+        board[row][col] = new Queen (row, col++, ChessPieceColor.BLACK);
+        board[row][col] = new King  (row, col++, ChessPieceColor.BLACK);
+        board[row][col] = new Bishop(row, col++, ChessPieceColor.BLACK);
+        board[row][col] = new Knight(row, col++, ChessPieceColor.BLACK);
+        board[row][col] = new Rook  (row, col++, ChessPieceColor.BLACK);
     }
 
     /**
@@ -138,8 +118,8 @@ public class ChessBoard {
                 movingPiece.capture(newRow, newColumn);
             else
                 movingPiece.move(newRow, newColumn);
-            board.get(newRow).set(newColumn, movingPiece);
-            board.get(oldRow).set(oldColumn, null);
+            board[newRow][newColumn] = movingPiece;
+            board[oldRow][oldColumn] = null;
             return true;
         }
         return false;
@@ -169,7 +149,7 @@ public class ChessBoard {
         if (!isOnTheBoard(row, column)) {
             throw new OffTheChessBoardException(row, column);
         }
-        return board.get(row).get(column);
+        return board[row][column];
     }
 
     /**
@@ -198,7 +178,7 @@ public class ChessBoard {
         int column = piece.getColumn();
         if (!isOnTheBoard(row, column))
             return false;
-        board.get(row).set(column, piece);
+        board[row][column] = piece;
         return true;
     }
 
