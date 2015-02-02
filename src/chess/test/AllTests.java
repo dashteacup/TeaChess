@@ -12,6 +12,7 @@ import org.junit.runners.Suite.SuiteClasses;
     BishopTest.class,
     ChessBoardTest.class,
     ChessPieceColorTest.class,
+    FileTest.class,
     KingTest.class,
     KnightTest.class,
     PawnTest.class,
