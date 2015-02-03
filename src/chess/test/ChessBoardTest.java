@@ -199,6 +199,7 @@ public class ChessBoardTest {
         // move the original board's knight
         board.move(b, 1, a, 3);
         assertTrue(board.getPiece(a, 3) instanceof Knight);
+        assertNull(board.getPiece(b, 1));
         // knight didn't move in the copy
         assertFalse(copyBoard.getPiece(a, 3) instanceof Knight);
         // move the copy's knight somewhere else
