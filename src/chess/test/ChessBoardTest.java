@@ -308,6 +308,48 @@ public class ChessBoardTest {
     }
 
     /**
+     * Confirm that you can use the forceMove method to illegally move a piece
+     * to any place on the board.
+     */
+    @Test
+    public void forceMove()
+    {
+        // try to move King to upper left corner from start position
+        assertFalse(board.move(e, 1, a, 8));
+        assertTrue(board.getPiece(e, 1) instanceof King);
+        assertTrue(board.getPiece(a, 8) instanceof Rook);
+        // now force move to upper left corner
+        board.forceMove(e, 1, a, 8);
+        assertTrue(board.emptySpace(e, 1));
+        assertTrue(board.getPiece(a, 8) instanceof King);
+    }
+
+    /**
+     * Confirm that when you attempt to force move a blank space, nothing
+     * happens.
+     */
+    @Test
+    public void forceMoveEmptySpace()
+    {
+        // try to move a blank space to the black king
+        board.forceMove(h, 4, e, 8);
+        // black king is still there
+        ChessPiece blackKing = board.getPiece(e, 8);
+        assertTrue(blackKing instanceof King);
+        assertEquals(BLACK, blackKing.getColor());
+    }
+
+    /**
+     * Confirm that attempting to force move a chess piece off the board throws
+     * an exception.
+     */
+    @Test(expected = OffTheChessBoardException.class)
+    public void forceMoveOffTheBoard()
+    {
+        board.forceMove(a, 8, a, 0);
+    }
+
+    /**
      * Ensure that horizontal moves fail if something blocks their way.
      */
     @Test

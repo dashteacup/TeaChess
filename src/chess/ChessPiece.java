@@ -58,6 +58,33 @@ public abstract class ChessPiece implements Cloneable {
     }
 
     /**
+     * Determine if a position is on the board and not the same as the chess
+     * piece's current position. Does not take into account the placement
+     * of other pieces.
+     * @param newRow row you want to move to (1-8)
+     * @param newColumn column you want move to (1-8)
+     * @return true if this is a valid move for this chess piece
+     */
+    public boolean isValidMove(int newRow, int newColumn)
+    {
+        return bothPlacesOnTheBoard(newRow, newColumn) &&
+               (!sourceAndDestinationSame(newRow, newColumn));
+    }
+
+    /**
+     * Determine if the chess piece can move to a new position on the
+     * board. The positions are specified in algebraic chess notation. Does not
+     * take into account the placement of other pieces.
+     * @param file letter for the column you want to move to (a-h)
+     * @param rank number for the row you want to move to (1-8)
+     * @return true if this is a valid move for this chess piece
+     */
+    public boolean isValidMove(File file, int rank)
+    {
+        return isValidMove(rank, file.getColumn());
+    }
+
+    /**
      * Move the chess piece to a new place on the board. If the new place is not
      * a valid way to move, then do not move the piece.
      * @return true if the piece moves to the new place, false otherwise.
@@ -83,30 +110,17 @@ public abstract class ChessPiece implements Cloneable {
     }
 
     /**
-     * Determine if a position is on the board and not the same as the chess
-     * piece's current position. Does not take into account the placement
-     * of other pieces.
-     * @param newRow row you want to move to (1-8)
-     * @param newColumn column you want move to (1-8)
-     * @return true if this is a valid move for this chess piece
+     * Move the chess piece to a new place on the board without confirming that
+     * it's a valid move.
+     * @param row to move to (1-8)
+     * @param column to move to (1-8)
      */
-    public boolean isValidMove(int newRow, int newColumn)
+    public void forceMove(int row, int column)
     {
-        return bothPlacesOnTheBoard(newRow, newColumn) &&
-               (!sourceAndDestinationSame(newRow, newColumn));
-    }
-
-    /**
-     * Determine if the chess piece can move to a new position on the
-     * board. The positions are specified in algebraic chess notation. Does not
-     * take into account the placement of other pieces.
-     * @param file letter for the column you want to move to (a-h)
-     * @param rank number for the row you want to move to (1-8)
-     * @return true if this is a valid move for this chess piece
-     */
-    public boolean isValidMove(File file, int rank)
-    {
-        return isValidMove(rank, file.getColumn());
+        if (!isOnTheBoard(row, column))
+            throw new OffTheChessBoardException(row, column);
+        this.row = row;
+        this.column = column;
     }
 
     /**

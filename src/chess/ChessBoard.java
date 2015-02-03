@@ -99,11 +99,8 @@ public class ChessBoard {
                 return false;
             }
         }
-        // if the piece can hop, then intervening pieces don't matter
-        if (piece.isHoppable())
-            return true;
-        // otherwise, make sure there's nothing between the two positions
-        return hasClearPath(oldRow, oldColumn, newRow, newColumn);
+        // piece must be hoppable or have a clear path to its destination
+        return piece.isHoppable() || hasClearPath(oldRow, oldColumn, newRow, newColumn);
     }
 
     /**
@@ -154,6 +151,38 @@ public class ChessBoard {
     public boolean move(File oldFile, int oldRank, File newFile, int newRank)
     {
         return move(oldRank, oldFile.getColumn(), newRank, newFile.getColumn());
+    }
+
+    /**
+     * Move a ChessPiece from one position to another without confirming that
+     * it's a valid chess move. Does nothing if there is no piece to move.
+     * @param oldRow of the piece to move (1-8)
+     * @param oldColumn of the piece to move (1-8)
+     * @param newRow to move to (1-8)
+     * @param newColumn to move to (1-8)
+     */
+    public void forceMove(int oldRow, int oldColumn, int newRow, int newColumn)
+    {
+        ChessPiece movingPiece = getPiece(oldRow, oldColumn);
+        if (movingPiece != null) {
+            movingPiece.forceMove(newRow, newColumn);
+            board[newRow][newColumn] = movingPiece;
+            board[oldRow][oldColumn] = null;
+        }
+    }
+
+    /**
+     * Move a ChessPiece from one position to another in algebraic chess
+     * notation without confirming that it's a valid chess move. Does nothing if
+     * there is no piece to move.
+     * @param oldFile of the piece to move (a-h)
+     * @param oldRank of the piece to move (1-8)
+     * @param newFile to move to (a-h)
+     * @param newRank to move to (1-8)
+     */
+    public void forceMove(File oldFile, int oldRank, File newFile, int newRank)
+    {
+        forceMove(oldRank, oldFile.getColumn(), newRank, newFile.getColumn());
     }
 
     /**
