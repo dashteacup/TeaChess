@@ -474,6 +474,29 @@ public class ChessBoardTest {
     }
 
     /**
+     * Ensure that a player can't make a move that would leave his king in
+     * check.
+     */
+    @Test
+    public void checkLimitsValidMoves()
+    {
+        // move white pawn up 1
+        board.move(f, 2, f, 3);
+        // move black pawn down 1
+        board.move(e, 7, e, 6);
+        // move white pawn up 1
+        board.move(h, 2, h, 3);
+        // move black queen to put white king in check
+        board.move(d, 8, h, 4);
+        // king will still be in check, so you can't move the knight
+        assertFalse(board.move(b, 1, c, 3));
+        // king will still be in check so you can't move it up-right 1
+        assertFalse(board.move(e, 1, f, 2));
+        // blocks the queen, only valid move
+        assertTrue(board.move(g, 2, g, 3));
+    }
+
+    /**
      * Test pawn movement and capture functionality.
      */
     @Test

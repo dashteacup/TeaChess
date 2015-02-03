@@ -100,7 +100,12 @@ public class ChessBoard {
             }
         }
         // piece must be hoppable or have a clear path to its destination
-        return piece.isHoppable() || hasClearPath(oldRow, oldColumn, newRow, newColumn);
+        if (! (piece.isHoppable() || hasClearPath(oldRow, oldColumn, newRow, newColumn)) )
+            return false;
+        // Will this move put the king in check?
+        ChessBoard potential = new ChessBoard(this);
+        potential.forceMove(oldRow, oldColumn, newRow, newColumn);
+        return !potential.inCheck(piece.getColor());
     }
 
     /**
