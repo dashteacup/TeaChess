@@ -74,6 +74,71 @@ public class ChessBoard {
     }
 
     /**
+     * Get the chess piece at the given location.
+     * @param row of the chess piece (1-8)
+     * @param column of the chess piece (1-8)
+     * @return the chess piece at the given location
+     */
+    public ChessPiece getPiece(int row, int column)
+    {
+        if (!isOnTheBoard(row, column)) {
+            throw new OffTheChessBoardException(row, column);
+        }
+        return board[row][column];
+    }
+
+    /**
+     * Get the chess piece at the location given in algebraic chess notation.
+     * @param file of the chess piece (a-h)
+     * @param rank of the chess piece (1-8)
+     * @return the chess piece at the given location
+     */
+    public ChessPiece getPiece(File file, int rank)
+    {
+        return getPiece(rank, file.getColumn());
+    }
+
+    /**
+     * Add a ChessPiece to the board. If a ChessPiece already exists at the new
+     * ChessPiece's location, it will be replaced with the new piece.
+     * @param piece to add to the board
+     * @return true if the piece is successfully added, false otherwise
+     */
+    public boolean addPiece(ChessPiece piece)
+    {
+        if (piece == null)
+            return false;
+        int row = piece.getRow();
+        int column = piece.getColumn();
+        if (!isOnTheBoard(row, column))
+            return false;
+        board[row][column] = piece;
+        return true;
+    }
+
+    /**
+     * Determine if there is a ChessPiece at the given location.
+     * @param row (1-8)
+     * @param column (1-8)
+     * @return true if the space is empty, false otherwise
+     */
+    public boolean isEmptySpace(int row, int column)
+    {
+        return getPiece(row, column) == null;
+    }
+
+    /**
+     * Determine if there is a ChessPiece at the given location.
+     * @param file in algebraic chess notation
+     * @param rank in algebraic chess notation (1-8)
+     * @return true if the space is empty, false otherwise
+     */
+    public boolean isEmptySpace(File file, int rank)
+    {
+        return isEmptySpace(rank, file.getColumn());
+    }
+
+    /**
      * Determine if the indicated move is a valid chess move.
      * @param oldRow of the piece to move (1-8)
      * @param oldColumn of the piece to move (1-8)
@@ -188,72 +253,6 @@ public class ChessBoard {
     public void forceMove(File oldFile, int oldRank, File newFile, int newRank)
     {
         forceMove(oldRank, oldFile.getColumn(), newRank, newFile.getColumn());
-    }
-
-    /**
-     * Get the chess piece at the given location.
-     * @param row of the chess piece (1-8)
-     * @param column of the chess piece (1-8)
-     * @return the chess piece at the given location
-     */
-    public ChessPiece getPiece(int row, int column)
-    {
-        if (!isOnTheBoard(row, column)) {
-            throw new OffTheChessBoardException(row, column);
-        }
-        return board[row][column];
-    }
-
-    /**
-     * Get the chess piece at the location given in algebraic chess notation.
-     * @param file of the chess piece (a-h)
-     * @param rank of the chess piece (1-8)
-     * @return the chess piece at the given location
-     */
-    public ChessPiece getPiece(File file, int rank)
-    {
-        return getPiece(rank, file.getColumn());
-    }
-
-
-    /**
-     * Add a ChessPiece to the board. If a ChessPiece already exists at the new
-     * ChessPiece's location, it will be replaced with the new piece.
-     * @param piece to add to the board
-     * @return true if the piece is successfully added, false otherwise
-     */
-    public boolean addPiece(ChessPiece piece)
-    {
-        if (piece == null)
-            return false;
-        int row = piece.getRow();
-        int column = piece.getColumn();
-        if (!isOnTheBoard(row, column))
-            return false;
-        board[row][column] = piece;
-        return true;
-    }
-
-    /**
-     * Determine if there is a ChessPiece at the given location.
-     * @param row (1-8)
-     * @param column (1-8)
-     * @return true if the space is empty, false otherwise
-     */
-    public boolean isEmptySpace(int row, int column)
-    {
-        return getPiece(row, column) == null;
-    }
-
-    /**
-     * Determine if there is a ChessPiece at the given location.
-     * @param file in algebraic chess notation
-     * @param rank in algebraic chess notation (1-8)
-     * @return true if the space is empty, false otherwise
-     */
-    public boolean emptySpace(File file, int rank)
-    {
-        return isEmptySpace(rank, file.getColumn());
     }
 
     /**

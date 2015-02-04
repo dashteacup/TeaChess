@@ -41,6 +41,90 @@ public class ChessBoardTest {
     }
 
     /**
+     * Confirm that all the white pieces are in their proper starting position.
+     */
+    @Test
+    public void initializeAndCheckWhiteSide()
+    {
+        // check white side
+        assertTrue(board.getPiece(1, 1) instanceof Rook);
+        assertTrue(board.getPiece(1, 2) instanceof Knight);
+        assertTrue(board.getPiece(1, 3) instanceof Bishop);
+        assertTrue(board.getPiece(1, 4) instanceof Queen);
+        assertTrue(board.getPiece(1, 5) instanceof King);
+        assertTrue(board.getPiece(1, 6) instanceof Bishop);
+        assertTrue(board.getPiece(1, 7) instanceof Knight);
+        assertTrue(board.getPiece(1, 8) instanceof Rook);
+        assertTrue(board.getPiece(2, 1) instanceof Pawn);
+        assertTrue(board.getPiece(2, 5) instanceof Pawn);
+        assertTrue(board.getPiece(2, 8) instanceof Pawn);
+
+        // check colors
+        assertEquals(WHITE, board.getPiece(1, 5).getColor());
+        assertEquals(WHITE, board.getPiece(2, 8).getColor());
+    }
+
+    /**
+     * Confirm that all the black pieces are in their proper starting position.
+     */
+    @Test
+    public void initializeAndCheckBlackSide()
+    {
+        // check black side
+        assertTrue(board.getPiece(8, 1) instanceof Rook);
+        assertTrue(board.getPiece(8, 2) instanceof Knight);
+        assertTrue(board.getPiece(8, 3) instanceof Bishop);
+        assertTrue(board.getPiece(8, 4) instanceof Queen);
+        assertTrue(board.getPiece(8, 5) instanceof King);
+        assertTrue(board.getPiece(8, 6) instanceof Bishop);
+        assertTrue(board.getPiece(8, 7) instanceof Knight);
+        assertTrue(board.getPiece(8, 8) instanceof Rook);
+        assertTrue(board.getPiece(7, 1) instanceof Pawn);
+        assertTrue(board.getPiece(7, 5) instanceof Pawn);
+        assertTrue(board.getPiece(7, 8) instanceof Pawn);
+
+        // check colors
+        assertEquals(BLACK, board.getPiece(7, 1).getColor());
+        assertEquals(BLACK, board.getPiece(8, 8).getColor());
+    }
+
+    /**
+     * Ensure that elements in the middle are null.
+     */
+    @Test
+    public void initializeAndCheckMiddle()
+    {
+        assertNull(board.getPiece(3, 2));
+        assertNull(board.getPiece(4, 4));
+        assertNull(board.getPiece(5, 1));
+        assertNull(board.getPiece(5, 8));
+        assertNull(board.getPiece(6, 7));
+    }
+
+    /**
+     * Ensure the copy constructor creates a correct deep copy of the
+     * ChessBoard.
+     */
+    @Test
+    public void copyConstructor()
+    {
+        ChessBoard copyBoard = new ChessBoard(board);
+        // copy has a knight in the right starting place
+        assertTrue(copyBoard.getPiece(b, 1) instanceof Knight);
+        // move the original board's knight
+        board.move(b, 1, a, 3);
+        assertTrue(board.getPiece(a, 3) instanceof Knight);
+        assertNull(board.getPiece(b, 1));
+        // knight didn't move in the copy
+        assertFalse(copyBoard.getPiece(a, 3) instanceof Knight);
+        // move the copy's knight somewhere else
+        copyBoard.move(b, 1, c, 3);
+        assertTrue(copyBoard.getPiece(c, 3) instanceof Knight);
+        // it doesn't affect the original board
+        assertFalse(board.getPiece(c, 3) instanceof Knight);
+    }
+
+    /**
      * Confirm that the getter in row/column notation works properly with valid
      * input.
      */
@@ -126,91 +210,6 @@ public class ChessBoardTest {
     }
 
     /**
-     * Confirm that all the white pieces are in their proper starting position.
-     */
-    @Test
-    public void initializeAndCheckWhiteSide()
-    {
-        // check white side
-        assertTrue(board.getPiece(1, 1) instanceof Rook);
-        assertTrue(board.getPiece(1, 2) instanceof Knight);
-        assertTrue(board.getPiece(1, 3) instanceof Bishop);
-        assertTrue(board.getPiece(1, 4) instanceof Queen);
-        assertTrue(board.getPiece(1, 5) instanceof King);
-        assertTrue(board.getPiece(1, 6) instanceof Bishop);
-        assertTrue(board.getPiece(1, 7) instanceof Knight);
-        assertTrue(board.getPiece(1, 8) instanceof Rook);
-        assertTrue(board.getPiece(2, 1) instanceof Pawn);
-        assertTrue(board.getPiece(2, 5) instanceof Pawn);
-        assertTrue(board.getPiece(2, 8) instanceof Pawn);
-
-        // check colors
-        assertEquals(WHITE, board.getPiece(1, 5).getColor());
-        assertEquals(WHITE, board.getPiece(2, 8).getColor());
-    }
-
-    /**
-     * Confirm that all the black pieces are in their proper starting position.
-     */
-    @Test
-    public void initializeAndCheckBlackSide()
-    {
-        // check black side
-        assertTrue(board.getPiece(8, 1) instanceof Rook);
-        assertTrue(board.getPiece(8, 2) instanceof Knight);
-        assertTrue(board.getPiece(8, 3) instanceof Bishop);
-        assertTrue(board.getPiece(8, 4) instanceof Queen);
-        assertTrue(board.getPiece(8, 5) instanceof King);
-        assertTrue(board.getPiece(8, 6) instanceof Bishop);
-        assertTrue(board.getPiece(8, 7) instanceof Knight);
-        assertTrue(board.getPiece(8, 8) instanceof Rook);
-        assertTrue(board.getPiece(7, 1) instanceof Pawn);
-        assertTrue(board.getPiece(7, 5) instanceof Pawn);
-        assertTrue(board.getPiece(7, 8) instanceof Pawn);
-
-        // check colors
-        assertEquals(BLACK, board.getPiece(7, 1).getColor());
-        assertEquals(BLACK, board.getPiece(8, 8).getColor());
-    }
-
-    /**
-     * Ensure that elements in the middle are null.
-     */
-    @Test
-    public void initializeAndCheckMiddle()
-    {
-        assertNull(board.getPiece(3, 2));
-        assertNull(board.getPiece(4, 4));
-        assertNull(board.getPiece(5, 1));
-        assertNull(board.getPiece(5, 8));
-        assertNull(board.getPiece(6, 7));
-    }
-
-    /**
-     * Ensure the copy constructor creates a correct deep copy of the
-     * ChessBoard.
-     */
-    @Test
-    public void copyConstructor()
-    {
-        ChessBoard copyBoard = new ChessBoard(board);
-        // copy has a knight in the right starting place
-        assertTrue(copyBoard.getPiece(b, 1) instanceof Knight);
-        // move the original board's knight
-        board.move(b, 1, a, 3);
-        assertTrue(board.getPiece(a, 3) instanceof Knight);
-        assertNull(board.getPiece(b, 1));
-        // knight didn't move in the copy
-        assertFalse(copyBoard.getPiece(a, 3) instanceof Knight);
-        // move the copy's knight somewhere else
-        copyBoard.move(b, 1, c, 3);
-        assertTrue(copyBoard.getPiece(c, 3) instanceof Knight);
-        // it doesn't affect the original board
-        assertFalse(board.getPiece(c, 3) instanceof Knight);
-    }
-
-
-    /**
      * Confirm that a ChessPiece successfully added to the board has the right
      * properties.
      */
@@ -254,10 +253,10 @@ public class ChessBoardTest {
     public void emptySpace()
     {
         // empty
-        assertTrue(board.emptySpace(c, 4));
+        assertTrue(board.isEmptySpace(c, 4));
         assertTrue(board.isEmptySpace(6, 8));
         // occupied
-        assertFalse(board.emptySpace(h, 8));
+        assertFalse(board.isEmptySpace(h, 8));
         assertFalse(board.isEmptySpace(2, 1));
     }
 
@@ -308,6 +307,60 @@ public class ChessBoardTest {
     }
 
     /**
+     * Test pawn movement and capture functionality.
+     */
+    @Test
+    public void movePawn()
+    {
+        // white up 2
+        assertTrue(board.move(c, 2, c, 4));
+        // black down 2
+        assertTrue(board.move(d, 7, d, 5));
+        // can white capture up-right?
+        assertTrue(board.isValidMove(c, 4, d, 5));
+        // black capture down-left
+        assertTrue(board.move(d, 5, c, 4));
+        // bad, black capture empty space down-right
+        assertFalse(board.move(c, 4, d, 3));
+    }
+
+    /**
+     * Run a simulated partial chess game only making valid moves.
+     */
+    @Test
+    public void moveMultiplePieces()
+    {
+        // white pawn up 2
+        assertTrue(board.move(h, 2, h, 4));
+        // black knight down 2 left 1
+        assertTrue(board.move(g, 8, f, 6));
+        // white rook up 2
+        assertTrue(board.move(h, 1, h, 3));
+        // black pawn down 1
+        assertTrue(board.move(g, 7, g, 6));
+        // white rook left 3
+        assertTrue(board.move(h, 3, e, 3));
+        // black bishop down-right 2
+        assertTrue(board.move(f, 8, h, 6));
+        // white pawn up 2
+        assertTrue(board.move(d, 2, d, 4));
+        // black bishop capture rook
+        assertTrue(board.move(h, 6, e, 3));
+        // white queen up 2
+        assertTrue(board.move(d, 1, d, 3));
+        // black king right
+        assertTrue(board.move(e, 8, f, 8));
+        // white queen capture bishop
+        assertTrue(board.move(d, 3, e, 3));
+        // black knight down 2 right 1
+        assertTrue(board.move(f, 6, g, 4));
+        // white queen capture pawn
+        assertTrue(board.move(e, 3, e, 7));
+        // black king capture queen
+        assertTrue(board.move(f, 8, e, 7));
+    }
+
+    /**
      * Confirm that you can use the forceMove method to illegally move a piece
      * to any place on the board.
      */
@@ -320,7 +373,7 @@ public class ChessBoardTest {
         assertTrue(board.getPiece(a, 8) instanceof Rook);
         // now force move to upper left corner
         board.forceMove(e, 1, a, 8);
-        assertTrue(board.emptySpace(e, 1));
+        assertTrue(board.isEmptySpace(e, 1));
         assertTrue(board.getPiece(a, 8) instanceof King);
     }
 
@@ -347,6 +400,62 @@ public class ChessBoardTest {
     public void forceMoveOffTheBoard()
     {
         board.forceMove(a, 8, a, 0);
+    }
+
+    /**
+     * Confirm that the board can recognize when a player is in or out of check.
+     */
+    @Test
+    public void inCheck()
+    {
+        // nothing should be in check at game start
+        assertFalse(board.inCheck(WHITE));
+        assertFalse(board.inCheck(BLACK));
+        // move white pawn before queen up 1
+        board.move(d, 2, d, 3);
+        // move black pawn before king down 1
+        board.move(e, 7, e, 6);
+        // move white pawn before king up 1
+        board.move(e, 2, e, 3);
+        // move black bishop to put the white king in check
+        board.move(f, 8, b, 4);
+        assertTrue(board.inCheck(WHITE));
+        // black king is still not in check
+        assertFalse(board.inCheck(BLACK));
+        // block with queen, making the white king safe
+        board.move(d, 1, d, 2);
+        assertFalse(board.inCheck(WHITE));
+        // move black king down 1
+        board.move(e, 8, e, 7);
+        // move white queen to put the black king in check
+        board.move(d, 2, b, 4);
+        assertTrue(board.inCheck(BLACK));
+        // move black king to safety
+        board.move(e, 7, f, 6);
+        assertFalse(board.inCheck(BLACK));
+    }
+
+    /**
+     * Ensure that a player can't make a move that would leave his king in
+     * check.
+     */
+    @Test
+    public void checkLimitsValidMoves()
+    {
+        // move white pawn up 1
+        board.move(f, 2, f, 3);
+        // move black pawn down 1
+        board.move(e, 7, e, 6);
+        // move white pawn up 1
+        board.move(h, 2, h, 3);
+        // move black queen to put white king in check
+        board.move(d, 8, h, 4);
+        // king will still be in check, so you can't move the knight
+        assertFalse(board.move(b, 1, c, 3));
+        // king will still be in check so you can't move it up-right 1
+        assertFalse(board.move(e, 1, f, 2));
+        // blocks the queen, only valid move
+        assertTrue(board.move(g, 2, g, 3));
     }
 
     /**
@@ -438,115 +547,5 @@ public class ChessBoardTest {
         assertFalse(board.move(h, 5, d, 1));
         // capture down-left
         assertTrue(board.move(h, 5, e, 2));
-    }
-
-    /**
-     * Confirm that the board can recognize when a player is in or out of check.
-     */
-    @Test
-    public void inCheck()
-    {
-        // nothing should be in check at game start
-        assertFalse(board.inCheck(WHITE));
-        assertFalse(board.inCheck(BLACK));
-        // move white pawn before queen up 1
-        board.move(d, 2, d, 3);
-        // move black pawn before king down 1
-        board.move(e, 7, e, 6);
-        // move white pawn before king up 1
-        board.move(e, 2, e, 3);
-        // move black bishop to put the white king in check
-        board.move(f, 8, b, 4);
-        assertTrue(board.inCheck(WHITE));
-        // black king is still not in check
-        assertFalse(board.inCheck(BLACK));
-        // block with queen, making the white king safe
-        board.move(d, 1, d, 2);
-        assertFalse(board.inCheck(WHITE));
-        // move black king down 1
-        board.move(e, 8, e, 7);
-        // move white queen to put the black king in check
-        board.move(d, 2, b, 4);
-        assertTrue(board.inCheck(BLACK));
-        // move black king to safety
-        board.move(e, 7, f, 6);
-        assertFalse(board.inCheck(BLACK));
-    }
-
-    /**
-     * Ensure that a player can't make a move that would leave his king in
-     * check.
-     */
-    @Test
-    public void checkLimitsValidMoves()
-    {
-        // move white pawn up 1
-        board.move(f, 2, f, 3);
-        // move black pawn down 1
-        board.move(e, 7, e, 6);
-        // move white pawn up 1
-        board.move(h, 2, h, 3);
-        // move black queen to put white king in check
-        board.move(d, 8, h, 4);
-        // king will still be in check, so you can't move the knight
-        assertFalse(board.move(b, 1, c, 3));
-        // king will still be in check so you can't move it up-right 1
-        assertFalse(board.move(e, 1, f, 2));
-        // blocks the queen, only valid move
-        assertTrue(board.move(g, 2, g, 3));
-    }
-
-    /**
-     * Test pawn movement and capture functionality.
-     */
-    @Test
-    public void pawnCapture()
-    {
-        // white up 2
-        assertTrue(board.move(c, 2, c, 4));
-        // black down 2
-        assertTrue(board.move(d, 7, d, 5));
-        // can white capture up-right?
-        assertTrue(board.isValidMove(c, 4, d, 5));
-        // black capture down-left
-        assertTrue(board.move(d, 5, c, 4));
-        // bad, black capture empty space down-right
-        assertFalse(board.move(c, 4, d, 3));
-    }
-
-    /**
-     * Run a simulated partial chess game.
-     */
-    @Test
-    public void testMultipleMoves()
-    {
-        // white pawn up 2
-        assertTrue(board.move(h, 2, h, 4));
-        // black knight down 2 left 1
-        assertTrue(board.move(g, 8, f, 6));
-        // white rook up 2
-        assertTrue(board.move(h, 1, h, 3));
-        // black pawn down 1
-        assertTrue(board.move(g, 7, g, 6));
-        // white rook left 3
-        assertTrue(board.move(h, 3, e, 3));
-        // black bishop down-right 2
-        assertTrue(board.move(f, 8, h, 6));
-        // white pawn up 2
-        assertTrue(board.move(d, 2, d, 4));
-        // black bishop capture rook
-        assertTrue(board.move(h, 6, e, 3));
-        // white queen up 2
-        assertTrue(board.move(d, 1, d, 3));
-        // black king right
-        assertTrue(board.move(e, 8, f, 8));
-        // white queen capture bishop
-        assertTrue(board.move(d, 3, e, 3));
-        // black knight down 2 right 1
-        assertTrue(board.move(f, 6, g, 4));
-        // white queen capture pawn
-        assertTrue(board.move(e, 3, e, 7));
-        // black king capture queen
-        assertTrue(board.move(f, 8, e, 7));
     }
 }
