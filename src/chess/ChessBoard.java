@@ -55,9 +55,13 @@ public class ChessBoard {
 
     /**
      * ChessBoard copy constructor. Duplicate the current chess board layout.
+     * If the sourceBoard is null, then return an empty board.
+     * @param sourceBoard board to duplicate
      */
     public ChessBoard(ChessBoard sourceBoard)
     {
+        if (sourceBoard == null)
+            return; // all elements null by default
         for (int row = 1; row < BOARD_SIZE; row++) {
             for (int col = 1; col < BOARD_SIZE; col++) {
                 ChessPiece piece = sourceBoard.getPiece(row, col);

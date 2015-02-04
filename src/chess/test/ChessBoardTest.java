@@ -125,6 +125,28 @@ public class ChessBoardTest {
     }
 
     /**
+     * Ensure that the copy constructor creates an empty board when given null
+     * as a parameter.
+     */
+    @Test
+    public void copyConstructorEmpty()
+    {
+        ChessBoard emptyBoard = new ChessBoard(null);
+        // white king
+        assertNull(emptyBoard.getPiece(e, 1));
+        // black king
+        assertNull(emptyBoard.getPiece(e, 8));
+        // white pawn
+        assertNull(emptyBoard.getPiece(h, 2));
+        // black knight
+        assertNull(emptyBoard.getPiece(b, 8));
+        // check everything
+        for (int row = 1; row <= 8; row++)
+            for (int col = 1; col <= 8; col++)
+                assertNull(emptyBoard.getPiece(row, col));
+    }
+
+    /**
      * Confirm that the getter in row/column notation works properly with valid
      * input.
      */
