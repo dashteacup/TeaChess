@@ -255,10 +255,10 @@ public class ChessBoardTest {
     {
         // empty
         assertTrue(board.emptySpace(c, 4));
-        assertTrue(board.emptySpace(6, 8));
+        assertTrue(board.isEmptySpace(6, 8));
         // occupied
         assertFalse(board.emptySpace(h, 8));
-        assertFalse(board.emptySpace(2, 1));
+        assertFalse(board.isEmptySpace(2, 1));
     }
 
     /**

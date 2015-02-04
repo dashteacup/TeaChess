@@ -84,11 +84,11 @@ public class ChessBoard {
     public boolean isValidMove(int oldRow, int oldColumn, int newRow, int newColumn)
     {
         // There must be a piece to move
-        if (emptySpace(oldRow, oldColumn))
+        if (isEmptySpace(oldRow, oldColumn))
             return false;
         ChessPiece piece = getPiece(oldRow, oldColumn);
         // moving to an empty space
-        if (emptySpace(newRow, newColumn)) {
+        if (isEmptySpace(newRow, newColumn)) {
             if (!piece.isValidMove(newRow, newColumn))
                 return false;
         // the space is occupied
@@ -240,7 +240,7 @@ public class ChessBoard {
      * @param column (1-8)
      * @return true if the space is empty, false otherwise
      */
-    public boolean emptySpace(int row, int column)
+    public boolean isEmptySpace(int row, int column)
     {
         return getPiece(row, column) == null;
     }
@@ -253,7 +253,7 @@ public class ChessBoard {
      */
     public boolean emptySpace(File file, int rank)
     {
-        return emptySpace(rank, file.getColumn());
+        return isEmptySpace(rank, file.getColumn());
     }
 
     /**
@@ -310,7 +310,7 @@ public class ChessBoard {
      */
     private boolean hasClearPath(int oldRow, int oldColumn, int newRow, int newColumn)
     {
-        assert !emptySpace(oldRow, oldColumn);
+        assert !isEmptySpace(oldRow, oldColumn);
         assert !(oldRow == newRow && oldColumn == newColumn);
         assert !getPiece(oldRow, oldColumn).isHoppable();
         int deltaRow = newRow - oldRow;
@@ -351,7 +351,7 @@ public class ChessBoard {
         int upper = Math.max(startColumn, endColumn);
         // check every space between the two columns
         for (int column = lower + 1; column < upper; ++column) {
-            if (!emptySpace(row, column))
+            if (!isEmptySpace(row, column))
                 return false;
         }
         return true;
@@ -374,7 +374,7 @@ public class ChessBoard {
         int upper = Math.max(startRow, endRow);
         // check every space between the two rows
         for (int row = lower + 1; row < upper; ++row) {
-            if (!emptySpace(row, column))
+            if (!isEmptySpace(row, column))
                 return false;
         }
         return true;
@@ -396,7 +396,7 @@ public class ChessBoard {
         assert rowStep == 1 || rowStep == -1 : rowStep;
         assert columnStep == 1 || columnStep == -1 : columnStep;
         for (int offset = 1; offset < spacesApart; ++offset) {
-            if (!emptySpace(row + (offset * rowStep), column + (offset * columnStep)))
+            if (!isEmptySpace(row + (offset * rowStep), column + (offset * columnStep)))
                 return false;
         }
         return true;
