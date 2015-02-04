@@ -502,42 +502,37 @@ public class ChessBoardTest {
     }
 
     /**
-     * The hasNoValidMoves method should return false when there are moves that
-     * you can make.
+     * The initial board layout should not be a checkmate or stalemate.
      */
     @Test
     public void hasValidMoves()
     {
-        assertFalse(board.hasNoValidMoves(WHITE));
         assertFalse(board.checkmate(WHITE));
         assertFalse(board.stalemate(WHITE));
-        assertFalse(board.hasNoValidMoves(BLACK));
         assertFalse(board.checkmate(BLACK));
         assertFalse(board.stalemate(BLACK));
     }
 
     /**
-     * When black is caught in checkmate, it has no valid moves to make.
+     * Recognize when black is caught in checkmate.
      */
     @Test
-    public void hasNoValidMovesCheckmate()
+    public void checkmate()
     {
         ChessBoard emptyBoard = new ChessBoard(null);
         emptyBoard.addPiece(new King(h, 5, BLACK));
         emptyBoard.addPiece(new Rook(h, 1, WHITE));
         emptyBoard.addPiece(new King(f, 5, WHITE));
 
-        assertTrue(emptyBoard.hasNoValidMoves(BLACK));
         assertTrue(emptyBoard.checkmate(BLACK));
         assertFalse(emptyBoard.stalemate(BLACK));
     }
 
     /**
-     * Ensure that when white is caught in the fool's mate checkmate, it has no
-     * valid moves to make.
+     * Recognize when white is caught in the fool's mate checkmate.
      */
     @Test
-    public void hasNoValidMovesFoolsMate()
+    public void checkmateFoolsMate()
     {
         // white pawn up 1
         board.move(f, 2, f, 3);
@@ -548,17 +543,16 @@ public class ChessBoardTest {
         // black king to checkmate
         board.move(d, 8, h, 4);
 
-        assertTrue(board.hasNoValidMoves(WHITE));
         assertTrue(board.checkmate(WHITE));
         assertFalse(board.stalemate(WHITE));
     }
 
     /**
-     * When black is caught in a stalemate, it has no valid moves to make and is
-     * NOT in check.
+     * Recognize when black is caught in a stalemate. It should have no possible
+     * moves and NOT be in check.
      */
     @Test
-    public void hasNoValidMovesStalemate()
+    public void stalemate()
     {
         ChessBoard emptyBoard = new ChessBoard(null);
         emptyBoard.addPiece(new King(h, 8, BLACK));
@@ -566,7 +560,6 @@ public class ChessBoardTest {
         emptyBoard.addPiece(new King(f, 7, WHITE));
 
         // stalemate = no valid moves but not in check
-        assertTrue(emptyBoard.hasNoValidMoves(BLACK));
         assertTrue(emptyBoard.stalemate(BLACK));
         assertFalse(emptyBoard.inCheck(BLACK));
         assertFalse(emptyBoard.checkmate(BLACK));

@@ -283,12 +283,35 @@ public class ChessBoard {
     }
 
     /**
+     * Determine if the given player has been checkmated. The game reaches
+     * checkmate when the current player is in check and has no valid moves
+     * to make.
+     * @param currentPlayer whose turn it is
+     * @return true if the player has been checkmated, false otherwise.
+     */
+    public boolean checkmate(ChessPieceColor currentPlayer)
+    {
+        return hasNoValidMoves(currentPlayer) && inCheck(currentPlayer);
+    }
+
+    /**
+     * Determine if the given player has forced a stalemate. The game is a
+     * stalemate if the current player has no valid moves and is NOT in check.
+     * @param currentPlayer whose turn it is
+     * @return true if the player is in stalemate, false otherwise.
+     */
+    public boolean stalemate(ChessPieceColor currentPlayer)
+    {
+        return hasNoValidMoves(currentPlayer) && !inCheck(currentPlayer);
+    }
+
+    /**
      * Determine if the given player has no valid moves. This means there is
      * either a checkmate or a stalemate.
      * @param currentPlayer to check for valid moves
      * @return true if the player can make any moves, false otherwise
      */
-    public boolean hasNoValidMoves(ChessPieceColor currentPlayer)
+    private boolean hasNoValidMoves(ChessPieceColor currentPlayer)
     {
         // check every space for my pieces
         for (int row = 1; row < BOARD_SIZE; row++) {
@@ -303,26 +326,6 @@ public class ChessBoard {
             }
         }
         return true;
-    }
-
-    /**
-     * Determine if the given player has been checkmated.
-     * @param currentPlayer whose turn it is
-     * @return true if the player has been checkmated, false otherwise.
-     */
-    public boolean checkmate(ChessPieceColor currentPlayer)
-    {
-        return hasNoValidMoves(currentPlayer) && inCheck(currentPlayer);
-    }
-
-    /**
-     * Determine if the given player has forced a stalemate.
-     * @param currentPlayer whose turn it is
-     * @return true if the player is in stalemate, false otherwise.
-     */
-    public boolean stalemate(ChessPieceColor currentPlayer)
-    {
-        return hasNoValidMoves(currentPlayer) && !inCheck(currentPlayer);
     }
 
     /**
