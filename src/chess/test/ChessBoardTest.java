@@ -509,6 +509,11 @@ public class ChessBoardTest {
     public void hasValidMoves()
     {
         assertFalse(board.hasNoValidMoves(WHITE));
+        assertFalse(board.checkmate(WHITE));
+        assertFalse(board.stalemate(WHITE));
+        assertFalse(board.hasNoValidMoves(BLACK));
+        assertFalse(board.checkmate(BLACK));
+        assertFalse(board.stalemate(BLACK));
     }
 
     /**
@@ -521,7 +526,10 @@ public class ChessBoardTest {
         emptyBoard.addPiece(new King(h, 5, BLACK));
         emptyBoard.addPiece(new Rook(h, 1, WHITE));
         emptyBoard.addPiece(new King(f, 5, WHITE));
+
         assertTrue(emptyBoard.hasNoValidMoves(BLACK));
+        assertTrue(emptyBoard.checkmate(BLACK));
+        assertFalse(emptyBoard.stalemate(BLACK));
     }
 
     /**
@@ -539,7 +547,10 @@ public class ChessBoardTest {
         board.move(g, 2, g, 4);
         // black king to checkmate
         board.move(d, 8, h, 4);
+
         assertTrue(board.hasNoValidMoves(WHITE));
+        assertTrue(board.checkmate(WHITE));
+        assertFalse(board.stalemate(WHITE));
     }
 
     /**
@@ -553,9 +564,12 @@ public class ChessBoardTest {
         emptyBoard.addPiece(new King(h, 8, BLACK));
         emptyBoard.addPiece(new Queen(g, 6, WHITE));
         emptyBoard.addPiece(new King(f, 7, WHITE));
+
         // stalemate = no valid moves but not in check
         assertTrue(emptyBoard.hasNoValidMoves(BLACK));
+        assertTrue(emptyBoard.stalemate(BLACK));
         assertFalse(emptyBoard.inCheck(BLACK));
+        assertFalse(emptyBoard.checkmate(BLACK));
     }
 
     /**

@@ -306,6 +306,26 @@ public class ChessBoard {
     }
 
     /**
+     * Determine if the given player has been checkmated.
+     * @param currentPlayer whose turn it is
+     * @return true if the player has been checkmated, false otherwise.
+     */
+    public boolean checkmate(ChessPieceColor currentPlayer)
+    {
+        return hasNoValidMoves(currentPlayer) && inCheck(currentPlayer);
+    }
+
+    /**
+     * Determine if the given player has forced a stalemate.
+     * @param currentPlayer whose turn it is
+     * @return true if the player is in stalemate, false otherwise.
+     */
+    public boolean stalemate(ChessPieceColor currentPlayer)
+    {
+        return hasNoValidMoves(currentPlayer) && !inCheck(currentPlayer);
+    }
+
+    /**
      * Determine if a ChessPiece has any valid moves to make
      * @param piece to check
      * @return true if the piece can make any moves, false otherwise
