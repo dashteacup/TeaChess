@@ -283,6 +283,46 @@ public class ChessBoard {
     }
 
     /**
+     * Determine if the given player has no valid moves. This means there is
+     * either a checkmate or a stalemate.
+     * @param currentPlayer to check for valid moves
+     * @return true if the player can make any moves, false otherwise
+     */
+    public boolean hasNoValidMoves(ChessPieceColor currentPlayer)
+    {
+        // check every space for my pieces
+        for (int row = 1; row < BOARD_SIZE; row++) {
+            for (int col = 1; col < BOARD_SIZE; col++) {
+                ChessPiece pieceToCheck = getPiece(row, col);
+                // if it is one of my chess pieces
+                if (pieceToCheck != null && pieceToCheck.getColor() == currentPlayer) {
+                    // see if it has any valid moves
+                    if (hasValidMoves(pieceToCheck))
+                        return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Determine if a ChessPiece has any valid moves to make
+     * @param piece to check
+     * @return true if the piece can make any moves, false otherwise
+     */
+    private boolean hasValidMoves(ChessPiece piece)
+    {
+        assert piece != null;
+        for (int row = 1; row < BOARD_SIZE; row++) {
+            for (int col = 1; col < BOARD_SIZE; col++) {
+                if (isValidMove(piece.getRow(), piece.getColumn(), row, col))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Return a reference to the king of the given player. Assumes that there is
      * exactly one king for each player.
      * @param player the King's color

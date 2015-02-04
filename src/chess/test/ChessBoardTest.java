@@ -502,6 +502,63 @@ public class ChessBoardTest {
     }
 
     /**
+     * The hasNoValidMoves method should return false when there are moves that
+     * you can make.
+     */
+    @Test
+    public void hasValidMoves()
+    {
+        assertFalse(board.hasNoValidMoves(WHITE));
+    }
+
+    /**
+     * When black is caught in checkmate, it has no valid moves to make.
+     */
+    @Test
+    public void hasNoValidMovesCheckmate()
+    {
+        ChessBoard emptyBoard = new ChessBoard(null);
+        emptyBoard.addPiece(new King(h, 5, BLACK));
+        emptyBoard.addPiece(new Rook(h, 1, WHITE));
+        emptyBoard.addPiece(new King(f, 5, WHITE));
+        assertTrue(emptyBoard.hasNoValidMoves(BLACK));
+    }
+
+    /**
+     * Ensure that when white is caught in the fool's mate checkmate, it has no
+     * valid moves to make.
+     */
+    @Test
+    public void hasNoValidMovesFoolsMate()
+    {
+        // white pawn up 1
+        board.move(f, 2, f, 3);
+        // black pawn down 2
+        board.move(e, 7, e, 5);
+        // white pawn up 2
+        board.move(g, 2, g, 4);
+        // black king to checkmate
+        board.move(d, 8, h, 4);
+        assertTrue(board.hasNoValidMoves(WHITE));
+    }
+
+    /**
+     * When black is caught in a stalemate, it has no valid moves to make and is
+     * NOT in check.
+     */
+    @Test
+    public void hasNoValidMovesStalemate()
+    {
+        ChessBoard emptyBoard = new ChessBoard(null);
+        emptyBoard.addPiece(new King(h, 8, BLACK));
+        emptyBoard.addPiece(new Queen(g, 6, WHITE));
+        emptyBoard.addPiece(new King(f, 7, WHITE));
+        // stalemate = no valid moves but not in check
+        assertTrue(emptyBoard.hasNoValidMoves(BLACK));
+        assertFalse(emptyBoard.inCheck(BLACK));
+    }
+
+    /**
      * Ensure that vertical moves fail if something blocks their way.
      */
     @Test
