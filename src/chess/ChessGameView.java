@@ -136,14 +136,10 @@ public class ChessGameView {
     {
         switch(playerColor) {
         case WHITE:
-            currentPlayerLabel.setText("White's turn.");
-            currentPlayerLabel.setBackground(Color.WHITE);
-            currentPlayerLabel.setForeground(Color.BLACK);
+            setCurrentPlayerLabel(playerColor, "White's turn.");
             break;
         case BLACK:
-            currentPlayerLabel.setText("Black's turn.");
-            currentPlayerLabel.setBackground(Color.BLACK);
-            currentPlayerLabel.setForeground(Color.WHITE);
+            setCurrentPlayerLabel(playerColor, "Black's turn.");
             break;
         case NONE:
             break;
@@ -167,6 +163,54 @@ public class ChessGameView {
         case NONE:
             checkConditionLabel.setText("");
             checkConditionLabel.setOpaque(false); // hide background
+            break;
+        }
+    }
+
+    /**
+     * Set the status bar labels to indicate the winner of the game.
+     * @param player who won the game, or NONE if it was a draw
+     */
+    public void setWinner(ChessPieceColor player)
+    {
+        checkConditionLabel.setOpaque(true);
+        checkConditionLabel.setBackground(Color.RED);
+        switch (player) {
+        case WHITE:
+            checkConditionLabel.setText("Checkmate!");
+            setCurrentPlayerLabel(player, "White wins!");
+            break;
+        case BLACK:
+            checkConditionLabel.setText("Checkmate!");
+            setCurrentPlayerLabel(player, "Black wins!");
+            break;
+        case NONE:
+            checkConditionLabel.setText("Stalemate!");
+            setCurrentPlayerLabel(player, "A draw!");
+            break;
+        }
+    }
+
+    /**
+     * Set the currentPlayerLabel's text with an appropriate color scheme.
+     * @param playerColor whose turn it is
+     * @param text to show on the label
+     */
+    private void setCurrentPlayerLabel(ChessPieceColor playerColor, String text)
+    {
+        currentPlayerLabel.setText(text);
+        switch (playerColor) {
+        case WHITE:
+            currentPlayerLabel.setForeground(Color.BLACK);
+            currentPlayerLabel.setBackground(Color.WHITE);
+            break;
+        case BLACK:
+            currentPlayerLabel.setForeground(Color.WHITE);
+            currentPlayerLabel.setBackground(Color.BLACK);
+            break;
+        case NONE:
+            currentPlayerLabel.setOpaque(false);
+            currentPlayerLabel.setForeground(Color.BLACK);
             break;
         }
     }
