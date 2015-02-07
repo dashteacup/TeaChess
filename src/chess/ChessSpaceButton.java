@@ -112,6 +112,7 @@ public class ChessSpaceButton extends JButton {
     public void selectSpace()
     {
         setBorder(selectedBorder);
+        repaint();
     }
 
     /**
@@ -120,6 +121,7 @@ public class ChessSpaceButton extends JButton {
     public void deselectSpace()
     {
         setBorder(unselectedBorder);
+        repaint();
     }
 
     /**
@@ -128,6 +130,7 @@ public class ChessSpaceButton extends JButton {
     public void highlightSpace()
     {
         setBorder(highlightedBorder);
+        repaint();
     }
 
     /**
@@ -146,6 +149,7 @@ public class ChessSpaceButton extends JButton {
         emptySpace = true;
         pieceColor = ChessPieceColor.NONE;
         super.setIcon(null);
+        repaint();
     }
 
     /**
