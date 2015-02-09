@@ -24,6 +24,14 @@ public abstract class ChessPiece implements Cloneable {
     private ChessPieceColor color;
 
     /**
+     * Flag indicating whether or not the piece has moved. This will be set to
+     * true after the piece uses the move method. Knowing whether or not a piece
+     * has moved is useful for castling, which requires that both the King and
+     * Rook haven't moved.
+     */
+    private boolean hasMoved = false;
+
+    /**
      * Create a new chess piece
      * @param row aka 'rank' valid 1-8
      * @param column aka 'file' valid 1-8 NOT a-h
@@ -94,6 +102,7 @@ public abstract class ChessPiece implements Cloneable {
         if (isValidMove(newRow, newColumn)) {
             this.row = newRow;
             this.column = newColumn;
+            hasMoved = true;
             return true;
         }
         return false;
@@ -121,6 +130,15 @@ public abstract class ChessPiece implements Cloneable {
             throw new OffTheChessBoardException(row, column);
         this.row = row;
         this.column = column;
+    }
+
+    /**
+     * Determine if the chess piece has moved earlier in the game.
+     * @return true if the piece has moved before, false otherwise
+     */
+    public boolean hasMoved()
+    {
+        return hasMoved;
     }
 
     /**
