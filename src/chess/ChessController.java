@@ -74,6 +74,7 @@ public class ChessController implements ActionListener {
             if (modelBoard.isValidMove(viewRowToModel(selectedRow), viewColumnToModel(selectedColumn),
                                        viewRowToModel(clickedRow),  viewColumnToModel(clickedColumn))) {
                 moveCurrentlySelectedPiece(clickedButton);
+                changePlayers();
             // selecting a new piece of the same color
             } else if (clickedButton.getPieceColor() == currentPlayerColor) {
                 clearMarkedSpaces();
@@ -115,6 +116,8 @@ public class ChessController implements ActionListener {
         assert clickedButton != null;
         assert pieceIsSelected;
         assert currentlySelectedButton != null;
+        assert view != null;
+        assert modelBoard != null;
         final int clickedRow = clickedButton.getRow();
         final int clickedColumn = clickedButton.getColumn();
         final int selectedRow = currentlySelectedButton.getRow();
@@ -123,13 +126,13 @@ public class ChessController implements ActionListener {
         view.moveChessPiece(selectedRow, selectedColumn, clickedRow, clickedColumn);
         modelBoard.move(viewRowToModel(selectedRow), viewColumnToModel(selectedColumn),
                         viewRowToModel(clickedRow),  viewColumnToModel(clickedColumn));
-        changePlayers();
-        if (modelBoard.checkmate(currentPlayerColor)) {
-            view.setWinner(currentPlayerColor.otherColor());
-        } else if (modelBoard.stalemate(currentPlayerColor)) {
+        final ChessPieceColor otherPlayer = currentPlayerColor.otherColor();
+        if (modelBoard.checkmate(otherPlayer)) {
+            view.setWinner(currentPlayerColor);
+        } else if (modelBoard.stalemate(otherPlayer)) {
             view.setWinner(ChessPieceColor.NONE);
-        } else if (modelBoard.inCheck(currentPlayerColor)) {
-            view.setCheckCondition(currentPlayerColor);
+        } else if (modelBoard.inCheck(otherPlayer)) {
+            view.setCheckCondition(otherPlayer);
         } else {
             view.setCheckCondition(ChessPieceColor.NONE);
         }
