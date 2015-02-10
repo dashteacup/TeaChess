@@ -190,6 +190,7 @@ public abstract class ChessPiece implements Cloneable {
         if (canCapture(enemyRow, enemyColumn)) {
             this.row = enemyRow;
             this.column = enemyColumn;
+            hasMoved = true;
             return true;
         }
         return false;
