@@ -61,6 +61,21 @@ public class ChessController implements ActionListener {
     }
 
     /**
+     * Prepare a new chess game. This sets the model, the view, and all
+     * controller variables to their default values.
+     */
+    private void setupNewChessGame()
+    {
+        assert view != null;
+        view.startNewGame();
+        modelBoard = new ChessBoard();
+        // White player always goes first in chess.
+        currentPlayerColor = ChessPieceColor.WHITE;
+        pieceIsSelected = false;
+        currentlySelectedButton = null;
+    }
+
+    /**
      * Actions to be performed when receiving a button clicked event.
      */
     private void buttonClickedAction(ChessSpaceButton clickedButton)
@@ -85,21 +100,6 @@ public class ChessController implements ActionListener {
             pieceIsSelected = true;
             highlightValidMoves();
         }
-    }
-
-    /**
-     * Prepare a new chess game. This sets the model, the view, and all
-     * controller variables to their default values.
-     */
-    private void setupNewChessGame()
-    {
-        assert view != null;
-        view.startNewGame();
-        modelBoard = new ChessBoard();
-        // White player always goes first in chess.
-        currentPlayerColor = ChessPieceColor.WHITE;
-        pieceIsSelected = false;
-        currentlySelectedButton = null;
     }
 
     /**
