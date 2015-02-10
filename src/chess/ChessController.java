@@ -73,21 +73,7 @@ public class ChessController implements ActionListener {
             // have to translate board positions because the model and view have different layout
             if (modelBoard.isValidMove(viewRowToModel(selectedRow), viewColumnToModel(selectedColumn),
                                        viewRowToModel(clickedRow),  viewColumnToModel(clickedColumn))) {
-                view.moveChessPiece(selectedRow, selectedColumn, clickedRow, clickedColumn);
-                modelBoard.move(viewRowToModel(selectedRow), viewColumnToModel(selectedColumn),
-                                viewRowToModel(clickedRow),  viewColumnToModel(clickedColumn));
-                changePlayers();
-                if (modelBoard.checkmate(currentPlayerColor)) {
-                    view.setWinner(currentPlayerColor.otherColor());
-                } else if (modelBoard.stalemate(currentPlayerColor)) {
-                    view.setWinner(ChessPieceColor.NONE);
-                } else if (modelBoard.inCheck(currentPlayerColor)) {
-                    view.setCheckCondition(currentPlayerColor);
-                } else {
-                    view.setCheckCondition(ChessPieceColor.NONE);
-                }
-                pieceSelected = false;
-                clearMarkedSpaces();
+                moveCurrentlySelectedPiece(clickedButton);
             // selecting a new piece of the same color
             } else if (clickedButton.getPieceColor() == currentPlayerColor) {
                 clearMarkedSpaces();
@@ -118,6 +104,37 @@ public class ChessController implements ActionListener {
         currentPlayerColor = ChessPieceColor.WHITE;
         pieceSelected = false;
         currentlySelectedButton = null;
+    }
+
+    /**
+     * Move the currently selected piece to the chess space clicked by the user.
+     * @param clickedButton the chess piece will move to
+     */
+    private void moveCurrentlySelectedPiece(ChessSpaceButton clickedButton)
+    {
+        assert clickedButton != null;
+        assert pieceSelected;
+        assert currentlySelectedButton != null;
+        final int clickedRow = clickedButton.getRow();
+        final int clickedColumn = clickedButton.getColumn();
+        final int selectedRow = currentlySelectedButton.getRow();
+        final int selectedColumn = currentlySelectedButton.getColumn();
+
+        view.moveChessPiece(selectedRow, selectedColumn, clickedRow, clickedColumn);
+        modelBoard.move(viewRowToModel(selectedRow), viewColumnToModel(selectedColumn),
+                        viewRowToModel(clickedRow),  viewColumnToModel(clickedColumn));
+        changePlayers();
+        if (modelBoard.checkmate(currentPlayerColor)) {
+            view.setWinner(currentPlayerColor.otherColor());
+        } else if (modelBoard.stalemate(currentPlayerColor)) {
+            view.setWinner(ChessPieceColor.NONE);
+        } else if (modelBoard.inCheck(currentPlayerColor)) {
+            view.setCheckCondition(currentPlayerColor);
+        } else {
+            view.setCheckCondition(ChessPieceColor.NONE);
+        }
+        pieceSelected = false;
+        clearMarkedSpaces();
     }
 
     /**
