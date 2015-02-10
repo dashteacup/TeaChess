@@ -63,10 +63,10 @@ public class ChessController implements ActionListener {
     /**
      * Actions to be performed when receiving a button clicked event.
      */
-    public void buttonClickedAction(ChessSpaceButton buttonClicked)
+    public void buttonClickedAction(ChessSpaceButton clickedButton)
     {
-        final int clickedRow = buttonClicked.getRow();
-        final int clickedColumn = buttonClicked.getColumn();
+        final int clickedRow = clickedButton.getRow();
+        final int clickedColumn = clickedButton.getColumn();
         if (pieceSelected) {
             final int selectedRow = currentlySelectedButton.getRow();
             final int selectedColumn = currentlySelectedButton.getColumn();
@@ -89,17 +89,17 @@ public class ChessController implements ActionListener {
                 pieceSelected = false;
                 clearMarkedSpaces();
             // selecting a new piece of the same color
-            } else if (buttonClicked.getPieceColor() == currentPlayerColor) {
+            } else if (clickedButton.getPieceColor() == currentPlayerColor) {
                 clearMarkedSpaces();
-                buttonClicked.selectSpace();
-                currentlySelectedButton = buttonClicked;
+                clickedButton.selectSpace();
+                currentlySelectedButton = clickedButton;
                 highlightValidMoves();
             }
             // do nothing if it's an invalid move
         // no piece currently selected
-        } else if (!buttonClicked.isEmptySpace() && buttonClicked.getPieceColor() == currentPlayerColor) {
-            buttonClicked.selectSpace();
-            currentlySelectedButton = buttonClicked;
+        } else if (!clickedButton.isEmptySpace() && clickedButton.getPieceColor() == currentPlayerColor) {
+            clickedButton.selectSpace();
+            currentlySelectedButton = clickedButton;
             pieceSelected = true;
             highlightValidMoves();
         }
