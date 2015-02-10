@@ -26,7 +26,7 @@ public class ChessController implements ActionListener {
     /**
      * Determine if the player has picked a piece to move.
      */
-    private boolean pieceSelected;
+    private boolean pieceIsSelected;
 
     /**
      * The button corresponding with the chess piece you intend to move.
@@ -67,7 +67,7 @@ public class ChessController implements ActionListener {
     {
         final int clickedRow = clickedButton.getRow();
         final int clickedColumn = clickedButton.getColumn();
-        if (pieceSelected) {
+        if (pieceIsSelected) {
             final int selectedRow = currentlySelectedButton.getRow();
             final int selectedColumn = currentlySelectedButton.getColumn();
             // have to translate board positions because the model and view have different layout
@@ -86,7 +86,7 @@ public class ChessController implements ActionListener {
         } else if (!clickedButton.isEmptySpace() && clickedButton.getPieceColor() == currentPlayerColor) {
             clickedButton.selectSpace();
             currentlySelectedButton = clickedButton;
-            pieceSelected = true;
+            pieceIsSelected = true;
             highlightValidMoves();
         }
     }
@@ -102,7 +102,7 @@ public class ChessController implements ActionListener {
         modelBoard = new ChessBoard();
         // White player always goes first in chess.
         currentPlayerColor = ChessPieceColor.WHITE;
-        pieceSelected = false;
+        pieceIsSelected = false;
         currentlySelectedButton = null;
     }
 
@@ -113,7 +113,7 @@ public class ChessController implements ActionListener {
     private void moveCurrentlySelectedPiece(ChessSpaceButton clickedButton)
     {
         assert clickedButton != null;
-        assert pieceSelected;
+        assert pieceIsSelected;
         assert currentlySelectedButton != null;
         final int clickedRow = clickedButton.getRow();
         final int clickedColumn = clickedButton.getColumn();
@@ -133,7 +133,7 @@ public class ChessController implements ActionListener {
         } else {
             view.setCheckCondition(ChessPieceColor.NONE);
         }
-        pieceSelected = false;
+        pieceIsSelected = false;
         clearMarkedSpaces();
     }
 
