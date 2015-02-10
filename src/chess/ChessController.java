@@ -65,14 +65,8 @@ public class ChessController implements ActionListener {
      */
     public void buttonClickedAction(ChessSpaceButton clickedButton)
     {
-        final int clickedRow = clickedButton.getRow();
-        final int clickedColumn = clickedButton.getColumn();
         if (pieceIsSelected) {
-            final int selectedRow = currentlySelectedButton.getRow();
-            final int selectedColumn = currentlySelectedButton.getColumn();
-            // have to translate board positions because the model and view have different layout
-            if (modelBoard.isValidMove(viewRowToModel(selectedRow), viewColumnToModel(selectedColumn),
-                                       viewRowToModel(clickedRow),  viewColumnToModel(clickedColumn))) {
+            if (isValidMove(clickedButton)) {
                 moveCurrentlySelectedPiece(clickedButton);
                 changePlayers();
             // selecting a new piece of the same color
@@ -108,6 +102,26 @@ public class ChessController implements ActionListener {
     }
 
     /**
+     * Determine if the currently selected chess piece can move to the space
+     * clicked by the user.
+     * @param clickedButton the chess piece will move to
+     * @return true if it's a legal chess move, false otherwise
+     */
+    private boolean isValidMove(ChessSpaceButton clickedButton)
+    {
+        assert clickedButton != null;
+        assert currentlySelectedButton != null;
+        assert modelBoard != null;
+        final int clickedRow = clickedButton.getRow();
+        final int clickedColumn = clickedButton.getColumn();
+        final int selectedRow = currentlySelectedButton.getRow();
+        final int selectedColumn = currentlySelectedButton.getColumn();
+        // have to translate board positions because the model and view have different layout
+        return modelBoard.isValidMove(viewRowToModel(selectedRow), viewColumnToModel(selectedColumn),
+                                      viewRowToModel(clickedRow),  viewColumnToModel(clickedColumn));
+    }
+
+    /**
      * Move the currently selected piece to the chess space clicked by the user.
      * @param clickedButton the chess piece will move to
      */
@@ -123,6 +137,7 @@ public class ChessController implements ActionListener {
         final int selectedRow = currentlySelectedButton.getRow();
         final int selectedColumn = currentlySelectedButton.getColumn();
 
+        // have to translate board positions because the model and view have different layout
         view.moveChessPiece(selectedRow, selectedColumn, clickedRow, clickedColumn);
         modelBoard.move(viewRowToModel(selectedRow), viewColumnToModel(selectedColumn),
                         viewRowToModel(clickedRow),  viewColumnToModel(clickedColumn));
