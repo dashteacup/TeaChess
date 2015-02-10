@@ -63,8 +63,9 @@ public class ChessController implements ActionListener {
     /**
      * Actions to be performed when receiving a button clicked event.
      */
-    public void buttonClickedAction(ChessSpaceButton clickedButton)
+    private void buttonClickedAction(ChessSpaceButton clickedButton)
     {
+        assert clickedButton != null;
         if (pieceIsSelected) {
             if (isValidMove(clickedButton)) {
                 moveCurrentlySelectedPiece(clickedButton);
