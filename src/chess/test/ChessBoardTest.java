@@ -27,9 +27,19 @@ import chess.Rook;
 public class ChessBoardTest {
 
     /**
-     * A chess board object to test.
+     * A normal chess board object with all chess pieces in their starting positions.
      */
     private ChessBoard board;
+
+    /**
+     * A chess board with no pieces.
+     */
+    private ChessBoard emptyBoard;
+
+    /**
+     * A chess board with only kings and rooks.
+     */
+    private ChessBoard kingsAndRooksBoard;
 
     /**
      * Create a new chess board object before every test.
@@ -38,6 +48,17 @@ public class ChessBoardTest {
     public void runBeforeTests()
     {
         board = new ChessBoard();
+        emptyBoard = new ChessBoard(null);
+
+        kingsAndRooksBoard = new ChessBoard(null);
+        // White side
+        kingsAndRooksBoard.addPiece(new King(e, 1, WHITE));
+        kingsAndRooksBoard.addPiece(new Rook(a, 1, WHITE));
+        kingsAndRooksBoard.addPiece(new Rook(h, 1, WHITE));
+        // Black side
+        kingsAndRooksBoard.addPiece(new King(e, 8, BLACK));
+        kingsAndRooksBoard.addPiece(new Rook(a, 8, BLACK));
+        kingsAndRooksBoard.addPiece(new Rook(h, 8, BLACK));
     }
 
     /**
@@ -131,7 +152,6 @@ public class ChessBoardTest {
     @Test
     public void copyConstructorEmpty()
     {
-        ChessBoard emptyBoard = new ChessBoard(null);
         // white king
         assertNull(emptyBoard.getPiece(e, 1));
         // black king
@@ -519,7 +539,6 @@ public class ChessBoardTest {
     @Test
     public void checkmate()
     {
-        ChessBoard emptyBoard = new ChessBoard(null);
         emptyBoard.addPiece(new King(h, 5, BLACK));
         emptyBoard.addPiece(new Rook(h, 1, WHITE));
         emptyBoard.addPiece(new King(f, 5, WHITE));
@@ -554,7 +573,6 @@ public class ChessBoardTest {
     @Test
     public void stalemate()
     {
-        ChessBoard emptyBoard = new ChessBoard(null);
         emptyBoard.addPiece(new King(h, 8, BLACK));
         emptyBoard.addPiece(new Queen(g, 6, WHITE));
         emptyBoard.addPiece(new King(f, 7, WHITE));
