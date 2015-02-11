@@ -158,6 +158,9 @@ public class ChessBoard {
         ChessPiece piece = getPiece(oldRow, oldColumn);
         // moving to an empty space
         if (isEmptySpace(newRow, newColumn)) {
+            // castling is a special case that requires knowledge of ChessBoard's state
+            if (canCastle(oldRow, oldColumn, newRow, newColumn))
+                return true;
             if (!piece.isValidMove(newRow, newColumn))
                 return false;
         // the space is occupied
@@ -189,6 +192,70 @@ public class ChessBoard {
     public boolean isValidMove(File oldFile, int oldRank, File newFile, int newRank)
     {
         return isValidMove(oldRank, oldFile.getColumn(), newRank, newFile.getColumn());
+    }
+
+    /**
+     * Determine if a king can castle to the given location.
+     * @param kingRow of the king (1-8)
+     * @param kingColumn of the king (1-8)
+     * @param newRow the king will castle to (1-8)
+     * @param newColumn the king will castle to (1-8)
+     * @return true if the king can castle, false otherwise
+     * @see <a href="http://en.wikipedia.org/w/index.php?title=Castling&oldid=641949496#Requirements">Castling Requirements</a> (Wikipedia)
+     */
+    public boolean canCastle(int kingRow, int kingColumn, int newRow, int newColumn)
+    {
+        ChessPiece king = getPiece(kingRow, kingColumn);
+        // must have a king there
+        if (king == null || !(king instanceof King))
+            return false;
+        // King can't have moved from its starting position
+        if (!king.inValidStartingPosition() || king.hasMoved())
+            return false;
+        // king and rook must be on same row
+        if (kingRow != newRow)
+            return false;
+        ChessPiece rook;
+        // have to move to column 3 or 7
+        if (newColumn == 3) {
+            rook = getPiece(kingRow, 1); // left (queenside) rook
+        } else if (newColumn == 7) {
+            rook = getPiece(kingRow, 8); // right (kingside) rook
+        } else { // king isn't moving to the right column for castling
+            return false;
+        }
+        // have to have a rook that hasn't moved from its starting position
+        if (rook == null || !(rook instanceof Rook) || rook.hasMoved())
+            return false;
+        // no other pieces between king and rook
+        if (!hasClearPath(kingRow, kingColumn, rook.getRow(), rook.getColumn()))
+            return false;
+        // King can't be in check
+        if (inCheck(king.getColor()))
+            return false;
+        // King can't move through a square that would put it in check,
+        // so look ahead two spaces.
+        int stepDirection = (newColumn == 3) ? -1 : 1; // -1 = left, 1 = right
+        ChessBoard oneStep = new ChessBoard(this);
+        oneStep.forceMove(kingRow, kingColumn, newRow, kingColumn + stepDirection);
+        ChessBoard twoSteps = new ChessBoard(oneStep);
+        twoSteps.forceMove(kingRow, kingColumn + stepDirection, newRow, newColumn);
+        return !( oneStep.inCheck(king.getColor()) || twoSteps.inCheck(king.getColor()) );
+    }
+
+    /**
+     * Determine if a king can castle to a new location, using algebraic chess
+     * notation.
+     * @param kingFile of the king (a-h)
+     * @param kingRank of the king (1-8)
+     * @param newFile of the king (a-h)
+     * @param newRank of the king (1-8)
+     * @return true if the king can castle, false otherwise
+     * @see <a href="http://en.wikipedia.org/w/index.php?title=Castling&oldid=641949496#Requirements">Castling Requirements</a> (Wikipedia)
+     */
+    public boolean canCastle(File kingFile, int kingRank, File newFile, int newRank)
+    {
+        return canCastle(kingRank, kingFile.getColumn(), newRank, newFile.getColumn());
     }
 
     /**

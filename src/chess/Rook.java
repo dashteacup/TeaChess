@@ -1,8 +1,8 @@
 package chess;
 
 /**
- * Represents the Rook chess piece.
- * TODO: implement castling
+ * Represents the Rook chess piece. Since castling requires information about
+ * the state of the board, it is implemented in {@link ChessBoard}.
  */
 public class Rook extends ChessPiece {
     /**

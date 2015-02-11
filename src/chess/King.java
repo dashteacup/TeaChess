@@ -1,8 +1,8 @@
 package chess;
 
 /**
- * Represents the King chess piece.
- * TODO: implement castling
+ * Represents the King chess piece. Since castling requires information about
+ * the state of the board, it is implemented in {@link ChessBoard}.
  */
 public class King extends ChessPiece {
     /**

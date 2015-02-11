@@ -349,6 +349,94 @@ public class ChessBoardTest {
     }
 
     /**
+     * Return true when white makes a legal kingside (right) castle.
+     */
+    @Test
+    public void canCastle_legalWhiteRightCastle()
+    {
+        // castling is a valid move
+        assertTrue(kingsAndRooksBoard.canCastle(e, 1, g, 1));
+    }
+
+    /**
+     * Return true when black makes a legal queenside (left) castle.
+     */
+    @Test
+    public void canCastle_legalBlackLeftCastle()
+    {
+        assertTrue(kingsAndRooksBoard.canCastle(e, 8, c, 8));
+    }
+
+    @Test
+    public void canCastle_kingHasAlreadyMoved()
+    {
+        // move up and then back down
+        kingsAndRooksBoard.move(e, 1, e, 2);
+        kingsAndRooksBoard.move(e, 2, e, 1);
+        assertFalse(kingsAndRooksBoard.canCastle(e, 1, c, 1));
+    }
+
+    @Test
+    public void canCastle_noKingAtGivenLocation()
+    {
+        // move king off start
+        kingsAndRooksBoard.move(e, 1, e, 2);
+        assertFalse(kingsAndRooksBoard.canCastle(e, 1, c, 1));
+    }
+
+    @Test
+    public void canCastle_noRookAtGivenLocation()
+    {
+        // move rook off start
+        kingsAndRooksBoard.move(h, 8, h, 7);
+        assertFalse(kingsAndRooksBoard.canCastle(e, 8, g, 8));
+    }
+
+    @Test
+    public void canCastle_wrongChessPieceAtRookStart()
+    {
+        // replace right white rook with queen
+        kingsAndRooksBoard.addPiece(new Queen(h, 1, WHITE));
+        assertFalse(kingsAndRooksBoard.canCastle(e, 1, g, 1));
+    }
+
+    @Test
+    public void canCastle_rookHasAlreadyMoved()
+    {
+        // move rook up and back
+        kingsAndRooksBoard.move(h, 1, h, 4);
+        kingsAndRooksBoard.move(h, 4, h, 1);
+        assertFalse(kingsAndRooksBoard.canCastle(e, 1, g, 1));
+    }
+
+    @Test
+    public void canCastle_wrongColorRook()
+    {
+        kingsAndRooksBoard.addPiece(new Rook(h, 1, BLACK));
+        assertFalse(kingsAndRooksBoard.canCastle(e, 1, g, 1));
+    }
+
+    @Test
+    public void canCastle_piecesInTheWay()
+    {
+        assertFalse(board.canCastle(e, 1, g, 1));
+    }
+
+    @Test
+    public void canCastle_firstStepPutsKingInCheck()
+    {
+        kingsAndRooksBoard.addPiece(new Queen(d, 4, BLACK));
+        assertFalse(kingsAndRooksBoard.canCastle(e, 1, c, 1));
+    }
+
+    @Test
+    public void canCastle_secondStepPutsKingInCheck()
+    {
+        kingsAndRooksBoard.addPiece(new Queen(c, 4, BLACK));
+        assertFalse(kingsAndRooksBoard.canCastle(e, 1, c, 1));
+    }
+
+    /**
      * Test pawn movement and capture functionality.
      */
     @Test
