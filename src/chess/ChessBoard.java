@@ -338,7 +338,8 @@ public class ChessBoard {
     {
         if (!canCastle(kingRow, kingColumn, newRow, newColumn))
             return; // do nothing
-        move(kingRow, kingColumn, newRow, newColumn); // move king
+        // forced because castling isn't handled in King.isValidMove()
+        forceMove(kingRow, kingColumn, newRow, newColumn); // move king
         if (newColumn == 7) // right castle
             forceMove(newRow, 8, newRow, 6);
         else // left castle

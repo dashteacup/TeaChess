@@ -124,20 +124,28 @@ public class ChessController implements ActionListener {
      */
     private void moveCurrentlySelectedPiece(ChessSpaceButton clickedButton)
     {
-        assert clickedButton != null;
         assert pieceIsSelected;
-        assert currentlySelectedButton != null;
-        assert view != null;
-        assert modelBoard != null;
         final int clickedRow = clickedButton.getRow();
         final int clickedColumn = clickedButton.getColumn();
         final int selectedRow = currentlySelectedButton.getRow();
         final int selectedColumn = currentlySelectedButton.getColumn();
-
         // have to translate board positions because the model and view have different layout
+        final int modelOldRow = viewRowToModel(selectedRow);
+        final int modelOldColumn = viewColumnToModel(selectedColumn);
+        final int modelNewRow = viewRowToModel(clickedRow);
+        final int modelNewColumn = viewColumnToModel(clickedColumn);
+
         view.moveChessPiece(selectedRow, selectedColumn, clickedRow, clickedColumn);
-        modelBoard.move(viewRowToModel(selectedRow), viewColumnToModel(selectedColumn),
-                        viewRowToModel(clickedRow),  viewColumnToModel(clickedColumn));
+        if (modelBoard.canCastle(modelOldRow, modelOldColumn, modelNewRow, modelNewColumn)) {
+            modelBoard.castle(modelOldRow, modelOldColumn, modelNewRow, modelNewColumn);
+            if (modelNewColumn > modelOldColumn) // castle right
+                view.moveChessPiece(clickedRow, 7, clickedRow, 5);
+            else // castle left
+                view.moveChessPiece(clickedRow, 0, clickedRow, 3);
+        } else {
+            modelBoard.move(modelOldRow, modelOldColumn, modelNewRow, modelNewColumn);
+        }
+
         final ChessPieceColor otherPlayer = currentPlayerColor.otherColor();
         if (modelBoard.checkmate(otherPlayer)) {
             view.setWinner(currentPlayerColor);
