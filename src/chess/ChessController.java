@@ -110,16 +110,13 @@ public class ChessController implements ActionListener {
      */
     private boolean isValidMove(ChessSpaceButton clickedButton)
     {
-        assert clickedButton != null;
-        assert currentlySelectedButton != null;
-        assert modelBoard != null;
-        final int clickedRow = clickedButton.getRow();
-        final int clickedColumn = clickedButton.getColumn();
-        final int selectedRow = currentlySelectedButton.getRow();
-        final int selectedColumn = currentlySelectedButton.getColumn();
+        final int clickedRow = viewRowToModel(clickedButton.getRow());
+        final int clickedColumn = viewColumnToModel(clickedButton.getColumn());
+        final int selectedRow = viewRowToModel(currentlySelectedButton.getRow());
+        final int selectedColumn = viewColumnToModel(currentlySelectedButton.getColumn());
         // have to translate board positions because the model and view have different layout
-        return modelBoard.isValidMove(viewRowToModel(selectedRow), viewColumnToModel(selectedColumn),
-                                      viewRowToModel(clickedRow),  viewColumnToModel(clickedColumn));
+        return modelBoard.isValidMove(selectedRow, selectedColumn,
+                                      clickedRow,  clickedColumn);
     }
 
     /**
