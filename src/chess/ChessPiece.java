@@ -100,9 +100,7 @@ public abstract class ChessPiece implements Cloneable {
     public boolean move(int newRow, int newColumn)
     {
         if (isValidMove(newRow, newColumn)) {
-            this.row = newRow;
-            this.column = newColumn;
-            hasMoved = true;
+            forceMove(newRow, newColumn);
             return true;
         }
         return false;
@@ -128,6 +126,7 @@ public abstract class ChessPiece implements Cloneable {
     {
         if (!isOnTheBoard(row, column))
             throw new OffTheChessBoardException(row, column);
+        hasMoved = true;
         this.row = row;
         this.column = column;
     }
