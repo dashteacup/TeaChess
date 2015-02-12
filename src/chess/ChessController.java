@@ -114,7 +114,6 @@ public class ChessController implements ActionListener {
         final int clickedColumn = viewColumnToModel(clickedButton.getColumn());
         final int selectedRow = viewRowToModel(currentlySelectedButton.getRow());
         final int selectedColumn = viewColumnToModel(currentlySelectedButton.getColumn());
-        // have to translate board positions because the model and view have different layout
         return modelBoard.isValidMove(selectedRow, selectedColumn,
                                       clickedRow,  clickedColumn);
     }
