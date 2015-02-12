@@ -532,6 +532,42 @@ public class ChessBoardTest {
         assertFalse(kingsAndRooksBoard.canCastle(e, 1, c, 1));
     }
 
+    @Test
+    public void castle_blackRightCastle()
+    {
+        kingsAndRooksBoard.castle(e, 8, g, 8);
+        // king has moved
+        assertTrue(kingsAndRooksBoard.isEmptySpace(e, 8));
+        assertTrue(kingsAndRooksBoard.getPiece(g, 8) instanceof King);
+        // rook has moved
+        assertTrue(kingsAndRooksBoard.isEmptySpace(h, 8));
+        assertTrue(kingsAndRooksBoard.getPiece(f, 8) instanceof Rook);
+    }
+
+    @Test
+    public void castle_whiteLeftCastle()
+    {
+        kingsAndRooksBoard.castle(e, 1, c, 1);
+        // king has moved
+        assertTrue(kingsAndRooksBoard.isEmptySpace(e, 1));
+        assertTrue(kingsAndRooksBoard.getPiece(c, 1) instanceof King);
+        // rook has moved
+        assertTrue(kingsAndRooksBoard.isEmptySpace(a, 1));
+        assertTrue(kingsAndRooksBoard.getPiece(d, 1) instanceof Rook);
+    }
+
+    @Test
+    public void castle_whenCastlingIsIllegal()
+    {
+        // there are 2 pieces in the way
+        board.castle(e, 1, g, 1);
+        // pieces haven't moved
+        assertTrue(board.getPiece(e, 1) instanceof King);
+        assertTrue(board.getPiece(f, 1) instanceof Bishop);
+        assertTrue(board.getPiece(g, 1) instanceof Knight);
+        assertTrue(board.getPiece(h, 1) instanceof Rook);
+    }
+
     /**
      * Confirm that the board can recognize when a player is in or out of check.
      */

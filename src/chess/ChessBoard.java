@@ -327,6 +327,40 @@ public class ChessBoard {
     }
 
     /**
+     * Castle the king to the given location also moving the rook to
+     * its proper place. If this isn't a valid castle, then do nothing.
+     * @param kingRow of the king (1-8)
+     * @param kingColumn of the king (1-8)
+     * @param newRow of the king (1-8)
+     * @param newColumn of the king (1-8)
+     */
+    public void castle(int kingRow, int kingColumn, int newRow, int newColumn)
+    {
+        if (!canCastle(kingRow, kingColumn, newRow, newColumn))
+            return; // do nothing
+        move(kingRow, kingColumn, newRow, newColumn); // move king
+        if (newColumn == 7) // right castle
+            forceMove(newRow, 8, newRow, 6);
+        else // left castle
+            forceMove(newRow, 1, newRow, 4);
+    }
+
+    /**
+     * Castle the king to the location given in algebraic chess notation, also
+     * moving the rook to its proper place. If this isn't a valid castle, then
+     * do nothing.
+     * @param kingFile of the king (a-h)
+     * @param kingRank of the king (1-8)
+     * @param newFile of the king (a-h)
+     * @param newRank of the king (1-8)
+     */
+    public void castle(File kingFile, int kingRank, File newFile, int newRank)
+    {
+        castle(kingRank, kingFile.getColumn(), newRank, newFile.getColumn());
+    }
+
+
+    /**
      * Determine if the current player is in check (i.e. their king is exposed
      * to attack).
      * @param currentPlayer to determine if checked
