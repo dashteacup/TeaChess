@@ -34,6 +34,12 @@ public class ChessController implements ActionListener {
     private ChessSpaceButton currentlySelectedButton;
 
     /**
+     * Flag indicating whether or not the current game has ended.
+     * Used to know when to ignore new actions from {@link ChessSpaceButton}.
+     */
+    private boolean gameIsOver;
+
+    /**
      * Create a new game controller.
      */
     public ChessController()
@@ -55,7 +61,7 @@ public class ChessController implements ActionListener {
         } else if (event.getActionCommand() == "Close") {
             System.exit(0);
         // Clicked one of the chess spaces
-        } else {
+        } else if (!gameIsOver) {
             buttonClickedAction((ChessSpaceButton) event.getSource());
         }
     }
@@ -66,13 +72,13 @@ public class ChessController implements ActionListener {
      */
     private void setupNewChessGame()
     {
-        assert view != null;
         view.startNewGame();
         modelBoard = new ChessBoard();
         // White player always goes first in chess.
         currentPlayerColor = ChessPieceColor.WHITE;
         pieceIsSelected = false;
         currentlySelectedButton = null;
+        gameIsOver = false;
     }
 
     /**
@@ -84,7 +90,7 @@ public class ChessController implements ActionListener {
         if (pieceIsSelected) {
             if (isValidMove(clickedButton)) {
                 moveCurrentlySelectedPiece(clickedButton);
-                changePlayers();
+                endTurn();
             // selecting a new piece of the same color
             } else if (clickedButton.getPieceColor() == currentPlayerColor) {
                 clearMarkedSpaces();
@@ -145,12 +151,20 @@ public class ChessController implements ActionListener {
         } else {
             modelBoard.move(modelOldRow, modelOldColumn, modelNewRow, modelNewColumn);
         }
+    }
 
+    /**
+     * Update the status bar and change players.
+     */
+    private void endTurn()
+    {
         final ChessPieceColor otherPlayer = currentPlayerColor.otherColor();
         if (modelBoard.checkmate(otherPlayer)) {
             view.setWinner(currentPlayerColor);
+            gameIsOver = true;
         } else if (modelBoard.stalemate(otherPlayer)) {
             view.setWinner(ChessPieceColor.NONE);
+            gameIsOver = true;
         } else if (modelBoard.inCheck(otherPlayer)) {
             view.setCheckCondition(otherPlayer);
         } else {
@@ -158,27 +172,8 @@ public class ChessController implements ActionListener {
         }
         pieceIsSelected = false;
         clearMarkedSpaces();
-    }
-
-    /**
-     * Change the color of the current player from black to white or white to black.
-     */
-    private void changePlayers()
-    {
-        assert view != null;
-        switch(currentPlayerColor) {
-        case WHITE:
-            currentPlayerColor = ChessPieceColor.BLACK;
-            view.setCurrentPlayer(ChessPieceColor.BLACK);
-            break;
-        case BLACK:
-            currentPlayerColor = ChessPieceColor.WHITE;
-            view.setCurrentPlayer(ChessPieceColor.WHITE);
-            break;
-        case NONE:
-            assert false;
-            break;
-        }
+        view.setCurrentPlayer(otherPlayer);
+        currentPlayerColor = otherPlayer;
     }
 
     /**
