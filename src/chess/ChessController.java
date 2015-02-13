@@ -159,6 +159,8 @@ public class ChessController implements ActionListener {
     private void endTurn()
     {
         final ChessPieceColor otherPlayer = currentPlayerColor.otherColor();
+        // do this first, so setWinner can override it if necessary
+        view.setCurrentPlayer(otherPlayer);
         if (modelBoard.checkmate(otherPlayer)) {
             view.setWinner(currentPlayerColor);
             gameIsOver = true;
@@ -172,7 +174,6 @@ public class ChessController implements ActionListener {
         }
         pieceIsSelected = false;
         clearMarkedSpaces();
-        view.setCurrentPlayer(otherPlayer);
         currentPlayerColor = otherPlayer;
     }
 
