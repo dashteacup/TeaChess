@@ -23,7 +23,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 
-Chess piece images by Colin M.L. Burnett (with modifications from
+Chess piece images by Colin M.L. Burnett (with modifications by
 Antonsusi) taken from:
 http://en.wikipedia.org/w/index.php?title=User:Cburnett/GFDL_images/Chess&oldid=177376797
 and licensed under the BSD 3-Clause License.
