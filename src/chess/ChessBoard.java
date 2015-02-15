@@ -360,6 +360,38 @@ public class ChessBoard {
         castle(kingRank, kingFile.getColumn(), newRank, newFile.getColumn());
     }
 
+    /**
+     * Determine if a pawn at the given location can be promoted. Promotion
+     * happens when a pawn reaches the opposite side of the board.
+     * @param row of the pawn (1-8)
+     * @param column of the pawn. (1-8)
+     * @return true if there is a pawn that can be promoted, false otherwise
+     */
+    public boolean canPromotePawn(int row, int column)
+    {
+        ChessPiece piece = getPiece(row, column);
+        if (piece instanceof Pawn) {
+            if ( (piece.getColor() == ChessPieceColor.WHITE) && (piece.getRow() == 8) )
+                return true;
+            if ( (piece.getColor() == ChessPieceColor.BLACK) && (piece.getRow() == 1) )
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Determine if a pawn at the location given in algebraic chess notation can
+     * be promoted. Promotion happens when a pawn reaches the opposite side of
+     * the board.
+     * @param file of the pawn (a-h)
+     * @param rank of the pawn (1-8)
+     * @return true if there is a pawn that can be promoted, false otherwise
+     */
+    public boolean canPromotePawn(File file, int rank)
+    {
+        return canPromotePawn(rank, file.getColumn());
+    }
+
 
     /**
      * Determine if the current player is in check (i.e. their king is exposed

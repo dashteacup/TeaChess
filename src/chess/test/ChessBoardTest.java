@@ -568,6 +568,40 @@ public class ChessBoardTest {
         assertTrue(board.getPiece(h, 1) instanceof Rook);
     }
 
+    @Test
+    public void canPromotePawn_whitePawnOnBlackSide()
+    {
+        emptyBoard.addPiece(new Pawn(a, 8, WHITE));
+        assertTrue(emptyBoard.canPromotePawn(a, 8));
+    }
+
+    @Test
+    public void canPromotePawn_blackPawnOnWhiteSide()
+    {
+        emptyBoard.addPiece(new Pawn(h, 1, BLACK));
+        assertTrue(emptyBoard.canPromotePawn(h, 1));
+    }
+
+    @Test
+    public void canPromotePawn_noPawnAtLocation()
+    {
+        emptyBoard.addPiece(new Queen(c, 8, WHITE));
+        assertFalse(emptyBoard.canPromotePawn(c, 8));
+    }
+
+    @Test
+    public void canPromotePawn_whitePawnAtStart()
+    {
+        assertFalse(board.canPromotePawn(g, 2));
+    }
+
+    @Test
+    public void canPromotePawn_blackPawnOnBlackSide()
+    {
+        emptyBoard.addPiece(new Pawn(b, 8, BLACK));
+        assertFalse(emptyBoard.canPromotePawn(b, 8));
+    }
+
     /**
      * Confirm that the board can recognize when a player is in or out of check.
      */
