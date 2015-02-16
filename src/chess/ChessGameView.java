@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
@@ -189,6 +190,34 @@ public class ChessGameView {
             setCurrentPlayerLabel(player, "A draw!");
             break;
         }
+    }
+
+    /**
+     * Display a dialog box asking the user which chess piece they will replace
+     * their pawn with.
+     * @param row of the chess piece in the view
+     * @param column of the chess piece in the view
+     * @return "Queen", "Knight", "Rook", or "Bishop" depending on user selection
+     */
+    public String chooseChessPieceToReplacePawn(int row, int column)
+    {
+        // TODO: I should replace this with a real custom dialog later.
+        ChessSpaceButton space = getSpace(row, column);
+        Object[] choices = { "Queen", "Knight", "Rook", "Bishop" };
+        String message = "Choose which chess piece will replace your pawn:";
+        String choice;
+        do {
+            choice = (String) JOptionPane.showInputDialog(gameWindow,
+                                                          message,
+                                                          "Promote Pawn",
+                                                          JOptionPane.QUESTION_MESSAGE,
+                                                          space.getIcon(),
+                                                          choices,
+                                                          "Queen");
+        } while (choice == null); // user hit cancel, have to promote pawn to something
+        String color = space.getPieceColor().toString().toLowerCase();
+        space.setPiece(color  + choice + ".png");
+        return choice;
     }
 
     /**

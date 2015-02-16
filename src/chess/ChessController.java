@@ -151,6 +151,27 @@ public class ChessController implements ActionListener {
         } else {
             modelBoard.move(modelOldRow, modelOldColumn, modelNewRow, modelNewColumn);
         }
+
+        if (modelBoard.canPromotePawn(modelNewRow, modelNewColumn)) {
+            String choice = view.chooseChessPieceToReplacePawn(clickedRow, clickedColumn);
+            ChessPiece replacement;
+            switch (choice) {
+            case "Knight":
+                replacement = new Knight(modelNewRow, modelNewColumn, currentPlayerColor);
+                break;
+            case "Rook":
+                replacement = new Rook(modelNewRow, modelNewColumn, currentPlayerColor);
+                break;
+            case "Bishop":
+                replacement = new Bishop(modelNewRow, modelNewColumn, currentPlayerColor);
+                break;
+            case "Queen":
+            default:
+                replacement = new Queen(modelNewRow, modelNewColumn, currentPlayerColor);
+                break;
+            }
+            modelBoard.addPiece(replacement);
+        }
     }
 
     /**
