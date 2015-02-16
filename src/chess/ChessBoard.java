@@ -275,7 +275,7 @@ public class ChessBoard {
     {
         ChessPiece king = getPiece(kingRow, kingColumn);
         // must have a king there
-        if (king == null || !(king instanceof King))
+        if (!(king instanceof King))
             return false;
         // King can't have moved from its starting position
         if (!king.inValidStartingPosition() || king.hasMoved())
@@ -293,7 +293,7 @@ public class ChessBoard {
             return false;
         }
         // have to have a rook that hasn't moved from its starting position
-        if (rook == null || !(rook instanceof Rook) || rook.hasMoved())
+        if (!(rook instanceof Rook) || rook.hasMoved())
             return false;
         // no other pieces between king and rook
         if (!hasClearPath(kingRow, kingColumn, rook.getRow(), rook.getColumn()))
@@ -490,7 +490,7 @@ public class ChessBoard {
         for (int row = 1; row <= 8; row++) {
             for (int col = 1; col <= 8; col++) {
                 ChessPiece piece = getPiece(row, col);
-                if (piece != null && (piece.getColor() == player) && (piece instanceof King))
+                if ((piece instanceof King) && (piece.getColor() == player))
                     return piece;
             }
         }
