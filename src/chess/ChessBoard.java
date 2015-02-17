@@ -200,21 +200,18 @@ public class ChessBoard {
      * @param oldColumn of the piece to move (1-8)
      * @param newRow to move to (1-8)
      * @param newColumn to move to (1-8)
-     * @return true if the move succeeds, false otherwise
      */
-    public boolean move(int oldRow, int oldColumn, int newRow, int newColumn)
+    public void move(int oldRow, int oldColumn, int newRow, int newColumn)
     {
-        if (isValidMove(oldRow, oldColumn, newRow, newColumn)) {
-            ChessPiece movingPiece = getPiece(oldRow, oldColumn);
+        ChessPiece movingPiece = getPiece(oldRow, oldColumn);
+        if (movingPiece != null) {
             if (movingPiece.canCapture(newRow, newColumn))
                 movingPiece.capture(newRow, newColumn);
             else
                 movingPiece.move(newRow, newColumn);
             board[newRow][newColumn] = movingPiece;
             board[oldRow][oldColumn] = null;
-            return true;
         }
-        return false;
     }
 
     /**
@@ -225,9 +222,9 @@ public class ChessBoard {
      * @param newRank to move to (1-8)
      * @return true if the move succeeds, false otherwise
      */
-    public boolean move(File oldFile, int oldRank, File newFile, int newRank)
+    public void move(File oldFile, int oldRank, File newFile, int newRank)
     {
-        return move(oldRank, oldFile.getColumn(), newRank, newFile.getColumn());
+        move(oldRank, oldFile.getColumn(), newRank, newFile.getColumn());
     }
 
     /**

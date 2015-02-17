@@ -171,7 +171,7 @@ public class ChessBoardTest {
      * input.
      */
     @Test
-    public void getPieceRowColumnWithValidInput()
+    public void getPiece_rowColumnWithValidInput()
     {
         // white right rook
         assertTrue(board.getPiece(1, 8) instanceof Rook);
@@ -193,7 +193,7 @@ public class ChessBoardTest {
      * Confirm that the getter throws an exception when given a row of zero.
      */
     @Test(expected = OffTheChessBoardException.class)
-    public void getPieceRowColumnWithBadRow()
+    public void getPiece_rowColumnWithBadRow()
     {
         board.getPiece(0, 5);
     }
@@ -202,7 +202,7 @@ public class ChessBoardTest {
      * Confirm that the getter throws an exception when given a column of zero.
      */
     @Test(expected = OffTheChessBoardException.class)
-    public void getPieceRowColumnWithBadColumn()
+    public void getPiece_rowColumnWithBadColumn()
     {
         board.getPiece(8, 0);
     }
@@ -212,7 +212,7 @@ public class ChessBoardTest {
      * Confirm that the getter throws an exception when given a column of 9.
      */
     @Test(expected = OffTheChessBoardException.class)
-    public void getPieceRowColumnWithBadColumn9()
+    public void getPiece_rowColumnWithBadColumn9()
     {
         board.getPiece(8, 9);
     }
@@ -222,7 +222,7 @@ public class ChessBoardTest {
      * input.
      */
     @Test
-    public void getPieceFileRankWithValidInput()
+    public void getPiece_fileRankWithValidInput()
     {
         // white left knight
         assertTrue(board.getPiece(b, 1) instanceof Knight);
@@ -246,7 +246,7 @@ public class ChessBoardTest {
      * Confirm the getter throws an exception when given a rank of 9
      */
     @Test(expected = OffTheChessBoardException.class)
-    public void getPieceFileRankWithBadRank()
+    public void getPiece_fileRankWithBadRank()
     {
         board.getPiece(c, 9);
     }
@@ -273,7 +273,7 @@ public class ChessBoardTest {
      * Ensure that a null piece cannot be added.
      */
     @Test
-    public void addPieceNull()
+    public void addPiece_null()
     {
         assertFalse(board.addPiece(null));
     }
@@ -282,7 +282,7 @@ public class ChessBoardTest {
      * Ensure that pieces with locations off the board cannot be added.
      */
     @Test
-    public void addPieceOffTheBoard()
+    public void addPiece_offTheBoard()
     {
         Pawn pawn = new Pawn(6, 0, BLACK);
         assertFalse(board.addPiece(pawn));
@@ -306,7 +306,7 @@ public class ChessBoardTest {
      * Confirm that empty spaces can't make moves.
      */
     @Test
-    public void isValidMoveEmptySpace()
+    public void isValidMove_emptySpace()
     {
         assertFalse(board.isValidMove(a, 5, a, 4));
         assertFalse(board.isValidMove(h, 3, a, 6));
@@ -316,7 +316,7 @@ public class ChessBoardTest {
      * Confirm that moves for a black pawn are recognized as valid/invalid.
      */
     @Test
-    public void isValidMoveBlackPawn()
+    public void isValidMove_blackPawn()
     {
         // 1 forward
         assertTrue(board.isValidMove(c, 7, c, 6));
@@ -336,7 +336,7 @@ public class ChessBoardTest {
      * Confirm that moves for a white Knight are recognized as valid/invalid.
      */
     @Test
-    public void isValidMoveWhiteKnight()
+    public void isValidMove_whiteKnight()
     {
         // up 2, left 1
         assertTrue(board.isValidMove(g, 1, f, 3));
@@ -352,54 +352,101 @@ public class ChessBoardTest {
      * Test pawn movement and capture functionality.
      */
     @Test
-    public void movePawn()
+    public void isValidMove_capturePawn()
     {
         // white up 2
-        assertTrue(board.move(c, 2, c, 4));
+        board.move(c, 2, c, 4);
         // black down 2
-        assertTrue(board.move(d, 7, d, 5));
+        board.move(d, 7, d, 5);
         // can white capture up-right?
         assertTrue(board.isValidMove(c, 4, d, 5));
         // black capture down-left
-        assertTrue(board.move(d, 5, c, 4));
+        assertTrue(board.isValidMove(d, 5, c, 4));
+        board.move(d, 5, c, 4);
         // bad, black capture empty space down-right
-        assertFalse(board.move(c, 4, d, 3));
+        assertFalse(board.isValidMove(c, 4, d, 3));
     }
 
     /**
-     * Run a simulated partial chess game only making valid moves.
+     * Ensure that horizontal moves fail if something blocks their way.
      */
     @Test
-    public void moveMultiplePieces()
+    public void isValidMove_hasClearPathHorizontal()
     {
-        // white pawn up 2
-        assertTrue(board.move(h, 2, h, 4));
-        // black knight down 2 left 1
-        assertTrue(board.move(g, 8, f, 6));
-        // white rook up 2
-        assertTrue(board.move(h, 1, h, 3));
-        // black pawn down 1
-        assertTrue(board.move(g, 7, g, 6));
-        // white rook left 3
-        assertTrue(board.move(h, 3, e, 3));
-        // black bishop down-right 2
-        assertTrue(board.move(f, 8, h, 6));
-        // white pawn up 2
-        assertTrue(board.move(d, 2, d, 4));
-        // black bishop capture rook
-        assertTrue(board.move(h, 6, e, 3));
-        // white queen up 2
-        assertTrue(board.move(d, 1, d, 3));
-        // black king right
-        assertTrue(board.move(e, 8, f, 8));
-        // white queen capture bishop
-        assertTrue(board.move(d, 3, e, 3));
-        // black knight down 2 right 1
-        assertTrue(board.move(f, 6, g, 4));
-        // white queen capture pawn
-        assertTrue(board.move(e, 3, e, 7));
-        // black king capture queen
-        assertTrue(board.move(f, 8, e, 7));
+        board.addPiece(new Rook(g, 4, WHITE));
+        // put something in the way
+        board.addPiece(new Rook(c, 4, BLACK));
+        // right rook can't move left over a piece
+        assertFalse(board.isValidMove(g, 4, b, 4));
+        // left rook can't move right over a piece
+        assertFalse(board.isValidMove(c, 4, h, 4));
+        // right rook CAN capture left
+        assertTrue(board.isValidMove(g, 4, c, 4));
+    }
+
+    /**
+     * Ensure that vertical moves fail if something blocks their way.
+     */
+    @Test
+    public void isValidMove_hasClearPathVertical()
+    {
+        board.addPiece(new Queen(e, 3, WHITE));
+        // can't move up over a piece
+        assertFalse(board.isValidMove(e, 3, e, 8));
+        // can capture up
+        assertTrue(board.isValidMove(e, 3, e, 7));
+    }
+
+    /**
+     * Ensure that up-right diagonal moves fail if something blocks their way.
+     */
+    @Test
+    public void isValidMove_hasClearPathDiagonalUpRight()
+    {
+        board.addPiece(new Bishop(c, 3, WHITE));
+        // can't move up-right past a piece
+        assertFalse(board.isValidMove(c, 3, h, 8));
+        // capture up-right
+        assertTrue(board.isValidMove(c, 3, g, 7));
+    }
+
+    /**
+     * Ensure that up-left moves fail if something blocks their way.
+     */
+    @Test
+    public void isValidMove_hasClearPathDiagonalUpLeft()
+    {
+        board.addPiece(new Queen(g, 3, WHITE));
+        // can't move up-left past a piece
+        assertFalse(board.isValidMove(g, 3, b, 8));
+        // capture up-left
+        assertTrue(board.isValidMove(g, 3, c, 7));
+    }
+
+    /**
+     * Ensure that down-right moves fail if something blocks their way.
+     */
+    @Test
+    public void isValidMove_hasClearPathDiagonalDownRight()
+    {
+        board.addPiece(new Queen(a, 6, BLACK));
+        // can't move down-right past a piece
+        assertFalse(board.isValidMove(a, 6, f, 1));
+        // capture down-right
+        assertTrue(board.isValidMove(a, 6, e, 2));
+    }
+
+    /**
+     * Ensure that down-left moves fail if something blocks their way.
+     */
+    @Test
+    public void isValidMove_hasClearPathDiagonalDownLeft()
+    {
+        board.addPiece(new Bishop(h, 5, BLACK));
+        // can't move down-left past a piece
+        assertFalse(board.isValidMove(h, 5, d, 1));
+        // capture down-left
+        assertTrue(board.isValidMove(h, 5, e, 2));
     }
 
     /**
@@ -410,7 +457,7 @@ public class ChessBoardTest {
     public void forceMove()
     {
         // try to move King to upper left corner from start position
-        assertFalse(board.move(e, 1, a, 8));
+        assertFalse(board.isValidMove(e, 1, a, 8));
         assertTrue(board.getPiece(e, 1) instanceof King);
         assertTrue(board.getPiece(a, 8) instanceof Rook);
         // now force move to upper left corner
@@ -424,7 +471,7 @@ public class ChessBoardTest {
      * happens.
      */
     @Test
-    public void forceMoveEmptySpace()
+    public void forceMove_emptySpace()
     {
         // try to move a blank space to the black king
         board.forceMove(h, 4, e, 8);
@@ -439,7 +486,7 @@ public class ChessBoardTest {
      * an exception.
      */
     @Test(expected = OffTheChessBoardException.class)
-    public void forceMoveOffTheBoard()
+    public void forceMove_offTheBoard()
     {
         board.forceMove(a, 8, a, 0);
     }
@@ -651,32 +698,11 @@ public class ChessBoardTest {
         // move black queen to put white king in check
         board.move(d, 8, h, 4);
         // king will still be in check, so you can't move the knight
-        assertFalse(board.move(b, 1, c, 3));
+        assertFalse(board.isValidMove(b, 1, c, 3));
         // king will still be in check so you can't move it up-right 1
-        assertFalse(board.move(e, 1, f, 2));
+        assertFalse(board.isValidMove(e, 1, f, 2));
         // blocks the queen, only valid move
-        assertTrue(board.move(g, 2, g, 3));
-    }
-
-    /**
-     * Ensure that horizontal moves fail if something blocks their way.
-     */
-    @Test
-    public void hasClearPathHorizontal()
-    {
-        Rook rightRook = new Rook(g, 4, WHITE);
-        assertTrue(board.addPiece(rightRook));
-        // rook left all the way
-        assertTrue(board.isValidMove(g, 4, a, 4));
-        // put something in the way
-        Rook leftRook = new Rook(c, 4, BLACK);
-        assertTrue(board.addPiece(leftRook));
-        // right rook can't move left over a piece
-        assertFalse(board.move(g, 4, b, 4));
-        // left rook can't move right over a piece
-        assertFalse(board.move(c, 4, h, 4));
-        // right rook CAN capture left
-        assertTrue(board.move(g, 4, c, 4));
+        assertTrue(board.isValidMove(g, 2, g, 3));
     }
 
     /**
@@ -739,75 +765,5 @@ public class ChessBoardTest {
         assertTrue(emptyBoard.stalemate(BLACK));
         assertFalse(emptyBoard.inCheck(BLACK));
         assertFalse(emptyBoard.checkmate(BLACK));
-    }
-
-    /**
-     * Ensure that vertical moves fail if something blocks their way.
-     */
-    @Test
-    public void hasClearPathVertical()
-    {
-        Queen queen = new Queen(e, 3, WHITE);
-        assertTrue(board.addPiece(queen));
-        // can't move up over a piece
-        assertFalse(board.move(e, 3, e, 8));
-        // can capture up
-        assertTrue(board.move(e, 3, e, 7));
-    }
-
-    /**
-     * Ensure that up-right diagonal moves fail if something blocks their way.
-     */
-    @Test
-    public void hasClearPathDiagonalUpRight()
-    {
-        Bishop bishop = new Bishop(c, 3, WHITE);
-        assertTrue(board.addPiece(bishop));
-        // can't move up-right past a piece
-        assertFalse(board.move(c, 3, h, 8));
-        // capture up-right
-        assertTrue(board.move(c, 3, g, 7));
-    }
-
-    /**
-     * Ensure that up-left moves fail if something blocks their way.
-     */
-    @Test
-    public void hasClearPathDiagonalUpLeft()
-    {
-        Queen queen = new Queen(g, 3, WHITE);
-        assertTrue(board.addPiece(queen));
-        // can't move up-left past a piece
-        assertFalse(board.move(g, 3, b, 8));
-        // capture up-left
-        assertTrue(board.move(g, 3, c, 7));
-    }
-
-    /**
-     * Ensure that down-right moves fail if something blocks their way.
-     */
-    @Test
-    public void hasClearPathDiagonalDownRight()
-    {
-        Queen queen = new Queen(a, 6, BLACK);
-        assertTrue(board.addPiece(queen));
-        // can't move down-right past a piece
-        assertFalse(board.move(a, 6, f, 1));
-        // capture down-right
-        assertTrue(board.move(a, 6, e, 2));
-    }
-
-    /**
-     * Ensure that down-left moves fail if something blocks their way.
-     */
-    @Test
-    public void hasClearPathDiagonalDownLeft()
-    {
-        Bishop bishop = new Bishop(h, 5, BLACK);
-        assertTrue(board.addPiece(bishop));
-        // can't move down-left past a piece
-        assertFalse(board.move(h, 5, d, 1));
-        // capture down-left
-        assertTrue(board.move(h, 5, e, 2));
     }
 }
