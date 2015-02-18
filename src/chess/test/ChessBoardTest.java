@@ -120,7 +120,7 @@ public class ChessBoardTest {
     }
 
     @Test
-    public void copyConstructor_CopiesGivenBoard()
+    public void copyConstructor_CopiesSourceBoard()
     {
         ChessBoard copyBoard = new ChessBoard(board);
         assertTrue(copyBoard.getPiece(b, 1) instanceof Knight);
@@ -148,7 +148,7 @@ public class ChessBoardTest {
     }
 
     @Test
-    public void copyConstructor_WhenGivenNullBoardIsEmpty()
+    public void copyConstructor_WhenGivenNullCreateEmptyBoard()
     {
         ChessBoard empty = new ChessBoard(null);
         // white king
@@ -157,147 +157,131 @@ public class ChessBoardTest {
         assertNull(empty.getPiece(b, 8));
     }
 
-    /**
-     * Confirm that the getter in row/column notation works properly with valid
-     * input.
-     */
     @Test
-    public void getPiece_rowColumnWithValidInput()
+    public void getPiece_RowColumn_CorrectPiecesInPlace()
     {
         // white right rook
         assertTrue(board.getPiece(1, 8) instanceof Rook);
-        // white left bishop
-        assertTrue(board.getPiece(1, 3) instanceof Bishop);
-        // black left rook
-        assertTrue(board.getPiece(8, 1) instanceof Rook);
         // black king
         assertTrue(board.getPiece(8, 5) instanceof King);
-        // empty space
+    }
+
+    @Test
+    public void getPiece_RowColumn_EmptySpaceIsNull()
+    {
         assertNull(board.getPiece(4, 4));
-        // black pawn has right color
+    }
+
+    @Test
+    public void getPiece_RowColumn_PiecesHaveTheRightColor()
+    {
         assertEquals(BLACK, board.getPiece(7, 4).getColor());
-        // white queen has right color
         assertEquals(WHITE, board.getPiece(1, 4).getColor());
     }
 
-    /**
-     * Confirm that the getter throws an exception when given a row of zero.
-     */
     @Test(expected = OffTheChessBoardException.class)
-    public void getPiece_rowColumnWithBadRow()
+    public void getPiece_RowColumn_ThrowsWhenRowIsZero()
     {
         board.getPiece(0, 5);
     }
 
-    /**
-     * Confirm that the getter throws an exception when given a column of zero.
-     */
     @Test(expected = OffTheChessBoardException.class)
-    public void getPiece_rowColumnWithBadColumn()
+    public void getPiece_RowColumn_ThrowsWhenColumnIsZero()
     {
         board.getPiece(8, 0);
     }
 
-
-    /**
-     * Confirm that the getter throws an exception when given a column of 9.
-     */
     @Test(expected = OffTheChessBoardException.class)
-    public void getPiece_rowColumnWithBadColumn9()
+    public void getPiece_RowColumn_ThrowsWhenColumnIsNine()
     {
         board.getPiece(8, 9);
     }
 
-    /**
-     * Confirm that the getter in file/rank notation works properly with valid
-     * input.
-     */
     @Test
-    public void getPiece_fileRankWithValidInput()
+    public void getPiece_FileRank_CorrectPiecesInPlace()
     {
-        // white left knight
-        assertTrue(board.getPiece(b, 1) instanceof Knight);
         // white king
         assertTrue(board.getPiece(e, 1) instanceof King);
-        // white right pawn
-        assertTrue(board.getPiece(h, 2) instanceof Pawn);
         // black queen
         assertTrue(board.getPiece(d, 8) instanceof Queen);
-        // black right rook
-        assertTrue(board.getPiece(h, 8) instanceof Rook);
-        // empty space
+    }
+
+    @Test
+    public void getPiece_FileRank_EmptySpaceIsNull()
+    {
         assertNull(board.getPiece(a, 5));
+    }
+
+    @Test
+    public void getPiece_FileRank_PiecesHaveTheRightColor()
+    {
         // black left knight has right color
         assertEquals(BLACK, board.getPiece(b, 8).getColor());
         // white pawn has right color
         assertEquals(WHITE, board.getPiece(f, 2).getColor());
     }
 
-    /**
-     * Confirm the getter throws an exception when given a rank of 9
-     */
     @Test(expected = OffTheChessBoardException.class)
-    public void getPiece_fileRankWithBadRank()
+    public void getPiece_FileRank_ThrowsWhenRankIsNine()
     {
         board.getPiece(c, 9);
     }
 
-    /**
-     * Confirm that a ChessPiece successfully added to the board has the right
-     * properties.
-     */
     @Test
-    public void addPiece()
+    public void addPiece_WithLegalPiece()
+    {
+        assertTrue(board.addPiece(new Queen(c, 5, BLACK)));
+    }
+
+    @Test
+    public void addPiece_HasSameReferenceAsValueRetrievedWithGetPiece()
     {
         Rook rook = new Rook(b, 4, WHITE);
-        assertTrue(board.addPiece(rook));
+        board.addPiece(rook);
         ChessPiece pieceAtLocation = board.getPiece(b, 4);
         // refer to same object?
         assertEquals(rook, pieceAtLocation);
-        // check internal state
-        assertEquals(4, pieceAtLocation.getRow());
-        assertEquals(2, pieceAtLocation.getColumn());
-        assertEquals(WHITE, pieceAtLocation.getColor());
     }
 
-    /**
-     * Ensure that a null piece cannot be added.
-     */
     @Test
-    public void addPiece_null()
+    public void addPiece_HasCorrectInternalState()
+    {
+        board.addPiece(new Rook(b, 4, WHITE));
+        ChessPiece piece = board.getPiece(b, 4);
+        assertEquals(4, piece.getRow());
+        assertEquals(2, piece.getColumn());
+        assertEquals(WHITE, piece.getColor());
+    }
+
+    @Test
+    public void addPiece_NullPieceFails()
     {
         assertFalse(board.addPiece(null));
     }
 
-    /**
-     * Ensure that pieces with locations off the board cannot be added.
-     */
     @Test
-    public void addPiece_offTheBoard()
+    public void addPiece_OffTheBoardPieceFails()
     {
         Pawn pawn = new Pawn(6, 0, BLACK);
         assertFalse(board.addPiece(pawn));
     }
 
     @Test
-    public void emptySpace_onEmptySpace()
+    public void emptySpace_OnEmptySpace()
     {
         assertTrue(board.isEmptySpace(c, 4));
         assertTrue(board.isEmptySpace(6, 8));
     }
 
     @Test
-    public void emptySpace_onOccupiedSpace()
+    public void emptySpace_OccupiedSpaceFails()
     {
         assertFalse(board.isEmptySpace(h, 8));
         assertFalse(board.isEmptySpace(2, 1));
     }
 
-    /**
-     * Confirm that empty spaces can't make moves.
-     */
     @Test
-    public void isValidMove_emptySpace()
+    public void isValidMove_EmptySpacesCantMakeMoves()
     {
         assertFalse(board.isValidMove(a, 5, a, 4));
         assertFalse(board.isValidMove(h, 3, a, 6));
