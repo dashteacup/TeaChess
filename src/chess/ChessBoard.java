@@ -466,7 +466,6 @@ public class ChessBoard {
      */
     private boolean hasValidMoves(ChessPiece piece)
     {
-        assert piece != null;
         for (int row = 1; row < BOARD_SIZE; row++) {
             for (int col = 1; col < BOARD_SIZE; col++) {
                 if (isValidMove(piece.getRow(), piece.getColumn(), row, col))
