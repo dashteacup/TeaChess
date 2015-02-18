@@ -365,6 +365,12 @@ public class ChessBoardTest {
         assertTrue(board.isValidMove(g, 2, g, 3));
     }
 
+    @Test
+    public void isValidMove_CastlingIsValid()
+    {
+        assertTrue(kingsAndRooksBoard.isValidMove(e, 8, c, 8));
+    }
+
     /**
      * Ensure that horizontal moves fail if something blocks their way.
      */
@@ -445,6 +451,13 @@ public class ChessBoardTest {
         assertFalse(board.isValidMove(h, 5, d, 1));
         // capture down-left
         assertTrue(board.isValidMove(h, 5, e, 2));
+    }
+
+    @Test
+    public void move_MovingNullPieceDoesNothing()
+    {
+        board.move(f, 5, f, 8);
+        assertTrue(board.getPiece(f, 8) instanceof Bishop);
     }
 
     /**
@@ -531,6 +544,12 @@ public class ChessBoardTest {
         // move rook off start
         kingsAndRooksBoard.move(h, 8, h, 7);
         assertFalse(kingsAndRooksBoard.canCastle(e, 8, g, 8));
+    }
+
+    @Test
+    public void canCastle_KingMovingToWrongColumn()
+    {
+        kingsAndRooksBoard.canCastle(e, 1, b, 1);
     }
 
     @Test
@@ -737,5 +756,14 @@ public class ChessBoardTest {
     {
         assertFalse(board.stalemate(WHITE));
         assertFalse(board.stalemate(BLACK));
+    }
+
+    @Test
+    public void stalemate_FailWhenInCheckmate()
+    {
+        emptyBoard.addPiece(new King(h, 5, BLACK));
+        emptyBoard.addPiece(new Rook(h, 1, WHITE));
+        emptyBoard.addPiece(new King(f, 5, WHITE));
+        assertFalse(emptyBoard.stalemate(BLACK));
     }
 }
