@@ -437,6 +437,36 @@ public class ChessBoard {
     }
 
     /**
+     * Print the current chess board layout to standard output.
+     */
+    public void printBoard()
+    {
+        System.out.println("________________");
+        for (int row = BOARD_SIZE - 1; row >= 1; row--) {
+            for (int col = 1; col < BOARD_SIZE; col++) {
+                ChessPiece piece = getPiece(row, col);
+                String print = "x";
+                if (piece instanceof King) {
+                    print = "K";
+                } else if (piece instanceof Rook) {
+                    print = "R";
+                } else if (piece instanceof Bishop) {
+                    print = "B";
+                } else if (piece instanceof Knight) {
+                    print = "N";
+                } else if ( piece instanceof Queen) {
+                    print = "Q";
+                } else if (piece instanceof Pawn) {
+                    print = "P";
+                }
+                System.out.print(print + " ");
+            }
+            System.out.print("|\n");
+        }
+        System.out.println("-----------------");
+    }
+
+    /**
      * Determine if the given player has no valid moves. This means there is
      * either a checkmate or a stalemate.
      * @param currentPlayer to check for valid moves
