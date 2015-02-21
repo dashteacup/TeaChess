@@ -454,6 +454,13 @@ public class ChessBoardTest {
     }
 
     @Test
+    public void isValidMove_NoKingOnTheBoardMakesMovesFail()
+    {
+        emptyBoard.addPiece(new Queen(a, 3, WHITE));
+        assertFalse(emptyBoard.isValidMove(a, 3, a, 6));
+    }
+
+    @Test
     public void move_MovingNullPieceDoesNothing()
     {
         board.move(f, 5, f, 8);
@@ -666,6 +673,12 @@ public class ChessBoardTest {
         assertFalse(emptyBoard.canPromotePawn(b, 8));
     }
 
+    @Test
+    public void hasKing_BoardIsEmpty()
+    {
+        assertFalse(emptyBoard.hasKing(BLACK));
+    }
+
     /**
      * Confirm that the board can recognize when a player is in or out of check.
      */
@@ -697,6 +710,12 @@ public class ChessBoardTest {
         // move black king to safety
         board.move(e, 7, f, 6);
         assertFalse(board.inCheck(BLACK));
+    }
+
+    @Test
+    public void inCheck_NoKingOnTheBoard()
+    {
+        assertFalse(emptyBoard.inCheck(BLACK));
     }
 
     @Test

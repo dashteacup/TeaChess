@@ -156,6 +156,7 @@ public class ChessBoard {
         if (isEmptySpace(oldRow, oldColumn))
             return false;
         ChessPiece piece = getPiece(oldRow, oldColumn);
+        ChessPieceColor playerColor = piece.getColor();
         // moving to an empty space
         if (isEmptySpace(newRow, newColumn)) {
             // castling is a special case that requires knowledge of ChessBoard's state
@@ -167,7 +168,7 @@ public class ChessBoard {
         } else {
             if ( (!piece.canCapture(newRow, newColumn))
                  || // can't capture your own color
-                 (piece.getColor() == getPiece(newRow, newColumn).getColor()) ) {
+                 (playerColor == getPiece(newRow, newColumn).getColor()) ) {
                 return false;
             }
         }
@@ -177,7 +178,7 @@ public class ChessBoard {
         // Will this move put the king in check?
         ChessBoard potential = new ChessBoard(this);
         potential.forceMove(oldRow, oldColumn, newRow, newColumn);
-        return !potential.inCheck(piece.getColor());
+        return potential.hasKing(playerColor) && !potential.inCheck(playerColor);
     }
 
     /**
@@ -389,6 +390,15 @@ public class ChessBoard {
         return canPromotePawn(rank, file.getColumn());
     }
 
+    /**
+     * Determine if the given player has a king on the chess board.
+     * @param color of the king to find
+     * @return true if there is a king, false otherwise
+     */
+    public boolean hasKing(ChessPieceColor color)
+    {
+        return getKing(color) != null;
+    }
 
     /**
      * Determine if the current player is in check (i.e. their king is exposed
@@ -399,6 +409,8 @@ public class ChessBoard {
     public boolean inCheck(ChessPieceColor currentPlayer)
     {
         ChessPiece myKing = getKing(currentPlayer);
+        if (myKing == null)
+            return false;
         for (int row = 1; row <= 8; row++) {
             for (int col = 1; col <= 8; col++) {
                 ChessPiece attackingPiece = getPiece(row, col);
@@ -520,7 +532,6 @@ public class ChessBoard {
                     return piece;
             }
         }
-        assert false; // the board has to have a king
         return null;
     }
 
