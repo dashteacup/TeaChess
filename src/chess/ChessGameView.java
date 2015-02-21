@@ -20,6 +20,23 @@ import javax.swing.border.EtchedBorder;
  * View Class for the chess board.
  */
 public class ChessGameView {
+
+    /**
+     * The text for the menu item that starts a new game.
+     */
+    public static final String NEW_GAME_MENU_ITEM = "New Game";
+
+    /**
+     * The text for the menu item that closes the app.
+     */
+    public static final String CLOSE_MENU_ITEM = "Close";
+
+    /**
+     * The text for the menu item that prints the current board state to the
+     * console.
+     */
+    public static final String PRINT_BOARD_MENU_ITEM = "Print Board";
+
     /**
      * Default height of the game window.
      */
@@ -253,15 +270,22 @@ public class ChessGameView {
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
 
-        JMenuItem newGameMenuItem = new JMenuItem("New Game");
+        JMenuItem newGameMenuItem = new JMenuItem(NEW_GAME_MENU_ITEM);
         newGameMenuItem.addActionListener(myController);
         fileMenu.add(newGameMenuItem);
 
-        JMenuItem closeMenuItem = new JMenuItem("Close");
+        JMenuItem closeMenuItem = new JMenuItem(CLOSE_MENU_ITEM);
         closeMenuItem.addActionListener(myController);
         fileMenu.add(closeMenuItem);
 
         menuBar.add(fileMenu);
+
+        JMenu printMenu = new JMenu("Debug");
+        JMenuItem printMenuItem = new JMenuItem(PRINT_BOARD_MENU_ITEM);
+        printMenuItem.addActionListener(myController);
+        printMenu.add(printMenuItem);
+        menuBar.add(printMenu);
+
         return menuBar;
     }
 
