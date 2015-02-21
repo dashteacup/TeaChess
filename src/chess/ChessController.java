@@ -223,9 +223,6 @@ public class ChessController implements ActionListener {
      */
     private void highlightValidMoves()
     {
-        assert currentlySelectedButton != null;
-        assert modelBoard != null;
-        assert view != null;
         int selectedRow = currentlySelectedButton.getRow();
         int selectedColumn = currentlySelectedButton.getColumn();
         for (int row = 0; row < 8; row++) {
@@ -243,7 +240,6 @@ public class ChessController implements ActionListener {
      */
     private void clearMarkedSpaces()
     {
-        assert view != null;
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 view.getSpace(row, col).deselectSpace();
