@@ -450,6 +450,7 @@ public class ChessBoard {
 
     /**
      * Print the current chess board layout to standard output.
+     * Useful for debugging.
      */
     public void printBoard()
     {
