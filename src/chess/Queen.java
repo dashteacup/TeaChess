@@ -30,7 +30,7 @@ public class Queen extends ChessPiece {
      * Determine if the Queen is in a valid starting position.
      */
     @Override
-    public boolean inValidStartingPosition()
+    public boolean atValidStartingPosition()
     {
         if (getColumn() != 4)
             return false;

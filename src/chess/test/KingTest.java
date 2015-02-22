@@ -30,7 +30,7 @@ public class KingTest {
     public void initializeWithValidInputs()
     {
         King whiteKing = new King(1, 5, ChessPieceColor.WHITE);
-        assertTrue(whiteKing.inValidStartingPosition());
+        assertTrue(whiteKing.atValidStartingPosition());
         // row/column notation
         assertEquals(1, whiteKing.getRow());
         assertEquals(5, whiteKing.getColumn());
@@ -41,7 +41,7 @@ public class KingTest {
         assertFalse(whiteKing.isHoppable());
 
         King blackKing = new King(8, 5, ChessPieceColor.BLACK);
-        assertTrue(blackKing.inValidStartingPosition());
+        assertTrue(blackKing.atValidStartingPosition());
         // row/column notation
         assertEquals(8, blackKing.getRow());
         assertEquals(5, blackKing.getColumn());
@@ -60,7 +60,7 @@ public class KingTest {
     public void initializeInChessNotationWithValidInputs()
     {
         King whiteKing = new King(e, 1, ChessPieceColor.WHITE);
-        assertTrue(whiteKing.inValidStartingPosition());
+        assertTrue(whiteKing.atValidStartingPosition());
         // file/rank notation
         assertEquals(e, whiteKing.getFile());
         assertEquals(1, whiteKing.getRank());
@@ -71,7 +71,7 @@ public class KingTest {
         assertFalse(whiteKing.isHoppable());
 
         King blackKing = new King(e, 8, ChessPieceColor.BLACK);
-        assertTrue(blackKing.inValidStartingPosition());
+        assertTrue(blackKing.atValidStartingPosition());
         // file/rank notation
         assertEquals(e, blackKing.getFile());
         assertEquals(8, blackKing.getRank());
@@ -91,19 +91,19 @@ public class KingTest {
     {
         // row/column notation
         King whiteKing = new King(8, 5, ChessPieceColor.WHITE);
-        assertFalse(whiteKing.inValidStartingPosition());
+        assertFalse(whiteKing.atValidStartingPosition());
         assertEquals(8, whiteKing.getRow());
         King blackKing = new King(1, 5, ChessPieceColor.BLACK);
-        assertFalse(blackKing.inValidStartingPosition());
+        assertFalse(blackKing.atValidStartingPosition());
         assertEquals(1, blackKing.getRow());
 
         // file/rank notation
         King whiteKingAlg = new King(e, 8, ChessPieceColor.WHITE);
         assertEquals(8, whiteKingAlg.getRank());
-        assertFalse(whiteKingAlg.inValidStartingPosition());
+        assertFalse(whiteKingAlg.atValidStartingPosition());
         King blackKingAlg = new King(e, 1, ChessPieceColor.BLACK);
         assertEquals(1, blackKingAlg.getRank());
-        assertFalse(blackKingAlg.inValidStartingPosition());
+        assertFalse(blackKingAlg.atValidStartingPosition());
     }
 
     /**
@@ -115,21 +115,21 @@ public class KingTest {
     {
         King whiteInQueenSpot = new King(1, 4, ChessPieceColor.WHITE);
         assertEquals(4, whiteInQueenSpot.getColumn());
-        assertFalse(whiteInQueenSpot.inValidStartingPosition());
+        assertFalse(whiteInQueenSpot.atValidStartingPosition());
 
         King blackInQueenSpot = new King(8, 4, ChessPieceColor.BLACK);
         assertEquals(4, blackInQueenSpot.getColumn());
-        assertFalse(blackInQueenSpot.inValidStartingPosition());
+        assertFalse(blackInQueenSpot.atValidStartingPosition());
 
         King inTheMiddleOfTheBoard = new King (5, 6, ChessPieceColor.BLACK);
         assertEquals(5, inTheMiddleOfTheBoard.getRow());
         assertEquals(6, inTheMiddleOfTheBoard.getColumn());
-        assertFalse(inTheMiddleOfTheBoard.inValidStartingPosition());
+        assertFalse(inTheMiddleOfTheBoard.atValidStartingPosition());
 
         King upperRightCorner = new King(8, 8, ChessPieceColor.BLACK);
         assertEquals(8, upperRightCorner.getRow());
         assertEquals(8, upperRightCorner.getColumn());
-        assertFalse(upperRightCorner.inValidStartingPosition());
+        assertFalse(upperRightCorner.atValidStartingPosition());
     }
 
     /**
@@ -142,17 +142,17 @@ public class KingTest {
         King whiteInRightBishopSpot = new King(f, 1, ChessPieceColor.WHITE);
         assertEquals(6, whiteInRightBishopSpot.getColumn());
         assertEquals(1, whiteInRightBishopSpot.getRank());
-        assertFalse(whiteInRightBishopSpot.inValidStartingPosition());
+        assertFalse(whiteInRightBishopSpot.atValidStartingPosition());
 
         King blackInLeftKnightSpot = new King(b, 8, ChessPieceColor.BLACK);
         assertEquals(b, blackInLeftKnightSpot.getFile());
         assertEquals(2, blackInLeftKnightSpot.getColumn());
-        assertFalse(blackInLeftKnightSpot.inValidStartingPosition());
+        assertFalse(blackInLeftKnightSpot.atValidStartingPosition());
 
         King middleRightOfBoard = new King(g, 4, ChessPieceColor.WHITE);
         assertEquals(7, middleRightOfBoard.getColumn());
         assertEquals(4, middleRightOfBoard.getRow());
-        assertFalse(middleRightOfBoard.inValidStartingPosition());
+        assertFalse(middleRightOfBoard.atValidStartingPosition());
     }
 
     /**
@@ -163,7 +163,7 @@ public class KingTest {
     public void confirmValidMovesAtWhiteKingStart()
     {
         King whiteKing = new King(1, 5, ChessPieceColor.WHITE);
-        assertTrue(whiteKing.inValidStartingPosition());
+        assertTrue(whiteKing.atValidStartingPosition());
         // Move to self
         assertFalse(whiteKing.isValidMove(e, 1));
         // Go left
@@ -200,7 +200,7 @@ public class KingTest {
     public void confirmValidMovesAtBlackKingStart()
     {
         King blackKing = new King(e, 8, ChessPieceColor.BLACK);
-        assertTrue(blackKing.inValidStartingPosition());
+        assertTrue(blackKing.atValidStartingPosition());
         // Move to self
         assertFalse(blackKing.isValidMove(8, 5));
         // Go left
@@ -237,7 +237,7 @@ public class KingTest {
     public void confirmValidMovesAtUpperRightCorner()
     {
         King upperRightKing = new King(8, 8, ChessPieceColor.BLACK);
-        assertFalse(upperRightKing.inValidStartingPosition());
+        assertFalse(upperRightKing.atValidStartingPosition());
         // Go left
         assertTrue(upperRightKing.isValidMove(8, 7));
         assertTrue(upperRightKing.isValidMove(g, 8));
@@ -271,7 +271,7 @@ public class KingTest {
     public void confirmAllMovesValidInCenter()
     {
         King centeredKing = new King(c, 3, ChessPieceColor.WHITE);
-        assertFalse(centeredKing.inValidStartingPosition());
+        assertFalse(centeredKing.atValidStartingPosition());
         // go left
         assertTrue(centeredKing.isValidMove(b, 3));
         // go up-left
@@ -298,7 +298,7 @@ public class KingTest {
     public void moveFromBlackStart()
     {
         King blackWanderer = new King(8, 5, ChessPieceColor.BLACK);
-        assertTrue(blackWanderer.inValidStartingPosition());
+        assertTrue(blackWanderer.atValidStartingPosition());
         // Try to go up, but fail
         assertFalse(blackWanderer.move(9, 5));
         // Go down
@@ -350,7 +350,7 @@ public class KingTest {
     public void moveFromLowerLeftCorner()
     {
         King whiteTraveler = new King(1, 1, ChessPieceColor.WHITE);
-        assertFalse(whiteTraveler.inValidStartingPosition());
+        assertFalse(whiteTraveler.atValidStartingPosition());
         // Try to go down-left, but fail
         assertFalse(whiteTraveler.move(0, 0));
         // Try to go left, but fail

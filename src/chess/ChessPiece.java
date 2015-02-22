@@ -143,8 +143,10 @@ public abstract class ChessPiece implements Cloneable {
 
     /**
      * Determine if the piece is in a valid starting position.
+     * @return true if the piece is where it could be at the beginning of a
+     * chess game
      */
-    public abstract boolean inValidStartingPosition();
+    public abstract boolean atValidStartingPosition();
 
     /**
      * Determine if the chess piece can capture a piece at another place on the

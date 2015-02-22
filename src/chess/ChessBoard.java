@@ -291,7 +291,7 @@ public class ChessBoard {
         if (!(king instanceof King))
             return false;
         // King can't have moved from its starting position
-        if (!king.inValidStartingPosition() || king.hasMoved())
+        if (!king.atValidStartingPosition() || king.hasMoved())
             return false;
         // king and rook must be on same row
         if (kingRow != newRow)

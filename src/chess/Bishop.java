@@ -30,7 +30,7 @@ public class Bishop extends ChessPiece {
      * Determine if the Bishop is in a valid starting position.
      */
     @Override
-    public boolean inValidStartingPosition()
+    public boolean atValidStartingPosition()
     {
         if ((getColor() == ChessPieceColor.WHITE) && (getRow() == 1)) {
             return (getColumn() == 3) || (getColumn() == 6);

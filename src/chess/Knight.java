@@ -30,7 +30,7 @@ public class Knight extends ChessPiece {
      * Determine if the Knight is in a valid starting position.
      */
     @Override
-    public boolean inValidStartingPosition()
+    public boolean atValidStartingPosition()
     {
         boolean isCorrectColumn = (getColumn() == 2) || (getColumn() == 7);
         if ((getColor() == ChessPieceColor.WHITE) && (getRow() == 1))

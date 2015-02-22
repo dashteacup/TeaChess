@@ -31,7 +31,7 @@ public class Rook extends ChessPiece {
      * Determine if the Rook is in a valid starting position.
      */
     @Override
-    public boolean inValidStartingPosition()
+    public boolean atValidStartingPosition()
     {
         if (!isOnTheBoard(getRow(), getColumn()))
             return false;
