@@ -4,11 +4,12 @@ package chess;
  * Represents the chess board itself.
  */
 public class ChessBoard {
+
     /**
      * The number of rows/columns on the chess board. Since the chess board is
      * square, these are the same.
      */
-    private static final int BOARD_SIZE = 8;
+    public static final int BOARD_SIZE = 8;
 
     /**
      * The board held in a 2 dimensional array; this is one greater than the

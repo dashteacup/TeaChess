@@ -208,7 +208,7 @@ public class ChessController implements ActionListener {
      */
     private int viewRowToModel(int viewRow)
     {
-        return 8 - viewRow;
+        return ChessBoard.BOARD_SIZE - viewRow;
     }
 
     /**
@@ -228,8 +228,8 @@ public class ChessController implements ActionListener {
     {
         int selectedRow = currentlySelectedButton.getRow();
         int selectedColumn = currentlySelectedButton.getColumn();
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
+        for (int row = 0; row < ChessBoard.BOARD_SIZE; row++) {
+            for (int col = 0; col < ChessBoard.BOARD_SIZE; col++) {
                 if (modelBoard.isValidMove(viewRowToModel(selectedRow), viewColumnToModel(selectedColumn),
                                            viewRowToModel(row),         viewColumnToModel(col))) {
                     view.getSpace(row, col).highlightSpace();
@@ -243,8 +243,8 @@ public class ChessController implements ActionListener {
      */
     private void clearMarkedSpaces()
     {
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
+        for (int row = 0; row < ChessBoard.BOARD_SIZE; row++) {
+            for (int col = 0; col < ChessBoard.BOARD_SIZE; col++) {
                 view.getSpace(row, col).deselectSpace();
             }
         }

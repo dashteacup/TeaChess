@@ -50,12 +50,12 @@ public class ChessGameView {
     /**
      * Number of rows on a chess board.
      */
-    private static final int CHESS_BOARD_ROWS = 8;
+    private static final int CHESS_BOARD_ROWS = ChessBoard.BOARD_SIZE;
 
     /**
      * Number of columns on a chess board.
      */
-    private static final int CHESS_BOARD_COLUMNS = 8;
+    private static final int CHESS_BOARD_COLUMNS = ChessBoard.BOARD_SIZE;
 
     /**
      * Color of the lighter spaces on the chess board.
