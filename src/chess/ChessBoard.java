@@ -18,6 +18,19 @@ public class ChessBoard {
     private ChessPiece[][] board = new ChessPiece[BOARD_SIZE + 1][BOARD_SIZE + 1];
 
     /**
+     * Determine if a given position is on the ChessBoard.
+     * @param row to inspect (1-8 is valid)
+     * @param column to inspect (1-8 is valid)
+     * @return true if the position is on the board, false otherwise.
+     */
+    public static boolean isOnTheBoard(int row, int column)
+    {
+        boolean validRow = (1 <= row && row <= 8);
+        boolean validColumn = (1 <= column && column <= 8);
+        return validRow && validColumn;
+    }
+
+    /**
      * Build new standard sized chess board with all chess pieces in their
      * starting positions. Currently, empty elements are set to null, I
      * think I need to do something better than that.
@@ -640,18 +653,5 @@ public class ChessBoard {
                 return false;
         }
         return true;
-    }
-
-    /**
-     * Determine if a given position is on the ChessBoard.
-     * @param row to inspect (1-8 is valid)
-     * @param column to inspect (1-8 is valid)
-     * @return true if the position is on the board, false otherwise.
-     */
-    private boolean isOnTheBoard(int row, int column)
-    {
-        boolean validRow = (1 <= row && row <= 8);
-        boolean validColumn = (1 <= column && column <= 8);
-        return validRow && validColumn;
     }
 }

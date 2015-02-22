@@ -268,9 +268,7 @@ public abstract class ChessPiece implements Cloneable {
      */
     protected boolean isOnTheBoard(int row, int column)
     {
-        boolean validRow = (row >= 1 && row <= 8);
-        boolean validColumn = (column >= 1 && column <= 8);
-        return validRow && validColumn;
+        return ChessBoard.isOnTheBoard(row, column);
     }
 
     /**
