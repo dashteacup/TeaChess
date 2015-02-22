@@ -67,8 +67,9 @@ public abstract class ChessPiece implements Cloneable {
 
     /**
      * Determine if a position is on the board and not the same as the chess
-     * piece's current position. Does not take into account the placement
-     * of other pieces.
+     * piece's current position. Subclasses should call the superclass's
+     * isValidMove to check for those conditions. Does not take into account the
+     * placement of other pieces.
      * @param newRow row you want to move to (1-8)
      * @param newColumn column you want move to (1-8)
      * @return true if this is a valid move for this chess piece

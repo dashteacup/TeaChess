@@ -71,6 +71,7 @@ public class Pawn extends ChessPiece {
     /**
      * Determine if the Pawn can capture a piece at another location. Doesn't
      * check to see if there is a chess piece at the indicated location.
+     * Doesn't support en passant.
      * @param enemyRow row of the piece to capture
      * @param enemyColumn column of the piece to capture
      * @return true if the Pawn can capture the piece at the indicated location,

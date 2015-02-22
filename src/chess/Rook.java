@@ -45,7 +45,8 @@ public class Rook extends ChessPiece {
 
     /**
      * Determine if a move follows the standard movement pattern for Rooks.
-     * Doesn't account for the presence of other pieces.
+     * Doesn't account for the presence of other pieces, so it doesn't support
+     * castling.
      */
     @Override
     public boolean isValidMove(int newRow, int newColumn)

@@ -43,8 +43,8 @@ public class King extends ChessPiece {
 
     /**
      * Determine if the move follows the standard movement pattern for Kings.
-     * Doesn't account for other pieces. Doesn't worry about the "Check"
-     * condition.
+     * Doesn't account for other pieces, so it doesn't support castling. Doesn't
+     * worry about the "Check" condition.
      */
     @Override
     public boolean isValidMove(int row, int column)
