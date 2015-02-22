@@ -49,7 +49,7 @@ public class Pawn extends ChessPiece {
     @Override
     public boolean isValidMove(int row, int column)
     {
-        if (!super.isValidMove(row, column))
+        if (isOffTheBoardOrToSelf(row, column))
             return false;
         // no capturing
         if (getColumn() != column)
@@ -80,9 +80,7 @@ public class Pawn extends ChessPiece {
     @Override
     public boolean canCapture(int enemyRow, int enemyColumn)
     {
-        if (!bothPlacesOnTheBoard(enemyRow, enemyColumn))
-            return false;
-        if (sourceAndDestinationSame(enemyRow, enemyColumn))
+        if (isOffTheBoardOrToSelf(enemyRow, enemyColumn))
             return false;
         boolean isMovingForward = false;
         if (getColor() == ChessPieceColor.WHITE)

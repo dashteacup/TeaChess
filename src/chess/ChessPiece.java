@@ -66,19 +66,13 @@ public abstract class ChessPiece implements Cloneable {
     }
 
     /**
-     * Determine if a position is on the board and not the same as the chess
-     * piece's current position. Subclasses should call the superclass's
-     * isValidMove to check for those conditions. Does not take into account the
-     * placement of other pieces.
-     * @param newRow row you want to move to (1-8)
-     * @param newColumn column you want move to (1-8)
+     * Determine if the chess piece can move to the given position. Does not
+     * take into account the placement of other pieces.
+     * @param newRow you want to move to (1-8)
+     * @param newColumn you want move to (1-8)
      * @return true if this is a valid move for this chess piece
      */
-    public boolean isValidMove(int newRow, int newColumn)
-    {
-        return bothPlacesOnTheBoard(newRow, newColumn) &&
-               (!sourceAndDestinationSame(newRow, newColumn));
-    }
+    public abstract boolean isValidMove(int newRow, int newColumn);
 
     /**
      * Determine if the chess piece can move to a new position on the
@@ -275,10 +269,26 @@ public abstract class ChessPiece implements Cloneable {
     }
 
     /**
+     * Determine if a move will take a chess piece off the board, use a
+     * chess piece already off the board, or move a chess piece to
+     * itself.
+     * @param row to move to
+     * @param column to move to
+     * @return true if either position is off the board or the piece
+     * moves to itself
+     */
+    protected boolean isOffTheBoardOrToSelf(int row, int column)
+    {
+        return !bothPlacesOnTheBoard(row, column)
+               ||
+               sourceAndDestinationSame(row, column);
+    }
+
+    /**
      * Determine if the piece's current position and it's desired
      * destination both reside within the chess board.
      */
-    protected boolean bothPlacesOnTheBoard(int newRow, int newColumn)
+    private boolean bothPlacesOnTheBoard(int newRow, int newColumn)
     {
         return isOnTheBoard(newRow, newColumn) &&
                isOnTheBoard(getRow(), getColumn());
@@ -288,7 +298,7 @@ public abstract class ChessPiece implements Cloneable {
      * Determine if the piece's destination and source are the same.
      * Chess pieces can't make no-op moves.
      */
-    protected boolean sourceAndDestinationSame(int newRow, int newColumn)
+    private boolean sourceAndDestinationSame(int newRow, int newColumn)
     {
         return (getRow() == newRow) && (getColumn() == newColumn);
     }

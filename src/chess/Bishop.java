@@ -48,7 +48,7 @@ public class Bishop extends ChessPiece {
     @Override
     public boolean isValidMove(int row, int column)
     {
-        if (!super.isValidMove(row, column))
+        if (isOffTheBoardOrToSelf(row, column))
             return false;
         int deltaRow = Math.abs(getRow() - row);
         int deltaColumn = Math.abs(getColumn() - column);

@@ -51,7 +51,7 @@ public class Rook extends ChessPiece {
     @Override
     public boolean isValidMove(int newRow, int newColumn)
     {
-        if (!super.isValidMove(newRow, newColumn))
+        if (isOffTheBoardOrToSelf(newRow, newColumn))
             return false;
         boolean rowMatch = (newRow == getRow());
         boolean columnMatch = (newColumn == getColumn());

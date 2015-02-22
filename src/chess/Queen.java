@@ -45,7 +45,7 @@ public class Queen extends ChessPiece {
     @Override
     public boolean isValidMove(int row, int column)
     {
-        if (!super.isValidMove(row, column))
+        if (isOffTheBoardOrToSelf(row, column))
             return false;
         // up-down like rook
         if (getRow() == row)
