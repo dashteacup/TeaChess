@@ -5,15 +5,16 @@ package chess;
  */
 public class ChessBoard {
     /**
-     * Set to nine so I can index from 1-8 normally. The [0] element
-     * will always be empty.
+     * The number of rows/columns on the chess board. Since the chess board is
+     * square, these are the same.
      */
-    private static final int BOARD_SIZE = 9;
+    private static final int BOARD_SIZE = 8;
 
     /**
-     * The board held in a 2 dimensional array;
+     * The board held in a 2 dimensional array; this is one greater than the
+     * board so that indexing can start from 1 as it does in chess.
      */
-    private ChessPiece[][] board = new ChessPiece[BOARD_SIZE][BOARD_SIZE];
+    private ChessPiece[][] board = new ChessPiece[BOARD_SIZE + 1][BOARD_SIZE + 1];
 
     /**
      * Build new standard sized chess board with all chess pieces in their
@@ -34,12 +35,12 @@ public class ChessBoard {
         board[row][col] = new Knight(row, col++, ChessPieceColor.WHITE);
         board[row][col] = new Rook  (row, col++, ChessPieceColor.WHITE);
         row = 2;
-        for (col = 1; col < BOARD_SIZE; col++)
+        for (col = 1; col <= BOARD_SIZE; col++)
             board[row][col] = new Pawn(row, col, ChessPieceColor.WHITE);
 
         // init black side
         row = 7;
-        for (col = 1; col < BOARD_SIZE; col++)
+        for (col = 1; col <= BOARD_SIZE; col++)
             board[row][col] = new Pawn(row, col, ChessPieceColor.BLACK);
         row = 8;
         col = 1;
@@ -62,8 +63,8 @@ public class ChessBoard {
     {
         if (sourceBoard == null)
             return; // all elements null by default
-        for (int row = 1; row < BOARD_SIZE; row++) {
-            for (int col = 1; col < BOARD_SIZE; col++) {
+        for (int row = 1; row <= BOARD_SIZE; row++) {
+            for (int col = 1; col <= BOARD_SIZE; col++) {
                 ChessPiece piece = sourceBoard.getPiece(row, col);
                 if (piece != null) {
                     try {
@@ -455,8 +456,8 @@ public class ChessBoard {
     public void printBoard()
     {
         System.out.println("________________");
-        for (int row = BOARD_SIZE - 1; row >= 1; row--) {
-            for (int col = 1; col < BOARD_SIZE; col++) {
+        for (int row = BOARD_SIZE; row >= 1; row--) {
+            for (int col = 1; col <= BOARD_SIZE; col++) {
                 ChessPiece piece = getPiece(row, col);
                 String print = "x";
                 if (piece instanceof King) {
@@ -488,8 +489,8 @@ public class ChessBoard {
     private boolean hasNoValidMoves(ChessPieceColor currentPlayer)
     {
         // check every space for my pieces
-        for (int row = 1; row < BOARD_SIZE; row++) {
-            for (int col = 1; col < BOARD_SIZE; col++) {
+        for (int row = 1; row <= BOARD_SIZE; row++) {
+            for (int col = 1; col <= BOARD_SIZE; col++) {
                 ChessPiece pieceToCheck = getPiece(row, col);
                 // if it is one of my chess pieces
                 if (pieceToCheck != null && pieceToCheck.getColor() == currentPlayer) {
@@ -509,8 +510,8 @@ public class ChessBoard {
      */
     private boolean hasValidMoves(ChessPiece piece)
     {
-        for (int row = 1; row < BOARD_SIZE; row++) {
-            for (int col = 1; col < BOARD_SIZE; col++) {
+        for (int row = 1; row <= BOARD_SIZE; row++) {
+            for (int col = 1; col <= BOARD_SIZE; col++) {
                 if (isValidMove(piece.getRow(), piece.getColumn(), row, col))
                     return true;
             }
