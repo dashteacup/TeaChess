@@ -173,8 +173,8 @@ public class KingTest {
     @Test
     public void isValidMove_UpTwoSpaces_False()
     {
-        King king = new King(e, 1, ChessPieceColor.WHITE);
-        assertFalse(king.isValidMove(e, 3));
+        King king = new King(a, 1, ChessPieceColor.WHITE);
+        assertFalse(king.isValidMove(a, 3));
     }
 
     /**
