@@ -255,7 +255,7 @@ public class ChessBoard {
     {
         ChessPiece movingPiece = getPiece(oldRow, oldColumn);
         if (movingPiece != null) {
-            movingPiece.forceMove(newRow, newColumn);
+            movingPiece.move(newRow, newColumn);
             board[newRow][newColumn] = movingPiece;
             board[oldRow][oldColumn] = null;
         }

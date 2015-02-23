@@ -95,7 +95,11 @@ public abstract class ChessPiece implements Cloneable {
      */
     public void move(int newRow, int newColumn)
     {
-        forceMove(newRow, newColumn);
+        if (!isOnTheBoard(newRow, newColumn))
+            throw new OffTheChessBoardException(newRow, newColumn);
+        hasMoved = true;
+        this.row = newRow;
+        this.column = newColumn;
     }
 
     /**
@@ -108,21 +112,6 @@ public abstract class ChessPiece implements Cloneable {
     public void move(File file, int rank)
     {
         move(rank, file.getColumn());
-    }
-
-    /**
-     * Move the chess piece to a new place on the board without confirming that
-     * it's a valid move.
-     * @param row to move to (1-8)
-     * @param column to move to (1-8)
-     */
-    public void forceMove(int row, int column)
-    {
-        if (!isOnTheBoard(row, column))
-            throw new OffTheChessBoardException(row, column);
-        hasMoved = true;
-        this.row = row;
-        this.column = column;
     }
 
     /**
