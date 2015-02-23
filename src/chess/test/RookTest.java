@@ -150,32 +150,4 @@ public class RookTest {
         // jump to upper left corner
         assertFalse(wrong.isValidMove(a, 8));
     }
-
-    /**
-     * Walk a Rook around the board, confirming that valid moves succeed and
-     * invalid ones fail.
-     */
-    @Test
-    public void walkLeftWhiteRookFromStart()
-    {
-        Rook white = new Rook(1, 1, ChessPieceColor.WHITE);
-        // right 4
-        assertTrue(white.move(1, 5));
-        // up 3
-        assertTrue(white.move(4, 5));
-        // can't move diagonally
-        assertFalse(white.move(5, 6));
-        // up 3
-        assertTrue(white.move(7, 5));
-        // no going out of bounds
-        assertFalse(white.move(9, 6));
-        // all the way right
-        assertTrue(white.capture(h, 7));
-        // down 1
-        assertTrue(white.move(h, 6));
-        // can't move like knight
-        assertFalse(white.capture(f, 5));
-        // all the way left
-        assertTrue(white.capture(a, 6));
-    }
 }

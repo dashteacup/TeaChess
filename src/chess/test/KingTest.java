@@ -163,6 +163,20 @@ public class KingTest {
         assertFalse(king.inStartingPosition());
     }
 
+    @Test
+    public void isValidMove_LeftTwoSpaces_False()
+    {
+        King king = new King(e, 1, ChessPieceColor.WHITE);
+        assertFalse(king.isValidMove(c, 1));
+    }
+
+    @Test
+    public void isValidMove_UpTwoSpaces_False()
+    {
+        King king = new King(e, 1, ChessPieceColor.WHITE);
+        assertFalse(king.isValidMove(e, 3));
+    }
+
     /**
      * Confirm that single step moves from the white king's starting position
      * are properly recognized as valid/invalid.
@@ -296,148 +310,6 @@ public class KingTest {
         assertTrue(centeredKing.isValidMove(c, 2));
         // go down-left
         assertTrue(centeredKing.isValidMove(b, 2));
-    }
-
-    /**
-     * Walk a black king around the board. Confirm that valid moves succeed,
-     * invalid moves fail, and the state is updated correctly.
-     */
-    @Test
-    public void moveFromBlackStart()
-    {
-        King blackWanderer = new King(8, 5, ChessPieceColor.BLACK);
-        assertTrue(blackWanderer.inStartingPosition());
-        // Try to go up, but fail
-        assertFalse(blackWanderer.move(9, 5));
-        // Go down
-        assertTrue(blackWanderer.move(7, 5));
-        assertEquals(e, blackWanderer.getFile());
-        assertEquals(7, blackWanderer.getRank());
-        // Go down-left
-        assertTrue(blackWanderer.move(6, 4));
-        assertEquals(d, blackWanderer.getFile());
-        assertEquals(6, blackWanderer.getRank());
-        // Go up
-        assertTrue(blackWanderer.move(7, 4));
-        assertEquals(d, blackWanderer.getFile());
-        assertEquals(7, blackWanderer.getRank());
-        // Go left
-        assertTrue(blackWanderer.move(7, 3));
-        assertEquals(c, blackWanderer.getFile());
-        assertEquals(7, blackWanderer.getRank());
-        // Go left
-        assertTrue(blackWanderer.move(7, 2));
-        assertEquals(b, blackWanderer.getFile());
-        assertEquals(7, blackWanderer.getRank());
-        // Go left
-        assertTrue(blackWanderer.move(7, 1));
-        assertEquals(a, blackWanderer.getFile());
-        assertEquals(7, blackWanderer.getRank());
-        // Try to go left, but fail
-        assertFalse(blackWanderer.move(7, 0));
-        // Try to go down-left, but fail
-        assertFalse(blackWanderer.move(6, 0));
-        // go down
-        assertTrue(blackWanderer.move(6, 1));
-        assertEquals(a, blackWanderer.getFile());
-        assertEquals(6, blackWanderer.getRank());
-        // go down-right
-        assertTrue(blackWanderer.move(b, 5));
-        // go down
-        assertTrue(blackWanderer.move(b, 4));
-        assertEquals(4, blackWanderer.getRow());
-        assertEquals(2, blackWanderer.getColumn());
-    }
-
-    /**
-     * Walk a white king around the board, starting from the lower left corner.
-     * Confirm that valid moves succeed, invalid moves fail, and the state is
-     * updated correctly.
-     */
-    @Test
-    public void moveFromLowerLeftCorner()
-    {
-        King whiteTraveler = new King(1, 1, ChessPieceColor.WHITE);
-        assertFalse(whiteTraveler.inStartingPosition());
-        // Try to go down-left, but fail
-        assertFalse(whiteTraveler.move(0, 0));
-        // Try to go left, but fail
-        assertFalse(whiteTraveler.move(1, 0));
-        // Go right
-        assertTrue(whiteTraveler.move(1, 2));
-        // Go right
-        assertTrue(whiteTraveler.move(1, 3));
-        // Go right
-        assertTrue(whiteTraveler.move(1, 4));
-        assertEquals(d, whiteTraveler.getFile());
-        assertEquals(1, whiteTraveler.getRank());
-        // Go up
-        assertTrue(whiteTraveler.move(2, 4));
-        assertEquals(d, whiteTraveler.getFile());
-        assertEquals(2, whiteTraveler.getRank());
-        // Go up-right
-        assertTrue(whiteTraveler.move(3, 5));
-        assertEquals(e, whiteTraveler.getFile());
-        assertEquals(3, whiteTraveler.getRank());
-        // go up-right
-        assertTrue(whiteTraveler.move(f, 4));
-        assertEquals(f, whiteTraveler.getFile());
-        assertEquals(4, whiteTraveler.getRank());
-        // go right
-        assertTrue(whiteTraveler.move(g, 4));
-        // go up-right
-        assertTrue(whiteTraveler.move(h, 5));
-        assertEquals(5, whiteTraveler.getRow());
-        assertEquals(8, whiteTraveler.getColumn());
-        // go right, but fail
-        assertFalse(whiteTraveler.move(5, 9));
-        // go up
-        assertTrue(whiteTraveler.move(h, 6));
-        assertEquals(h, whiteTraveler.getFile());
-        assertEquals(6, whiteTraveler.getRank());
-    }
-
-    /**
-     * Test that a king behaves correctly when given invalid but in-bounds moves.
-     */
-    @Test
-    public void moveCrazyWrong()
-    {
-        King confusedKing = new King(4, 4, ChessPieceColor.WHITE);
-        // Can't cover two spaces in one move
-        assertFalse(confusedKing.move(4, 6));
-        // Go right
-        assertTrue(confusedKing.move(4, 5));
-        // Can't jump to random places
-        assertFalse(confusedKing.move(1, 1));
-        assertFalse(confusedKing.move(b, 8));
-        assertFalse(confusedKing.move(8, 8));
-        assertFalse(confusedKing.move(h, 6));
-        // Go up-right (still at (4, 5))
-        assertTrue(confusedKing.move(5, 6));
-        // Go right
-        assertTrue(confusedKing.move(5, 7));
-        // Go down-right
-        assertTrue(confusedKing.move(4, 8));
-        // Can't skip 3 spaces
-        assertFalse(confusedKing.move(7, 8));
-        // Try to go right, but fail
-        assertFalse(confusedKing.move(4, 9));
-        // Can't move to yourself
-        assertFalse(confusedKing.move(4, 8));
-        // Can't move like a bishop
-        assertFalse(confusedKing.move(d, 8));
-        // Go up-left
-        assertTrue(confusedKing.move(g, 5));
-        // Can't move like a knight
-        assertFalse(confusedKing.move(e, 4));
-        // Go up
-        assertTrue(confusedKing.move(g, 6));
-        // Can't move like a rook
-        assertFalse(confusedKing.move(a, 6));
-        // Make sure we are in the right place
-        assertEquals(6, confusedKing.getRow());
-        assertEquals(7, confusedKing.getColumn());
     }
 
 }

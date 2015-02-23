@@ -183,39 +183,4 @@ public class BishopTest {
         // move to right bishop's spot
         assertFalse(wrong.isValidMove(f, 1));
     }
-
-    /**
-     * Walk the right white bishop around the board from its starting position.
-     * Confirm that valid moves succeed, invalid moves fail, and the state is
-     * updated correctly.
-     */
-    @Test
-    public void walkFromRightWhiteBishop()
-    {
-        Bishop traveler = new Bishop(f, 1, ChessPieceColor.WHITE);
-        // move up-right to edge
-        assertTrue(traveler.move(h, 3));
-        // move up-left to edge
-        assertTrue(traveler.move(c, 8));
-        // move down-left to edge
-        assertTrue(traveler.move(a, 6));
-        assertEquals(6, traveler.getRow());
-        assertEquals(1, traveler.getColumn());
-        // bad move like rook
-        assertFalse(traveler.move(f, 6));
-        // move down-right two
-        assertTrue(traveler.move(c, 4));
-        // bad move like knight up-right
-        assertFalse(traveler.move(d, 6));
-        // move down-left one
-        assertTrue(traveler.move(b, 3));
-        // move down-left one
-        assertTrue(traveler.move(a, 2));
-        // bad move up like king
-        assertFalse(traveler.move(a, 3));
-        assertEquals(a, traveler.getFile());
-        assertEquals(2, traveler.getRank());
-        // move up-right three
-        assertTrue(traveler.move(d, 5));
-    }
 }

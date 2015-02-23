@@ -186,33 +186,4 @@ public class QueenTest {
         // move to self
         assertFalse(wrong.isValidMove(4, 6));
     }
-
-    /**
-     * Walk a white Queen around the board from its starting position,
-     * confirming that valid moves succeed and invalid ones fail.
-     */
-    @Test
-    public void walkWhiteQueenFromStart()
-    {
-        Queen walker = new Queen(d, 1, ChessPieceColor.WHITE);
-        assertTrue(walker.inStartingPosition());
-        // up 3
-        assertTrue(walker.move(d, 4));
-        // down-left 2
-        assertTrue(walker.move(f, 2));
-        // up-right 2
-        assertTrue(walker.move(h, 4));
-        // bad, jump to upper left corner
-        assertFalse(walker.move(a, 8));
-        // capture left 6
-        assertTrue(walker.capture(b, 4));
-        // up 2
-        assertTrue(walker.move(b, 6));
-        // bad, knight move
-        assertFalse(walker.capture(d, 5));
-        // up-right 1
-        assertTrue(walker.move(c, 7));
-        // down-right 5
-        assertTrue(walker.capture(h, 2));
-    }
 }

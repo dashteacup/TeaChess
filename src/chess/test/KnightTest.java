@@ -202,41 +202,6 @@ public class KnightTest {
     }
 
     /**
-     * Walk the right black knight around the board from its starting position.
-     * Confirm that valid moves succeed, invalid moves fail, and the state is
-     * updated properly.
-     */
-    @Test
-    public void walkFromRightBlackKnight()
-    {
-        Knight traveler = new Knight(g, 8, ChessPieceColor.BLACK);
-        assertTrue(traveler.inStartingPosition());
-        // down 2, left 1
-        assertTrue(traveler.move(f, 6));
-        // down 1, left 2
-        assertTrue(traveler.move(d, 5));
-        // down 2, right 1
-        assertTrue(traveler.move(e, 3));
-        assertEquals(e, traveler.getFile());
-        assertEquals(3, traveler.getRank());
-        // bad move, up 1, left 1
-        assertFalse(traveler.move(d, 4));
-        // bad move, up 4
-        assertFalse(traveler.move(d, 8));
-        // down 1, left 2
-        assertTrue(traveler.move(c, 2));
-        // down 1, right 2 (this is where the king is)
-        assertTrue(traveler.move(e, 1));
-        assertEquals(e, traveler.getFile());
-        assertEquals(5, traveler.getColumn());
-        assertEquals(1, traveler.getRow());
-        // bad move, all the way to the right
-        assertFalse(traveler.move(h, 1));
-        // up one, right 2
-        assertTrue(traveler.move(g, 2));
-    }
-
-    /**
      * Confirm that the capture functions work properly. Knights capture the
      * same way they move.
      */

@@ -88,27 +88,26 @@ public abstract class ChessPiece implements Cloneable {
     }
 
     /**
-     * Move the chess piece to a new place on the board. If the new place is not
-     * a valid way to move, then do not move the piece.
-     * @return true if the piece moves to the new place, false otherwise.
+     * Move the chess piece to a new place on the board. Moves without
+     * considering chess piece type or the positions of other pieces.
+     * @param newRow to move to
+     * @param newColumn to move to
      */
-    public boolean move(int newRow, int newColumn)
+    public void move(int newRow, int newColumn)
     {
-        if (isValidMove(newRow, newColumn)) {
-            forceMove(newRow, newColumn);
-            return true;
-        }
-        return false;
+        forceMove(newRow, newColumn);
     }
 
     /**
-     * Move the chess piece to a new place on the board. If the new place is not
-     * a valid way to move, then do not move the piece.
-     * @return true if the piece moves to the new place, false otherwise.
+     * Move the chess piece to a new place on the board given in algebraic chess
+     * notation. Moves without considering chess piece type or the positions of
+     * other pieces.
+     * @param file to move to
+     * @param rank to move to
      */
-    public boolean move(File file, int rank)
+    public void move(File file, int rank)
     {
-        return move(rank, file.getColumn());
+        move(rank, file.getColumn());
     }
 
     /**
