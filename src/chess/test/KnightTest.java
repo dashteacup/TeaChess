@@ -214,15 +214,17 @@ public class KnightTest {
         // bad move, up 1, right 1
         assertFalse(white.canCapture(e, 5));
         // up 1, right 2
-        assertTrue(white.capture(f, 5));
+        assertTrue(white.canCapture(f, 5));
+        white.move(f, 5);
         // bad move, right 2
-        assertFalse(white.capture(h, 5));
+        assertFalse(white.canCapture(h, 5));
         // down 2, right 1
-        assertTrue(white.capture(g, 3));
+        assertTrue(white.canCapture(g, 3));
+        white.move(g, 3);
         // bad move, lower left corner
-        assertFalse(white.capture(a, 1));
+        assertFalse(white.canCapture(a, 1));
         // bad move, up 3, left 1
-        assertFalse(white.capture(f, 6));
+        assertFalse(white.canCapture(f, 6));
         assertEquals(g, white.getFile());
         assertEquals(3, white.getRank());
     }

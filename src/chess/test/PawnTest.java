@@ -175,13 +175,6 @@ public class PawnTest {
         assertFalse(black.canCapture(a, 8));
         // can't capture back-right
         assertFalse(black.canCapture(b, 8));
-
-        // actually capture right
-        assertTrue(black.capture(6, 2));
-        // can't capture forwards
-        assertFalse(black.capture(5, 2));
-        // capture left
-        assertTrue(black.capture(a, 5));
     }
 
     /**
@@ -197,17 +190,6 @@ public class PawnTest {
         assertFalse(white.canCapture(1, 7));
         // can't capture like bishop
         assertFalse(white.canCapture(4, 6));
-
-        // let's actually capture something (left)
-        assertTrue(white.capture(3, 7));
-        // capture right
-        assertTrue(white.capture(4, 8));
-        // can't capture forwards
-        assertFalse(white.capture(5, 8));
-        // can't capture back-left
-        assertFalse(white.capture(3, 7));
-        // capture left
-        assertTrue(white.capture(g, 5));
     }
 
     /**

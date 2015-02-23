@@ -151,42 +151,6 @@ public abstract class ChessPiece implements Cloneable {
     }
 
     /**
-     * "Capture" an enemy piece at the enemy row and column. Doesn't actually
-     * handle the destruction of a piece and it's removal from the board--only
-     * moves this piece to the other's place. Also doesn't check to see if there
-     * is actually a chess piece at the indicated position. If this is not a
-     * valid way to capture, the piece will not be moved.
-     * @param enemyRow row of the piece to capture
-     * @param enemyColumn column of the piece to capture
-     * @return true if the capture succeeds, false if it cannot be made.
-     */
-    public boolean capture(int enemyRow, int enemyColumn)
-    {
-        if (canCapture(enemyRow, enemyColumn)) {
-            this.row = enemyRow;
-            this.column = enemyColumn;
-            hasMoved = true;
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * "Capture" an enemy piece at the enemy file and rank. Doesn't actually
-     * handle the destruction of a piece and it's removal from the board--only
-     * moves this piece to the other's place. Also doesn't check to see if there
-     * is actually a chess piece at the indicated position. If this is not a
-     * valid way to capture, the piece will not be moved.
-     * @param enemyFile file of the piece to capture
-     * @param enemyRank rank of the piece to capture
-     * @return true if the capture succeeds, false if it cannot be made.
-     */
-    public boolean capture(File enemyFile, int enemyRank)
-    {
-        return capture(enemyRank, enemyFile.getColumn());
-    }
-
-    /**
      * Get the chess piece's row aka 'rank' on the board.
      * Rows begin numbering from bottom to top.
      */

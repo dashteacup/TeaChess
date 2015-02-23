@@ -221,10 +221,7 @@ public class ChessBoard {
     {
         ChessPiece movingPiece = getPiece(oldRow, oldColumn);
         if (movingPiece != null) {
-            if (movingPiece.canCapture(newRow, newColumn))
-                movingPiece.capture(newRow, newColumn);
-            else
-                movingPiece.move(newRow, newColumn);
+            movingPiece.move(newRow, newColumn);
             board[newRow][newColumn] = movingPiece;
             board[oldRow][oldColumn] = null;
         }
