@@ -192,7 +192,7 @@ public class ChessBoard {
             return false;
         // Will this move put the king in check?
         ChessBoard potential = new ChessBoard(this);
-        potential.forceMove(oldRow, oldColumn, newRow, newColumn);
+        potential.move(oldRow, oldColumn, newRow, newColumn);
         return potential.hasKing(playerColor) && !potential.inCheck(playerColor);
     }
 
@@ -241,38 +241,6 @@ public class ChessBoard {
     }
 
     /**
-     * Move a ChessPiece from one position to another without confirming that
-     * it's a valid chess move. Does nothing if there is no piece to move.
-     * @param oldRow of the piece to move (1-8)
-     * @param oldColumn of the piece to move (1-8)
-     * @param newRow to move to (1-8)
-     * @param newColumn to move to (1-8)
-     */
-    public void forceMove(int oldRow, int oldColumn, int newRow, int newColumn)
-    {
-        ChessPiece movingPiece = getPiece(oldRow, oldColumn);
-        if (movingPiece != null) {
-            movingPiece.move(newRow, newColumn);
-            board[newRow][newColumn] = movingPiece;
-            board[oldRow][oldColumn] = null;
-        }
-    }
-
-    /**
-     * Move a ChessPiece from one position to another in algebraic chess
-     * notation without confirming that it's a valid chess move. Does nothing if
-     * there is no piece to move.
-     * @param oldFile of the piece to move (a-h)
-     * @param oldRank of the piece to move (1-8)
-     * @param newFile to move to (a-h)
-     * @param newRank to move to (1-8)
-     */
-    public void forceMove(File oldFile, int oldRank, File newFile, int newRank)
-    {
-        forceMove(oldRank, oldFile.getColumn(), newRank, newFile.getColumn());
-    }
-
-    /**
      * Determine if a king can castle to the given location.
      * @param kingRow of the king (1-8)
      * @param kingColumn of the king (1-8)
@@ -315,9 +283,9 @@ public class ChessBoard {
         // so look ahead two spaces.
         int stepDirection = (newColumn == 3) ? -1 : 1; // -1 = left, 1 = right
         ChessBoard oneStep = new ChessBoard(this);
-        oneStep.forceMove(kingRow, kingColumn, newRow, kingColumn + stepDirection);
+        oneStep.move(kingRow, kingColumn, newRow, kingColumn + stepDirection);
         ChessBoard twoSteps = new ChessBoard(oneStep);
-        twoSteps.forceMove(kingRow, kingColumn + stepDirection, newRow, newColumn);
+        twoSteps.move(kingRow, kingColumn + stepDirection, newRow, newColumn);
         return !( oneStep.inCheck(king.getColor()) || twoSteps.inCheck(king.getColor()) );
     }
 
@@ -349,11 +317,11 @@ public class ChessBoard {
         if (!canCastle(kingRow, kingColumn, newRow, newColumn))
             return; // do nothing
         // forced because castling isn't handled in King.isValidMove()
-        forceMove(kingRow, kingColumn, newRow, newColumn); // move king
+        move(kingRow, kingColumn, newRow, newColumn); // move king
         if (newColumn == 7) // right castle
-            forceMove(newRow, 8, newRow, 6);
+            move(newRow, 8, newRow, 6);
         else // left castle
-            forceMove(newRow, 1, newRow, 4);
+            move(newRow, 1, newRow, 4);
     }
 
     /**

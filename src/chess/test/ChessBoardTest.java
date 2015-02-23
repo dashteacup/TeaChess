@@ -468,18 +468,18 @@ public class ChessBoardTest {
     }
 
     /**
-     * Confirm that you can use the forceMove method to illegally move a piece
+     * Confirm that you can use the move method to illegally move a piece
      * to any place on the board.
      */
     @Test
-    public void forceMove()
+    public void move_ToArbitrarySpaceOnBoard_Works()
     {
         // try to move King to upper left corner from start position
         assertFalse(board.isValidMove(e, 1, a, 8));
         assertTrue(board.getPiece(e, 1) instanceof King);
         assertTrue(board.getPiece(a, 8) instanceof Rook);
         // now force move to upper left corner
-        board.forceMove(e, 1, a, 8);
+        board.move(e, 1, a, 8);
         assertTrue(board.isEmptySpace(e, 1));
         assertTrue(board.getPiece(a, 8) instanceof King);
     }
@@ -489,10 +489,10 @@ public class ChessBoardTest {
      * happens.
      */
     @Test
-    public void forceMove_emptySpace()
+    public void move_EmptySpace_NothingHappens()
     {
         // try to move a blank space to the black king
-        board.forceMove(h, 4, e, 8);
+        board.move(h, 4, e, 8);
         // black king is still there
         ChessPiece blackKing = board.getPiece(e, 8);
         assertTrue(blackKing instanceof King);
@@ -500,13 +500,13 @@ public class ChessBoardTest {
     }
 
     /**
-     * Confirm that attempting to force move a chess piece off the board throws
+     * Confirm that attempting to move a chess piece off the board throws
      * an exception.
      */
     @Test(expected = OffTheChessBoardException.class)
-    public void forceMove_offTheBoard()
+    public void move_OffTheBoard_Throws()
     {
-        board.forceMove(a, 8, a, 0);
+        board.move(a, 8, a, 0);
     }
 
     /**
