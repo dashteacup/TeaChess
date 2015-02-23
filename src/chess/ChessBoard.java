@@ -291,7 +291,7 @@ public class ChessBoard {
         if (!(king instanceof King))
             return false;
         // King can't have moved from its starting position
-        if (!king.atValidStartingPosition() || king.hasMoved())
+        if (!king.inStartingPosition())
             return false;
         // king and rook must be on same row
         if (kingRow != newRow)
@@ -306,7 +306,7 @@ public class ChessBoard {
             return false;
         }
         // have to have a rook that hasn't moved from its starting position
-        if (!(rook instanceof Rook) || rook.hasMoved())
+        if (!(rook instanceof Rook) || !rook.inStartingPosition())
             return false;
         // no other pieces between king and rook
         if (!hasClearPath(kingRow, kingColumn, rook.getRow(), rook.getColumn()))

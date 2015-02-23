@@ -28,11 +28,13 @@ public class Rook extends ChessPiece {
     }
 
     /**
-     * Determine if the Rook is in a valid starting position.
+     * Determine if the Rook is in its starting position.
      */
     @Override
-    public boolean atValidStartingPosition()
+    public boolean inStartingPosition()
     {
+        if (hasMoved())
+            return false;
         if (!isOnTheBoard(getRow(), getColumn()))
             return false;
         boolean onWhiteSide = (getRow() == 1 && getColumn() == 1) ||

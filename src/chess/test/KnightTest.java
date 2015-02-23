@@ -21,22 +21,22 @@ public class KnightTest {
     public void initializeWithValidInputs()
     {
         Knight whiteLeft = new Knight(1, 2, ChessPieceColor.WHITE);
-        assertTrue(whiteLeft.atValidStartingPosition());
+        assertTrue(whiteLeft.inStartingPosition());
         assertEquals(b, whiteLeft.getFile());
         assertEquals(1, whiteLeft.getRank());
 
         Knight whiteRight = new Knight(1, 7, ChessPieceColor.WHITE);
-        assertTrue(whiteRight.atValidStartingPosition());
+        assertTrue(whiteRight.inStartingPosition());
         assertEquals(g, whiteRight.getFile());
         assertEquals(1, whiteRight.getRank());
 
         Knight blackLeft = new Knight(8, 2, ChessPieceColor.BLACK);
-        assertTrue(blackLeft.atValidStartingPosition());
+        assertTrue(blackLeft.inStartingPosition());
         assertEquals(b, blackLeft.getFile());
         assertEquals(8, blackLeft.getRank());
 
         Knight blackRight = new Knight(8, 7, ChessPieceColor.BLACK);
-        assertTrue(blackRight.atValidStartingPosition());
+        assertTrue(blackRight.inStartingPosition());
         assertTrue(blackRight.isHoppable());
         assertEquals(g, blackRight.getFile());
         assertEquals(8, blackRight.getRank());
@@ -50,16 +50,16 @@ public class KnightTest {
     public void initializeWithBlackAndWhiteSwapped()
     {
         Knight whiteInBlackRightSpot = new Knight(8, 7, ChessPieceColor.WHITE);
-        assertFalse(whiteInBlackRightSpot.atValidStartingPosition());
+        assertFalse(whiteInBlackRightSpot.inStartingPosition());
 
         Knight whiteInBlackLeftSpot = new Knight(b, 8, ChessPieceColor.WHITE);
-        assertFalse(whiteInBlackLeftSpot.atValidStartingPosition());
+        assertFalse(whiteInBlackLeftSpot.inStartingPosition());
 
         Knight blackInWhiteRightSpot = new Knight(g, 1, ChessPieceColor.BLACK);
-        assertFalse(blackInWhiteRightSpot.atValidStartingPosition());
+        assertFalse(blackInWhiteRightSpot.inStartingPosition());
 
         Knight blackInWhiteLeftSpot = new Knight(1, 2, ChessPieceColor.BLACK);
-        assertFalse(blackInWhiteLeftSpot.atValidStartingPosition());
+        assertFalse(blackInWhiteLeftSpot.inStartingPosition());
     }
 
     /**
@@ -70,17 +70,26 @@ public class KnightTest {
     public void initializeWithCompletelyWrongLocation()
     {
         Knight whiteInWrongColumn = new Knight(1, 5, ChessPieceColor.WHITE);
-        assertFalse(whiteInWrongColumn.atValidStartingPosition());
+        assertFalse(whiteInWrongColumn.inStartingPosition());
 
         Knight offTheBoard = new Knight(1, 9, ChessPieceColor.WHITE);
-        assertFalse(offTheBoard.atValidStartingPosition());
+        assertFalse(offTheBoard.inStartingPosition());
 
         Knight inTheMiddle = new Knight(4, 4, ChessPieceColor.BLACK);
-        assertFalse(inTheMiddle.atValidStartingPosition());
+        assertFalse(inTheMiddle.inStartingPosition());
 
         Knight rightSideOfBoard = new Knight(h, 4, ChessPieceColor.WHITE);
-        assertFalse(rightSideOfBoard.atValidStartingPosition());
+        assertFalse(rightSideOfBoard.inStartingPosition());
     }
+
+    @Test
+    public void inStartingPosition_MovingToStartFromSomewhereElseFails()
+    {
+        Knight piece = new Knight(f, 6, ChessPieceColor.BLACK);
+        piece.move(g, 8); // right black knight start
+        assertFalse(piece.inStartingPosition());
+    }
+
 
     /**
      * Confirm that all L-shaped moves from the right white knight's starting
@@ -90,7 +99,7 @@ public class KnightTest {
     public void confirmValidMovesAtRightWhiteKnightStart()
     {
         Knight white = new Knight(1, 7, ChessPieceColor.WHITE);
-        assertTrue(white.atValidStartingPosition());
+        assertTrue(white.inStartingPosition());
         // up 2, left 1
         assertTrue(white.isValidMove(3, 6));
         // up 1, left 2
@@ -117,7 +126,7 @@ public class KnightTest {
     public void confirmValidMovesAtLeftBlackKnightStart()
     {
         Knight black = new Knight(b, 8, ChessPieceColor.BLACK);
-        assertTrue(black.atValidStartingPosition());
+        assertTrue(black.inStartingPosition());
         // down 2, left 1
         assertTrue(black.isValidMove(a, 6));
         // down 2, right 1
@@ -143,7 +152,7 @@ public class KnightTest {
     public void confirmBadMovesAtRightWhiteKnightStart()
     {
         Knight white = new Knight(g, 1, ChessPieceColor.WHITE);
-        assertTrue(white.atValidStartingPosition());
+        assertTrue(white.inStartingPosition());
         // up-left 2, like bishop, fail
         assertFalse(white.isValidMove(3, 5));
         // up 2, like rook, fail
@@ -201,7 +210,7 @@ public class KnightTest {
     public void walkFromRightBlackKnight()
     {
         Knight traveler = new Knight(g, 8, ChessPieceColor.BLACK);
-        assertTrue(traveler.atValidStartingPosition());
+        assertTrue(traveler.inStartingPosition());
         // down 2, left 1
         assertTrue(traveler.move(f, 6));
         // down 1, left 2

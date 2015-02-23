@@ -23,25 +23,25 @@ public class RookTest {
     public void initializeWithValidInitialPositions()
     {
         Rook lwhite = new Rook(1, 1, ChessPieceColor.WHITE);
-        assertTrue(lwhite.atValidStartingPosition());
+        assertTrue(lwhite.inStartingPosition());
         assertEquals(a, lwhite.getFile());
         assertEquals(1, lwhite.getRank());
         assertEquals(ChessPieceColor.WHITE, lwhite.getColor());
 
         Rook rwhite = new Rook(1, 8, ChessPieceColor.WHITE);
-        assertTrue(rwhite.atValidStartingPosition());
+        assertTrue(rwhite.inStartingPosition());
         assertEquals(h, rwhite.getFile());
         assertEquals(1, rwhite.getRank());
         assertEquals(ChessPieceColor.WHITE, rwhite.getColor());
 
         Rook lblack = new Rook(8, 1, ChessPieceColor.BLACK);
-        assertTrue(lblack.atValidStartingPosition());
+        assertTrue(lblack.inStartingPosition());
         assertEquals(8, lblack.getRow());
         assertEquals(1, lblack.getColumn());
         assertEquals(ChessPieceColor.BLACK, lblack.getColor());
 
         Rook rblack = new Rook(8, 8, ChessPieceColor.BLACK);
-        assertTrue(rblack.atValidStartingPosition());
+        assertTrue(rblack.inStartingPosition());
         assertEquals(8, rblack.getRow());
         assertEquals(8, rblack.getColumn());
         assertEquals(ChessPieceColor.BLACK, rblack.getColor());
@@ -56,16 +56,16 @@ public class RookTest {
     {
         // not on back row
         Rook bad = new Rook(3, 3, ChessPieceColor.WHITE);
-        assertFalse(bad.atValidStartingPosition());
+        assertFalse(bad.inStartingPosition());
         // off the board
         Rook invalid = new Rook(0, 1, ChessPieceColor.WHITE);
-        assertFalse(invalid.atValidStartingPosition());
+        assertFalse(invalid.inStartingPosition());
         // 1 row off
         Rook wrong = new Rook(7, 8, ChessPieceColor.BLACK);
-        assertFalse(wrong.atValidStartingPosition());
+        assertFalse(wrong.inStartingPosition());
         // 1 column off
         Rook offColumn = new Rook(g, 1, ChessPieceColor.WHITE);
-        assertFalse(offColumn.atValidStartingPosition());
+        assertFalse(offColumn.inStartingPosition());
     }
 
     /**
@@ -77,16 +77,30 @@ public class RookTest {
     {
         // black on white side
         Rook black11 = new Rook(1, 1, ChessPieceColor.BLACK);
-        assertFalse(black11.atValidStartingPosition());
+        assertFalse(black11.inStartingPosition());
         Rook black18 = new Rook(1, 8, ChessPieceColor.BLACK);
-        assertFalse(black18.atValidStartingPosition());
+        assertFalse(black18.inStartingPosition());
         // white on black side
         Rook white81 = new Rook(8, 1, ChessPieceColor.WHITE);
-        assertFalse(white81.atValidStartingPosition());
+        assertFalse(white81.inStartingPosition());
         Rook white88 = new Rook(8, 8, ChessPieceColor.WHITE);
-        assertFalse(white88.atValidStartingPosition());
+        assertFalse(white88.inStartingPosition());
     }
 
+    @Test
+    public void inStartingPosition_MovingToStartFromSomewhereElseFails()
+    {
+        Rook piece = new Rook(a, 4, ChessPieceColor.WHITE);
+        piece.move(a, 1);
+        assertFalse(piece.inStartingPosition());
+    }
+
+    @Test
+    public void inStartingPosition_BlackRookOnWrongColumnFails()
+    {
+        Rook piece = new Rook(d, 8, ChessPieceColor.BLACK);
+        assertFalse(piece.inStartingPosition());
+    }
 
     /**
      * Confirm that valid moves are recognized as such.

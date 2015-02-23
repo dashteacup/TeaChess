@@ -27,11 +27,13 @@ public class Queen extends ChessPiece {
     }
 
     /**
-     * Determine if the Queen is in a valid starting position.
+     * Determine if the Queen is in its starting position.
      */
     @Override
-    public boolean atValidStartingPosition()
+    public boolean inStartingPosition()
     {
+        if (hasMoved())
+            return false;
         if (getColumn() != 4)
             return false;
         return ((getColor() == ChessPieceColor.WHITE) && (getRow() == 1)) ||

@@ -28,11 +28,13 @@ public class King extends ChessPiece {
     }
 
     /**
-     * Determine if the King is in a valid starting position.
+     * Determine if the King is in its starting position.
      */
     @Override
-    public boolean atValidStartingPosition()
+    public boolean inStartingPosition()
     {
+        if (hasMoved())
+            return false;
         if (getColumn() == 5) {
             boolean isWhiteKing = (getColor() == ChessPieceColor.WHITE) && (getRow() == 1);
             boolean isBlackKing = (getColor() == ChessPieceColor.BLACK) && (getRow() == 8);

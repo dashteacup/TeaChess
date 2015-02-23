@@ -590,6 +590,13 @@ public class ChessBoardTest {
     }
 
     @Test
+    public void canCastle_FailsWhenKingIsInCheck()
+    {
+        kingsAndRooksBoard.addPiece(new Queen(e, 4, BLACK));
+        assertFalse(kingsAndRooksBoard.canCastle(e, 1, g, 1));
+    }
+
+    @Test
     public void canCastle_firstStepPutsKingInCheck()
     {
         kingsAndRooksBoard.addPiece(new Queen(d, 4, BLACK));

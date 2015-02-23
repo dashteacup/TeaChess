@@ -127,20 +127,11 @@ public abstract class ChessPiece implements Cloneable {
     }
 
     /**
-     * Determine if the chess piece has moved earlier in the game.
-     * @return true if the piece has moved before, false otherwise
-     */
-    public boolean hasMoved()
-    {
-        return hasMoved;
-    }
-
-    /**
-     * Determine if the piece is in a valid starting position.
-     * @return true if the piece is where it could be at the beginning of a
+     * Determine if the piece has moved from its legal starting position.
+     * @return true if the piece hasn't moved from its initial position in a
      * chess game
      */
-    public abstract boolean atValidStartingPosition();
+    public abstract boolean inStartingPosition();
 
     /**
      * Determine if the chess piece can capture a piece at another place on the
@@ -266,6 +257,15 @@ public abstract class ChessPiece implements Cloneable {
     protected boolean isOnTheBoard(int row, int column)
     {
         return ChessBoard.isOnTheBoard(row, column);
+    }
+
+    /**
+     * Determine if the chess piece has moved earlier in the game.
+     * @return true if the piece has moved before, false otherwise
+     */
+    protected boolean hasMoved()
+    {
+        return hasMoved;
     }
 
     /**

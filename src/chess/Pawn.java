@@ -28,11 +28,14 @@ public class Pawn extends ChessPiece {
     }
 
     /**
-     * Determine if the Pawn is in a valid starting position.
+     * Determine if the Pawn is in its starting position.
      */
     @Override
-    public boolean atValidStartingPosition()
+    public boolean inStartingPosition()
     {
+        if (hasMoved())
+            return false;
+        // any column on the board works
         if (!isOnTheBoard(getRow(), getColumn()))
             return false;
         if ((getRow() == 2) && (getColor() == ChessPieceColor.WHITE))
@@ -57,12 +60,12 @@ public class Pawn extends ChessPiece {
         boolean isMovingForward = false;
         if (getColor() == ChessPieceColor.WHITE) {
             isMovingForward = (row == getRow() + 1);
-            if (atValidStartingPosition())
+            if (inStartingPosition())
                 isMovingForward = isMovingForward || (row == getRow() + 2);
         }
         if (getColor() == ChessPieceColor.BLACK) {
             isMovingForward = (row == getRow() - 1);
-            if (atValidStartingPosition())
+            if (inStartingPosition())
                 isMovingForward = isMovingForward || (row == getRow() - 2);
         }
         return isMovingForward;

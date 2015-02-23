@@ -21,13 +21,13 @@ public class QueenTest {
     public void initializeWithValidInputs()
     {
         Queen white = new Queen(1, 4, ChessPieceColor.WHITE);
-        assertTrue(white.atValidStartingPosition());
+        assertTrue(white.inStartingPosition());
         assertEquals(d, white.getFile());
         assertEquals(1, white.getRank());
         assertEquals(ChessPieceColor.WHITE, white.getColor());
 
         Queen black = new Queen(8, 4, ChessPieceColor.BLACK);
-        assertTrue(black.atValidStartingPosition());
+        assertTrue(black.inStartingPosition());
         assertEquals(8, black.getRow());;
         assertEquals(4, black.getColumn());
         assertEquals(ChessPieceColor.BLACK, black.getColor());
@@ -41,9 +41,9 @@ public class QueenTest {
     public void initializeWithBlackAndWhiteSwapped()
     {
         Queen whiteInBlackSpot = new Queen(8, 4, ChessPieceColor.WHITE);
-        assertFalse(whiteInBlackSpot.atValidStartingPosition());
+        assertFalse(whiteInBlackSpot.inStartingPosition());
         Queen blackInWhiteSpot = new Queen(1, 4, ChessPieceColor.BLACK);
-        assertFalse(blackInWhiteSpot.atValidStartingPosition());
+        assertFalse(blackInWhiteSpot.inStartingPosition());
     }
 
     /**
@@ -54,15 +54,23 @@ public class QueenTest {
     public void initializeWithCompletelyWrongLocation()
     {
         Queen whiteInWrongColumn = new Queen(1, 7, ChessPieceColor.WHITE);
-        assertFalse(whiteInWrongColumn.atValidStartingPosition());
+        assertFalse(whiteInWrongColumn.inStartingPosition());
         Queen blackInWrongRow = new Queen(7, 4, ChessPieceColor.BLACK);
-        assertFalse(blackInWrongRow.atValidStartingPosition());
+        assertFalse(blackInWrongRow.inStartingPosition());
         Queen middleOfBoard = new Queen(4, 4, ChessPieceColor.BLACK);
-        assertFalse(middleOfBoard.atValidStartingPosition());
+        assertFalse(middleOfBoard.inStartingPosition());
         Queen offTheBoard = new Queen(3, 9, ChessPieceColor.WHITE);
-        assertFalse(offTheBoard.atValidStartingPosition());
+        assertFalse(offTheBoard.inStartingPosition());
         Queen lowerRightCorner = new Queen(h, 1, ChessPieceColor.WHITE);
-        assertFalse(lowerRightCorner.atValidStartingPosition());
+        assertFalse(lowerRightCorner.inStartingPosition());
+    }
+
+    @Test
+    public void inStartingPosition_MovingToStartFromSomewhereElseFails()
+    {
+        Queen piece = new Queen(d, 4, ChessPieceColor.BLACK);
+        piece.move(d, 8); // black queen start
+        assertFalse(piece.inStartingPosition());
     }
 
     /**
@@ -187,7 +195,7 @@ public class QueenTest {
     public void walkWhiteQueenFromStart()
     {
         Queen walker = new Queen(d, 1, ChessPieceColor.WHITE);
-        assertTrue(walker.atValidStartingPosition());
+        assertTrue(walker.inStartingPosition());
         // up 3
         assertTrue(walker.move(d, 4));
         // down-left 2
