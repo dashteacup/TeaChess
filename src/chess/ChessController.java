@@ -96,7 +96,7 @@ public class ChessController implements ActionListener {
                 endTurn();
             // selecting a new piece of the same color
             } else if (clickedButton.getPieceColor() == currentPlayerColor) {
-                clearMarkedSpaces();
+                view.clearMarkedSpaces();
                 clickedButton.selectSpace();
                 currentlySelectedButton = clickedButton;
                 highlightValidMoves();
@@ -200,7 +200,7 @@ public class ChessController implements ActionListener {
             view.setCheckCondition(ChessPieceColor.NONE);
         }
         pieceIsSelected = false;
-        clearMarkedSpaces();
+        view.clearMarkedSpaces();
         currentPlayerColor = otherPlayer;
     }
 
@@ -237,18 +237,6 @@ public class ChessController implements ActionListener {
                                            viewRowToModel(row),         viewColumnToModel(col))) {
                     view.highlightSpace(row, col);
                 }
-            }
-        }
-    }
-
-    /**
-     * Clear all selected and highlighted spaces.
-     */
-    private void clearMarkedSpaces()
-    {
-        for (int row = 0; row < ChessBoard.BOARD_SIZE; row++) {
-            for (int col = 0; col < ChessBoard.BOARD_SIZE; col++) {
-                view.getSpace(row, col).deselectSpace();
             }
         }
     }

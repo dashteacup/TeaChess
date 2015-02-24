@@ -168,6 +168,31 @@ public class ChessGameView {
         space.highlightSpace();
     }
 
+
+    /**
+     * Clear the borders of all selected and highlighted spaces on the chess
+     * board, restoring them to their default state.
+     */
+    public void clearMarkedSpaces()
+    {
+        for (int row = 0; row < CHESS_BOARD_ROWS; row++) {
+            for (int col = 0; col < CHESS_BOARD_COLUMNS; col++) {
+                unselectSpace(row, col);
+            }
+        }
+    }
+
+    /**
+     * Clear all highlighting around the space at the given location
+     * @param row of the space to unselect (0-7)
+     * @param column of the space to unselect (0-7)
+     */
+    public void unselectSpace(int row, int column)
+    {
+        ChessSpaceButton space = getSpace(row, column);
+        space.deselectSpace();
+    }
+
     /**
      * Set the current player label to the appropriate text and color.
      * @param playerColor of the current player
