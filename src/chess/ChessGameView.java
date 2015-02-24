@@ -38,6 +38,16 @@ public class ChessGameView {
     public static final String PRINT_BOARD_MENU_ITEM = "Print Board";
 
     /**
+     * The text for the menu item that enables highlighting.
+     */
+    public static final String SHOW_HIGHLIGHTING_MENU_ITEM = "Show Highlighting";
+
+    /**
+     * The text for the menu item that disables highlighting.
+     */
+    public static final String HIDE_HIGHLIGHTING_MENU_ITEM = "Hide Highlighting";
+
+    /**
      * Default height of the game window.
      */
     private static final int WINDOW_HEIGHT = 600;
@@ -92,6 +102,16 @@ public class ChessGameView {
      * A label that shows if a player's king is in check.
      */
     private JLabel checkConditionLabel;
+
+    /**
+     * Flag indicating whether the view will highlight valid moves.
+     */
+    private boolean showHighlighting = true;
+
+    /**
+     * Menu item that allows the user to show/hide highlighting of valid moves.
+     */
+    private JMenuItem highlightingMenuItem;
 
     /**
      * Create a new frame (top-level container) for the chess program.
@@ -164,8 +184,10 @@ public class ChessGameView {
      */
     public void highlightSpace(int row, int column)
     {
-        ChessSpaceButton space = getSpace(row, column);
-        space.highlightSpace();
+        if (showHighlighting) {
+            ChessSpaceButton space = getSpace(row, column);
+            space.highlightSpace();
+        }
     }
 
 
@@ -191,6 +213,30 @@ public class ChessGameView {
     {
         ChessSpaceButton space = getSpace(row, column);
         space.deselectSpace();
+    }
+
+    /**
+     * Enable the highlighting of potential moves and toggle the highlighting
+     * menu item to give the option to hide highlighting. Does not highlight
+     * moves for the currently selected space.
+     */
+    public void showHighlighting()
+    {
+        highlightingMenuItem.setText(HIDE_HIGHLIGHTING_MENU_ITEM);
+        showHighlighting = true;
+
+    }
+
+    /**
+     * Disable highlighting of potential moves and toggle the highlighting
+     * menu item to give the option to show highlighting. Clears all selected
+     * and highlighted spaces.
+     */
+    public void hideHighlighting()
+    {
+        highlightingMenuItem.setText(SHOW_HIGHLIGHTING_MENU_ITEM);
+        showHighlighting = false;
+        clearMarkedSpaces();
     }
 
     /**
@@ -315,17 +361,21 @@ public class ChessGameView {
     private JMenuBar createGameMenuBar()
     {
         JMenuBar menuBar = new JMenuBar();
-        JMenu fileMenu = new JMenu("File");
 
+        JMenu fileMenu = new JMenu("File");
         JMenuItem newGameMenuItem = new JMenuItem(NEW_GAME_MENU_ITEM);
         newGameMenuItem.addActionListener(myController);
         fileMenu.add(newGameMenuItem);
-
         JMenuItem closeMenuItem = new JMenuItem(CLOSE_MENU_ITEM);
         closeMenuItem.addActionListener(myController);
         fileMenu.add(closeMenuItem);
-
         menuBar.add(fileMenu);
+
+        JMenu optionsMenu = new JMenu("Options");
+        highlightingMenuItem = new JMenuItem(HIDE_HIGHLIGHTING_MENU_ITEM);
+        highlightingMenuItem.addActionListener(myController);
+        optionsMenu.add(highlightingMenuItem);
+        menuBar.add(optionsMenu);
 
         JMenu printMenu = new JMenu("Debug");
         JMenuItem printMenuItem = new JMenuItem(PRINT_BOARD_MENU_ITEM);

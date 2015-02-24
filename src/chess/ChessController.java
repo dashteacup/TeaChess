@@ -59,6 +59,14 @@ public class ChessController implements ActionListener {
             setupNewChessGame();
         } else if (actionCommand == ChessGameView.CLOSE_MENU_ITEM) {
             System.exit(0);
+        } else if (actionCommand == ChessGameView.SHOW_HIGHLIGHTING_MENU_ITEM) {
+            view.showHighlighting();
+            if (pieceIsSelected)
+                highlightValidMoves();
+        } else if (actionCommand == ChessGameView.HIDE_HIGHLIGHTING_MENU_ITEM) {
+            view.hideHighlighting();
+            if (pieceIsSelected)
+                currentlySelectedButton.selectSpace();
         } else if (actionCommand == ChessGameView.PRINT_BOARD_MENU_ITEM) {
             modelBoard.printBoard();
         // Clicked one of the chess spaces
