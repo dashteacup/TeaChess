@@ -151,7 +151,7 @@ public class ChessGameView {
      * @param row to clear (0-7)
      * @param column to clear (0-7)
      */
-    public void clearSpace(int row, int column)
+    public void emptySpace(int row, int column)
     {
         ChessSpaceButton space = getSpace(row, column);
         space.setEmptySpace();
