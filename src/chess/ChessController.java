@@ -55,10 +55,8 @@ public class ChessController implements ActionListener {
     public void actionPerformed(ActionEvent event)
     {
         String actionCommand = event.getActionCommand();
-        // Clicked the new game menu item.
         if (actionCommand == ChessGameView.NEW_GAME_MENU_ITEM) {
             setupNewChessGame();
-        // Clicked the close menu item.
         } else if (actionCommand == ChessGameView.CLOSE_MENU_ITEM) {
             System.exit(0);
         } else if (actionCommand == ChessGameView.PRINT_BOARD_MENU_ITEM) {
