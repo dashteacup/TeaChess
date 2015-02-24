@@ -235,7 +235,7 @@ public class ChessController implements ActionListener {
             for (int col = 0; col < ChessBoard.BOARD_SIZE; col++) {
                 if (modelBoard.isValidMove(viewRowToModel(selectedRow), viewColumnToModel(selectedColumn),
                                            viewRowToModel(row),         viewColumnToModel(col))) {
-                    view.getSpace(row, col).highlightSpace();
+                    view.highlightSpace(row, col);
                 }
             }
         }

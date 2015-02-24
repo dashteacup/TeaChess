@@ -158,6 +158,17 @@ public class ChessGameView {
     }
 
     /**
+     * Highlight the chess space at the given location.
+     * @param row of the space to highlight (0-7)
+     * @param column of the space to highlight (0-7)
+     */
+    public void highlightSpace(int row, int column)
+    {
+        ChessSpaceButton space = getSpace(row, column);
+        space.highlightSpace();
+    }
+
+    /**
      * Set the current player label to the appropriate text and color.
      * @param playerColor of the current player
      */
