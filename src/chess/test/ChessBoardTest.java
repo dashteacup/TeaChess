@@ -700,7 +700,7 @@ public class ChessBoardTest {
     }
 
     @Test
-    public void canEnPassant_PawnCapturesWrongColumn_False()
+    public void canEnPassant_CapturingPawnInWrongColumn_False()
     {
         board.addPiece(new Pawn(h, 5, WHITE));
         board.move(d, 7, d, 5);
