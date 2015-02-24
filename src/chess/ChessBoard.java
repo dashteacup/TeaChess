@@ -18,6 +18,18 @@ public class ChessBoard {
     private ChessPiece[][] board = new ChessPiece[BOARD_SIZE + 1][BOARD_SIZE + 1];
 
     /**
+     * The last piece that was moved. Used for determining if you can perform
+     * an en passant.
+     */
+    private ChessPiece pieceLastMoved;
+
+    /**
+     * The row that the most recently moved piece came from. Used for determining
+     * if you can perform an en passant.
+     */
+    private int startRowOfPieceLastMoved;
+
+    /**
      * Determine if a given position is on the ChessBoard.
      * @param row to inspect (1-8 is valid)
      * @param column to inspect (1-8 is valid)
@@ -174,8 +186,10 @@ public class ChessBoard {
         ChessPieceColor playerColor = piece.getColor();
         // moving to an empty space
         if (isEmptySpace(newRow, newColumn)) {
-            // castling is a special case that requires knowledge of ChessBoard's state
-            if (canCastle(oldRow, oldColumn, newRow, newColumn))
+            // castling and en passant are special cases that requires knowledge of
+            // ChessBoard's state
+            if ( canCastle(oldRow, oldColumn, newRow, newColumn) ||
+                 canEnPassant(oldRow, oldColumn, newRow, newColumn) )
                 return true;
             if (!piece.isValidMove(newRow, newColumn))
                 return false;
@@ -224,6 +238,9 @@ public class ChessBoard {
             movingPiece.move(newRow, newColumn);
             board[newRow][newColumn] = movingPiece;
             board[oldRow][oldColumn] = null;
+
+            pieceLastMoved = movingPiece;
+            startRowOfPieceLastMoved = oldRow;
         }
     }
 
@@ -336,6 +353,81 @@ public class ChessBoard {
     public void castle(File kingFile, int kingRank, File newFile, int newRank)
     {
         castle(kingRank, kingFile.getColumn(), newRank, newFile.getColumn());
+    }
+
+    /**
+     * Determine if the Pawn at the given location can perform an en passant capture
+     * to the new location.
+     * @param oldRow of the Pawn to move
+     * @param oldColumn of the Pawn to move
+     * @param newRow where the Pawn will move
+     * @param newColumn where the Pawn will move
+     * @return true if the Pawn can perform an en passant capture, false otherwise
+     * @see <a href="http://en.wikipedia.org/w/index.php?title=En_passant&oldid=648302895#The_rule">En passant</a> (Wikipedia)
+     */
+    public boolean canEnPassant(int oldRow, int oldColumn, int newRow, int newColumn)
+    {
+        ChessPiece pieceToMove = getPiece(oldRow, oldColumn);
+        // both pieces have to be pawns
+        if (!(pieceLastMoved instanceof Pawn) || !(pieceToMove instanceof Pawn))
+            return false;
+        // positive -> black pawn moved, negative -> white pawn moved
+        final int deltaRow = startRowOfPieceLastMoved - pieceLastMoved.getRow();
+        // pawn must have made a double move
+        if (Math.abs(deltaRow) != 2)
+            return false;
+        // A double move only happens from the Pawn's starting position, so if
+        // you can capture the place they skipped in the double move, your Pawn
+        // is on its fifth rank.
+        final int captureRow = pieceLastMoved.getRow() + Integer.signum(deltaRow);
+        final int captureColumn = pieceLastMoved.getColumn();
+        return (pieceToMove.canCapture(captureRow, captureColumn) &&
+                newRow == captureRow &&
+                newColumn == captureColumn);
+    }
+
+    /**
+     * Determine if the Pawn at the given location can perform an en passant capture
+     * to the new location. Locations are specified in algebraic chess notation.
+     * @param oldFile of the Pawn to move
+     * @param oldRank of the Pawn to move
+     * @param newFile where the Pawn will move
+     * @param newRank where the Pawn will move
+     * @return true if the Pawn can perform an en passant capture, false otherwise
+     * @see <a href="http://en.wikipedia.org/w/index.php?title=En_passant&oldid=648302895#The_rule">En passant</a> (Wikipedia)
+     */
+    public boolean canEnPassant(File oldFile, int oldRank, File newFile, int newRank)
+    {
+        return canEnPassant(oldRank, oldFile.getColumn(), newRank, newFile.getColumn());
+    }
+
+    /**
+     * Perform an en passant capture to the given location. If this isn't a
+     * valid en passant, do nothing.
+     * @param oldRow of the Pawn to move
+     * @param oldColumn of the Pawn to move
+     * @param newRow where the Pawn will move
+     * @param newColumn where the Pawn will move
+     */
+    public void enPassant(int oldRow, int oldColumn, int newRow, int newColumn)
+    {
+        if (canEnPassant(oldRow, oldColumn, newRow, newColumn)) {
+            board[oldRow][newColumn] = null;
+            move(oldRow, oldColumn, newRow, newColumn);
+        }
+    }
+
+    /**
+     * Perform an en passant capture to the location specified in algebraic
+     * chess notation. If this isn't a valid en passant, do nothing.
+     * @param oldFile of the Pawn to move
+     * @param oldRank of the Pawn to move
+     * @param newFile where the Pawn will move
+     * @param newRank where the Pawn will move
+     */
+    public void enPassant(File oldFile, int oldRank, File newFile, int newRank)
+    {
+        enPassant(oldRank, oldFile.getColumn(), newRank, newFile.getColumn());
     }
 
     /**

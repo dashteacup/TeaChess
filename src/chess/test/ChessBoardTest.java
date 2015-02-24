@@ -109,6 +109,7 @@ public class ChessBoardTest {
         assertEquals(BLACK, board.getPiece(8, 8).getColor());
     }
 
+
     @Test
     public void constructor_SpacesInTheMiddleAreNull()
     {
@@ -644,6 +645,114 @@ public class ChessBoardTest {
         assertTrue(board.getPiece(f, 1) instanceof Bishop);
         assertTrue(board.getPiece(g, 1) instanceof Knight);
         assertTrue(board.getPiece(h, 1) instanceof Rook);
+    }
+
+    @Test
+    public void canEnPassant_WhiteCapturesBlackPawn_True()
+    {
+        board.addPiece(new Pawn(e, 5, WHITE));
+        board.move(d, 7, d, 5);
+        assertTrue(board.canEnPassant(e, 5, d, 6));
+    }
+
+    @Test
+    public void canEnPassant_BlackCapturesWhitePawn_True()
+    {
+        board.addPiece(new Pawn(a, 4, BLACK));
+        board.move(b, 2, b, 4);
+        assertTrue(board.canEnPassant(a, 4, b, 3));
+    }
+
+    @Test
+    public void canEnPassant_NoPieceToMove_False()
+    {
+        board.move(d, 7, d, 5);
+        assertFalse(board.canEnPassant(e, 5, d, 6));
+    }
+
+    @Test
+    public void canEnPassant_PieceToMoveNotAPawn_False()
+    {
+        board.addPiece(new Queen(e, 5, WHITE));
+        board.move(d, 7, d, 5);
+        assertFalse(board.canEnPassant(e, 5, d, 6));
+    }
+
+    @Test
+    public void canEnPassant_PieceLastMovedNotAPawn_False()
+    {
+        board.addPiece(new Pawn(e, 5, WHITE));
+        // black pawn down 2
+        board.move(d, 7, d, 5);
+        // black knight moves
+        board.move(g, 8, f, 6);
+        assertFalse(board.canEnPassant(e, 5, d, 6));
+    }
+
+    @Test
+    public void canEnPassant_PawnsLastMoveOnlyASingleStepForward_False()
+    {
+        board.addPiece(new Pawn(e, 5, WHITE));
+        // black pawn down 1, then 1 more
+        board.move(d, 7, d, 6);
+        board.move(d, 6, d, 5);
+        assertFalse(board.canEnPassant(e, 5, d, 6));
+    }
+
+    @Test
+    public void canEnPassant_PawnCapturesWrongColumn_False()
+    {
+        board.addPiece(new Pawn(h, 5, WHITE));
+        board.move(d, 7, d, 5);
+        assertFalse(board.canEnPassant(h, 5, d, 6));
+    }
+
+    @Test
+    public void canEnPassant_PawnCapturesWithForwardStep_False()
+    {
+        board.addPiece(new Pawn(e, 5, WHITE));
+        board.move(d, 7, d, 5);
+        assertFalse(board.canEnPassant(e, 5, e, 6));
+    }
+
+    @Test
+    public void canEnPassant_PawnCapturesWrongRow_False()
+    {
+        board.addPiece(new Pawn(e, 5, WHITE));
+        board.move(d, 7, d, 5);
+        assertFalse(board.canEnPassant(e, 5, d, 7));
+    }
+
+    @Test
+    public void enPassant_WhiteCapturesBlackPawn_Succeeds()
+    {
+        board.addPiece(new Pawn(e, 5, WHITE));
+        board.move(d, 7, d, 5);
+        board.enPassant(e, 5, d, 6);
+        assertTrue(board.isEmptySpace(d, 5)); // killed black pawn
+        assertTrue(board.getPiece(d, 6) instanceof Pawn);
+    }
+
+    @Test
+    public void enPassant_BlackCapturesWhitePawn_Succeeds()
+    {
+        board.addPiece(new Pawn(a, 4, BLACK));
+        board.move(b, 2, b, 4);
+        board.enPassant(a, 4, b, 3);
+        assertTrue(board.isEmptySpace(b, 4)); // killed white pawn
+        assertTrue(board.getPiece(b, 3) instanceof Pawn);
+    }
+
+    @Test
+    public void enPassant_MakeIllegalEnPassant_Fails()
+    {
+        board.addPiece(new Pawn(e, 5, WHITE));
+        // black makes two steps
+        board.move(d, 7, d, 6);
+        board.move(d, 6, d, 5);
+        board.enPassant(e, 5, d, 6);
+        assertFalse(board.isEmptySpace(d, 5)); // black pawn still there
+        assertFalse(board.getPiece(d, 6) instanceof Pawn); // white pawn hasn't moved
     }
 
     @Test

@@ -151,6 +151,9 @@ public class ChessController implements ActionListener {
                 view.moveChessPiece(clickedRow, 7, clickedRow, 5); // castle right
             else
                 view.moveChessPiece(clickedRow, 0, clickedRow, 3); // castle left
+        } else if (modelBoard.canEnPassant(modelOldRow, modelOldColumn, modelNewRow, modelNewColumn)) {
+            modelBoard.enPassant(modelOldRow, modelOldColumn, modelNewRow, modelNewColumn);
+            view.clearSpace(selectedRow, clickedColumn);
         } else {
             modelBoard.move(modelOldRow, modelOldColumn, modelNewRow, modelNewColumn);
         }

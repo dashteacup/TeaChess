@@ -147,6 +147,17 @@ public class ChessGameView {
     }
 
     /**
+     * Make the given space empty (remove the chess piece icon).
+     * @param row to clear (0-7)
+     * @param column to clear (0-7)
+     */
+    public void clearSpace(int row, int column)
+    {
+        ChessSpaceButton space = getSpace(row, column);
+        space.setEmptySpace();
+    }
+
+    /**
      * Set the current player label to the appropriate text and color.
      * @param playerColor of the current player
      */
