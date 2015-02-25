@@ -441,9 +441,9 @@ public class ChessBoard {
     {
         ChessPiece piece = getPiece(row, column);
         if (piece instanceof Pawn) {
-            if ( (piece.getColor() == ChessPieceColor.WHITE) && (piece.getRow() == 8) )
-                return true;
-            if ( (piece.getColor() == ChessPieceColor.BLACK) && (piece.getRow() == 1) )
+            if ( ((piece.getColor() == ChessPieceColor.WHITE) && (piece.getRow() == 8))
+                 ||
+                 ((piece.getColor() == ChessPieceColor.BLACK) && (piece.getRow() == 1)) )
                 return true;
         }
         return false;
