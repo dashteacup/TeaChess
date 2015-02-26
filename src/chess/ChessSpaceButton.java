@@ -117,7 +117,7 @@ public class ChessSpaceButton extends JButton {
     /**
      * Mark this space as unselected.
      */
-    public void deselectSpace()
+    public void unselectSpace()
     {
         setBorder(unselectedBorder);
     }

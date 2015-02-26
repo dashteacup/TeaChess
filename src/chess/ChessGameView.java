@@ -212,7 +212,7 @@ public class ChessGameView {
     public void unselectSpace(int row, int column)
     {
         ChessSpaceButton space = getSpace(row, column);
-        space.deselectSpace();
+        space.unselectSpace();
     }
 
     /**
